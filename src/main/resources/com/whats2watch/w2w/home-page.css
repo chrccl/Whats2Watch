@@ -1,0 +1,147 @@
+.home-container {
+    -fx-padding: 25;
+    -fx-font-family: "Noto Sans Hebrew, -apple-system, Roboto, Helvetica, sans-serif";
+    -fx-background-color: #272727;
+    -fx-text-fill: white;
+
+}
+
+.header-wrapper {
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-padding: 10;
+}
+
+.site-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.logout-button {
+    -fx-background-color: #cb2000;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-padding: 10 20;
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+}
+
+.rooms-section,
+.genre-section,
+.leaderboard-section,
+.trending-section {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-padding: 20;
+    -fx-spacing: 20;
+    -fx-border-radius: 30;
+    -fx-pref-width: 1404px;
+}
+
+.section-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.carousel-scroll-pane {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-padding: 10; /* Add some padding */
+}
+
+.carousel-scroll-pane .viewport {
+    -fx-background-color: transparent; /* Transparent viewport */
+}
+
+.room-grid {
+    -fx-spacing: 20; /* Spacing between cards */
+    -fx-alignment: center; /* Center the content horizontally */
+}
+
+.room-card {
+    -fx-background-color: white;
+    -fx-border-radius: 25;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-pref-width: 200; /* Set a fixed width for each card */
+}
+
+.genre-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-alignment: center;
+}
+
+.genre-card {
+    -fx-background-color: white;
+    -fx-border-radius: 25;
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+
+.room-image,
+.genre-icon {
+    -fx-border-radius: 15;
+    -fx-max-width: 100;
+    -fx-max-height: 75;
+}
+
+.room-name,
+.genre-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+.room-info {
+    -fx-spacing: 8;
+    -fx-alignment: center;
+}
+
+.member-count,
+.genre-label {
+    -fx-text-fill: black;
+}
+
+.divider {
+    -fx-pref-width: 1;
+    -fx-background-color: black;
+}
+
+.movie-entry {
+    -fx-spacing: 15;
+    -fx-alignment: center-left;
+}
+
+.movie-title {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+}
+
+.trending-movie {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.cta-section {
+    -fx-spacing: 10;
+    -fx-alignment: center;
+}
+
+.cta-button {
+    -fx-background-color: #cb2000;
+    -fx-text-fill: white;
+    -fx-padding: 10 15;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+.footer-divider {
+    -fx-pref-height: 2;
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-bar {
+    -fx-background-color: rgba(0, 0, 0, 0.9);
+    -fx-padding: 15;
+}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.whats2watch.w2w.HelloController">
+  <!-- Background Image -->
+  <ImageView preserveRatio="true" styleClass="background-image" fx:id="imageView">
+    <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+  </ImageView>
+
+  <!-- Login Container -->
+  <VBox spacing="15" alignment="CENTER" styleClass="login-container" AnchorPane.topAnchor="50"
+        AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200">
+    <!-- Brand Title -->
+    <Label text="Whats2Watch" styleClass="brand-title"/>
+
+    <!-- Welcome Text -->
+    <Label text="Welcome" styleClass="welcome-text"/>
+
+    <!-- Form -->
+    <VBox spacing="10" styleClass="login-form">
+      <!-- Email -->
+      <VBox spacing="5" styleClass="form-group">
+        <Label text="Email" styleClass="form-label"/>
+        <TextField fx:id="emailField" styleClass="form-input"/>
+      </VBox>
+      <!-- Password -->
+      <VBox spacing="5" styleClass="form-group">
+        <Label text="Password" styleClass="form-label"/>
+        <PasswordField fx:id="passwordField" styleClass="form-input"/>
+      </VBox>
+      <!-- Register Prompt -->
+      <Label text="Don't you have an account? Register" styleClass="register-prompt"/>
+      <!-- Login Button -->
+      <Button text="Login" fx:id="loginButton" styleClass="login-button"/>
+    </VBox>
+  </VBox>
+</AnchorPane>

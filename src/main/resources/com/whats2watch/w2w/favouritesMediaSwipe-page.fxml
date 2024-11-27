@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@favouritesMediaSwipe-page.css" styleClass="movie-container" fx:controller="com.whats2watch.w2w.HelloController">
+    <top>
+        <VBox alignment="CENTER" spacing="10" styleClass="movie-container">
+            <HBox spacing="10" alignment="CENTER" styleClass="header-wrapper">
+                <Label text="Whats2Watch" styleClass="site-title"/>
+                <Button text="Logout" styleClass="logout-button"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <!-- Matches Section -->
+            <VBox styleClass="matches-section">
+                <Label text="Room Matches" styleClass="section-title"/>
+                <ScrollPane hbarPolicy="ALWAYS" vbarPolicy="NEVER" fitToHeight="true" fitToWidth="true">
+                    <HBox spacing="15" styleClass="movie-grid">
+                        <!-- Movie Cards -->
+                        <VBox alignment="CENTER" styleClass="movie-card">
+                            <ImageView fitWidth="100" fitHeight="120" styleClass="movie-poster">
+                                <Image url="https://cdn.builder.io/api/v1/image/assets/77557d1d41b3402088175639f97039a4/44dae5e83d6748d60196363d8dc32d46102f36e51e05acbc3b9ddbb3d0780b01?apiKey=77557d1d41b3402088175639f97039a4&amp;"/>
+                            </ImageView>
+                            <Label text="Venom: The Last Dance" styleClass="movie-title"/>
+                        </VBox>
+                        <!-- Repeat other cards similarly -->
+                    </HBox>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Likes Section -->
+            <VBox styleClass="likes-section">
+                <Label text="Your Likes" styleClass="section-title"/>
+                <ScrollPane hbarPolicy="ALWAYS" vbarPolicy="NEVER" fitToHeight="true" fitToWidth="true">
+                    <HBox spacing="15" styleClass="movie-grid">
+                        <!-- Movie Cards -->
+                        <VBox alignment="CENTER" styleClass="movie-card">
+                            <ImageView fitWidth="100" fitHeight="120" styleClass="movie-poster">
+                                <Image url="https://cdn.builder.io/api/v1/image/assets/77557d1d41b3402088175639f97039a4/44dae5e83d6748d60196363d8dc32d46102f36e51e05acbc3b9ddbb3d0780b01?apiKey=77557d1d41b3402088175639f97039a4&amp;"/>
+                            </ImageView>
+                            <Label text="Venom: The Last Dance" styleClass="movie-title"/>
+                        </VBox>
+                        <!-- Repeat other cards similarly -->
+                    </HBox>
+                </ScrollPane>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

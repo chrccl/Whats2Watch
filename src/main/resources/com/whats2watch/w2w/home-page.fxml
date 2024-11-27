@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.whats2watch.w2w.HelloController">
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">
+        <VBox fx:id="homeContainer" styleClass="home-container" alignment="CENTER">
+        <!-- Header with Title and Logout -->
+        <HBox fx:id="headerWrapper" styleClass="header-wrapper" alignment="CENTER">
+            <Label text="Whats2Watch" styleClass="site-title" />
+            <Button text="Logout" styleClass="logout-button" />
+        </HBox>
+
+        <!-- Rooms Section -->
+        <VBox fx:id="roomsSection" styleClass="rooms-section" alignment="TOP_CENTER">
+            <Label text="Recent Rooms" styleClass="section-title" />
+            <ScrollPane fx:id="roomScrollPaneRoomsSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
+                <HBox fx:id="roomGrid" styleClass="room-grid">
+                    <!-- Room Cards -->
+                    <VBox fx:id="roomCard" styleClass="room-card">
+                        <ImageView fx:id="roomImage" styleClass="room-image">
+                            <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+                        </ImageView>
+                        <Label text="Room's Name" styleClass="room-name" />
+                        <HBox fx:id="roomInfo" styleClass="room-info">
+                            <Label text="8 Members" styleClass="member-count" />
+                            <Pane styleClass="divider" />
+                            <Label text="Genres Room" styleClass="genre-label" />
+                        </HBox>
+                    </VBox>
+                </HBox >
+            </ScrollPane>
+        </VBox>
+
+        <!-- Genre Section -->
+        <VBox fx:id="genreSection" styleClass="genre-section" alignment="TOP_CENTER">
+            <Label text="Create Room per Genre" styleClass="section-title" />
+            <ScrollPane fx:id="roomScrollPaneGenreSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
+                <HBox fx:id="genreGrid" styleClass="genre-grid">
+                    <!-- Genre Cards -->
+                    <VBox fx:id="genreCard" styleClass="genre-card">
+                        <Label text="Horror Room" styleClass="genre-name" />
+                        <ImageView fx:id="genreIcon" styleClass="genre-icon">
+                            <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+                        </ImageView>
+                    </VBox>
+                </HBox>
+            </ScrollPane>
+        </VBox>
+
+        <!-- Leaderboard Section -->
+        <VBox fx:id="leaderboardSection" styleClass="leaderboard-section" alignment="TOP_CENTER">
+            <Label text="Leaderboard Action Movies" styleClass="section-title" />
+            <ScrollPane fx:id="roomScrollPaneLeaderboardSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
+                <HBox fx:id="leaderboardCard" styleClass="leaderboard-card">
+                    <!-- Movie Entries -->
+                    <HBox fx:id="movieEntry" styleClass="movie-entry">
+                        <VBox fx:id="movieInfo">
+                            <Label text="#1 - Mad Max: Fury Road" styleClass="movie-title" />
+                            <Label text="Set in a post-apocalyptic world..." styleClass="movie-description" />
+                        </VBox>
+                        <ImageView fx:id="moviePoster" styleClass="movie-poster" >
+                            <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+                        </ImageView>
+                    </HBox>
+                </HBox>
+            </ScrollPane>
+        </VBox>
+
+        <!-- Trending Section -->
+        <VBox fx:id="trendingSection" styleClass="trending-section" alignment="TOP_CENTER">
+            <Label text="Trending Movies" styleClass="section-title" />
+            <ScrollPane fx:id="roomScrollPaneTrendingSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
+                <HBox fx:id="trendingGrid">
+                    <!-- Trending Movies -->
+                    <VBox fx:id="trendingMovie" styleClass="trending-movie">
+                        <ImageView fx:id="trendingPoster" styleClass="trending-poster">
+                            <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+                        </ImageView>
+                        <Label text="Venom: The Last Dance" styleClass="trending-title" />
+                    </VBox>
+                </HBox>
+            </ScrollPane>
+        </VBox>
+
+        <!-- Call to Action Section -->
+        <VBox fx:id="ctaSection" styleClass="cta-section" alignment="CENTER">
+            <Label text="Do you think a film is missing? Request it now by clicking the button right here!" />
+            <Button text="Request Movie" styleClass="cta-button" />
+        </VBox>
+
+        <!-- Footer Divider -->
+        <Pane fx:id="footerDivider" styleClass="footer-divider" />
+
+        <!-- Navigation Bar -->
+        <HBox fx:id="navBar" styleClass="nav-bar">
+        </HBox>
+    </VBox>
+    </ScrollPane>
+</StackPane>

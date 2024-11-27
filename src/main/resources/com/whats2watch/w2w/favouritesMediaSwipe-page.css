@@ -1,0 +1,68 @@
+.movie-container {
+    -fx-background-color: #272727;
+    -fx-padding: 20 10;
+    -fx-font-family: "Noto Sans Hebrew", sans-serif;
+    -fx-font-weight: bold;
+    -fx-text-fill: #fff;
+}
+
+.header-wrapper {
+    -fx-spacing: 10;
+    -fx-text-fill: #fff;
+}
+
+.site-title {
+    -fx-font-size: 32px;
+    -fx-text-fill: #fff;
+
+}
+
+.logout-button {
+    -fx-background-color: #cb2000;
+    -fx-text-fill: #fff;
+    -fx-font-size: 18px;
+    -fx-padding: 10 15;
+    -fx-border-radius: 20px;
+    -fx-cursor: hand;
+}
+
+.matches-section, .likes-section {
+    -fx-background-color: #202020;
+    -fx-border-radius: 20px;
+    -fx-padding: 20;
+    -fx-spacing: 10;
+}
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+    -fx-background-color: #202020;
+    -fx-text-fill: #fff;
+
+}
+
+.movie-grid {
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-background-color: #202020;
+}
+
+.movie-card {
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-background-color: transparent;
+}
+
+.movie-poster {
+    -fx-effect: innershadow(gaussian, black, 5, 0, 0, 1);
+    -fx-border-radius: 10px;
+    -fx-fit-to-width: true;
+}
+
+.movie-title {
+    -fx-font-size: 16px;
+    -fx-text-alignment: center;
+    -fx-background-color: #272727;
+    -fx-text-fill: #fff;
+
+}

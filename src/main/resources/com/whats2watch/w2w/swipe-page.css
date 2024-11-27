@@ -1,0 +1,102 @@
+/* Global Styles */
+.home-container {
+    -fx-alignment: center;
+    -fx-spacing: 20;
+    -fx-padding: 20;
+    -fx-background-color: #272727;
+    -fx-text-fill: white;
+}
+
+/* Header Section */
+.home-header {
+    -fx-background-color: #202020;
+    -fx-pref-height: 80;
+    -fx-padding: 0 20;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+}
+
+.home-text1 {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.home-logout-btn {
+    -fx-background-color: #ca2000;
+    -fx-text-fill: white;
+    -fx-border-radius: 20;
+    -fx-pref-width: 100;
+    -fx-pref-height: 40;
+    -fx-alignment: center;
+}
+
+/* Proposed Media Section */
+.home-proposed-media {
+    -fx-pref-width: 600;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+    -fx-padding: 20 0;
+}
+
+.home-media-card {
+    -fx-background-color: white;
+    -fx-border-radius: 20;
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-pref-width: 400;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 4);
+}
+
+.home-media-card img {
+    -fx-fit-width: 100%;
+    -fx-max-height: 400;
+    -fx-object-fit: cover;
+    -fx-border-radius: 15;
+    -fx-margin-bottom: 15;
+}
+
+.home-text3 {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #272727;
+}
+
+/* Like and Dislike Buttons */
+.home-like-btn, .home-dislike-btn {
+    -fx-pref-width: 100;
+    -fx-pref-height: 50;
+    -fx-border-radius: 100;
+    -fx-alignment: center;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-background-color: #fff;
+    -fx-cursor: hand;
+    -fx-text-fill: #ca2000;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.image-view {
+    -fx-opacity: 1; /* Ensure visibility */
+    -fx-background-color: transparent; /* Avoid background overlay */
+}
+
+
+/* Navigation Bar */
+.home-navbar {
+    -fx-background-color: #202020;
+    -fx-pref-height: 80;
+    -fx-padding: 0 20;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+}
+
+.home-text4, .home-text5 {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.home-text5 {
+    -fx-text-fill: #ca2000;
+}

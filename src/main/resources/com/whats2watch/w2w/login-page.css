@@ -1,0 +1,71 @@
+/* Background Image */
+.background-image {
+    -fx-position: absolute;
+    -fx-fit-width: 100%;
+    -fx-fit-height: 100%;
+}
+
+/* Login Container */
+.login-container {
+    -fx-background-color: rgba(0, 0, 0, 0.85);
+    -fx-background-radius: 20;
+    -fx-padding: 20 25;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-max-width: 350;
+    -fx-text-fill: white;
+}
+
+/* Brand Title */
+.brand-title {
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* Welcome Text */
+.welcome-text {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+/* Form Group */
+.form-group {
+    -fx-spacing: 5;
+}
+
+/* Form Label */
+.form-label {
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* Form Input */
+.form-input {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-background-radius: 8;
+    -fx-border-color: transparent;
+    -fx-padding: 0 10;
+    -fx-font-size: 14;
+    -fx-pref-height: 35;
+}
+
+/* Register Prompt */
+.register-prompt {
+    -fx-font-size: 14;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+}
+
+/* Login Button */
+.login-button {
+    -fx-background-radius: 20;
+    -fx-background-color: #cb2000;
+    -fx-text-fill: white;
+    -fx-font-size: 16;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}

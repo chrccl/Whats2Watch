@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="app-container" alignment="CENTER" fx:controller="com.whats2watch.w2w.HelloController">
+    <!-- Header -->
+    <HBox fx:id="headerWrapper" styleClass="header-wrapper">
+        <Label text="Whats2Watch" styleClass="app-title" />
+        <Button text="Logout" styleClass="logout-button" />
+    </HBox>
+
+    <!-- Main Content -->
+    <HBox fx:id="mainContent" styleClass="main-content" alignment="TOP_CENTER">
+        <!-- Join Room Section -->
+        <VBox fx:id="joinRoomContainer" styleClass="room-container">
+            <Label text="Join a Room" styleClass="room-title" />
+            <Label text="Room Code" styleClass="input-label" />
+            <TextField fx:id="roomCodeField" styleClass="room-code-field" promptText="Enter room code" />
+            <Button text="Join" styleClass="room-button" />
+        </VBox>
+
+        <!-- Divider -->
+        <Pane fx:id="divider" styleClass="divider" />
+
+        <!-- Create Room Section -->
+        <VBox fx:id="createRoomContainer" styleClass="room-container">
+            <Label text="Create a Room" styleClass="room-title" />
+            <Label text="Genres" styleClass="input-label" />
+            <TextField fx:id="genresField" styleClass="input-field" promptText="Enter genres" />
+            <Label text="Year" styleClass="input-label" />
+            <TextField fx:id="yearField" styleClass="input-field" promptText="Enter year" />
+            <Button text="Create" styleClass="room-button" />
+        </VBox>
+    </HBox>
+
+    <!-- Navigation Section -->
+    <VBox fx:id="navigationContainer" styleClass="navigation-container">
+    </VBox>
+</VBox>

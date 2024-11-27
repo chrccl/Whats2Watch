@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="profile-container" alignment="CENTER">
+    <!-- Header Section -->
+    <HBox fx:id="headerWrapper" styleClass="header-wrapper">
+        <Label text="Whats2Watch" styleClass="app-title" />
+        <Button text="Logout" styleClass="logout-button" />
+    </HBox>
+
+    <!-- Main Content Section -->
+    <VBox fx:id="profileContent" styleClass="profile-content">
+        <HBox fx:id="contentWrapper" styleClass="content-wrapper" spacing="20">
+            <!-- Profile Info Section -->
+            <VBox fx:id="profileInfo" styleClass="profile-info">
+                <StackPane fx:id="profileImage" styleClass="profile-image">
+                    <ImageView fx:id="profileImageView" fitWidth="150" fitHeight="150" preserveRatio="true">
+                        <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+                    </ImageView>
+                </StackPane>
+                <Label text="Name Surname" styleClass="user-name" />
+                <VBox fx:id="userDetails" styleClass="user-details">
+                    <GridPane fx:id="detailsGrid" styleClass="details-grid">
+                        <Label text="Email:" styleClass="genre-tags"/>
+                        <Label text="user.email@example.com" styleClass="genre-tags"/>
+                        <Label text="Password:" styleClass="genre-tags"/>
+                        <Label text="*******************" styleClass="genre-tags"/>
+                    </GridPane>
+                </VBox>
+            </VBox>
+
+            <!-- Favorites Section -->
+            <VBox fx:id="favoritesSection" styleClass="favorites-section">
+                <HBox fx:id="sectionHeader" styleClass="section-header">
+                    <Label text="Your Favourite Movies" />
+                </HBox>
+                <FlowPane fx:id="moviesGrid" styleClass="movies-grid">
+                    <!-- Movie Card -->
+                    <VBox fx:id="movieCard" styleClass="movie-card">
+                        <ImageView fx:id="movieImage" styleClass="movie-image" fitWidth="120" fitHeight="180">
+                            <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
+                        </ImageView>
+                        <Label text="Venom" />
+                    </VBox>
+                    <!-- Add more movie cards here -->
+                </FlowPane>
+
+                <!-- Genres Section -->
+                <VBox fx:id="genresSection" styleClass="genres-section">
+                    <Label text="Your Favourite Genres" />
+                    <FlowPane fx:id="genreTags" styleClass="genre-tags">
+                        <Label text="Horror" styleClass="genre-tag" />
+                        <Label text="Fantasy" styleClass="genre-tag" />
+                    </FlowPane>
+                </VBox>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <!-- Navigation Section -->
+    <HBox fx:id="navigation" styleClass="navigation">
+    </HBox>
+</VBox>

@@ -1,0 +1,96 @@
+/* Root Styling */
+.app-container {
+    -fx-padding: 20 15;
+    -fx-alignment: center;
+    -fx-font-family: 'Noto Sans Hebrew', sans-serif;
+    -fx-background-color: #272727;
+    -fx-text-fill: #fff;
+}
+
+/* Header Styling */
+.header-wrapper {
+    -fx-spacing: 20;
+    -fx-alignment: center;
+    -fx-padding: 10;
+}
+
+.app-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.logout-button {
+    -fx-background-color: #cb2000;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 15;
+    -fx-border-radius: 25;
+}
+
+/* Main Content */
+.main-content {
+    -fx-spacing: 20;
+    -fx-padding: 30 0;
+}
+
+.room-container {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 4, 0, 0, 4);
+    -fx-alignment: top-center;
+}
+
+.room-title {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.input-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-margin-top: 10px;
+}
+
+.input-field,
+.room-code-field {
+    -fx-background-color: rgba(255, 255, 255, 0.45);
+    -fx-text-fill: white;
+    -fx-border-radius: 8;
+    -fx-padding: 0 10;
+    -fx-font-size: 14px;
+    -fx-pref-height: 35;
+}
+
+.room-button {
+    -fx-background-color: #cb2000;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 0;
+    -fx-border-radius: 20;
+    -fx-alignment: center;
+    -fx-margin-top: 10;
+}
+
+/* Divider Styling */
+.divider {
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-pref-width: 1;
+}
+
+/* Navigation Section */
+.navigation-container {
+    -fx-background-color: rgba(0, 0, 0, 0.9);
+    -fx-padding: 23 80;
+    -fx-alignment: center;
+}
+
+.navigation-logo {
+    -fx-fit-width: 626;
+    -fx-preserve-ratio: true;
+    -fx-alignment: center;
+}
