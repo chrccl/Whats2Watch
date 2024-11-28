@@ -6,7 +6,7 @@ public class TVSeries extends Media{
 
     private Integer numberOfSeasons;
 
-    private TVSeries(Builder builder) {
+    private TVSeries(MediaBuilder builder) {
         super(builder);
         this.numberOfSeasons = builder.numberOfSeasons;
     }
@@ -32,16 +32,16 @@ public class TVSeries extends Media{
         return result;
     }
 
-    public static class Builder extends Media.Builder<Builder> {
+    public static class MediaBuilder extends Media.MediaBuilder<MediaBuilder> {
         private Integer numberOfSeasons;
 
-        public Builder seasons(Integer numberOfSeasons) {
+        public MediaBuilder seasons(Integer numberOfSeasons) {
             this.numberOfSeasons = numberOfSeasons;
             return this;
         }
 
         @Override
-        protected Builder self() {
+        protected MediaBuilder self() {
             return this;
         }
 

@@ -27,7 +27,7 @@ public abstract class Media {
 
     protected Set<WatchProvider> watchProviders;
 
-    protected Media(Builder<?> builder) {
+    protected Media(MediaBuilder<?> builder) {
         this.title = builder.title;
         this.plot = builder.plot;
         this.posterUrl = builder.posterUrl;
@@ -141,7 +141,7 @@ public abstract class Media {
         return Objects.hash(title, year);
     }
 
-    public abstract static class Builder<T extends Builder<T>> {
+    public abstract static class MediaBuilder<T extends MediaBuilder<T>>{
         protected String title;
         protected String plot;
         protected String posterUrl;
@@ -208,7 +208,6 @@ public abstract class Media {
             this.watchProviders = watchProviders;
             return self();
         }
-
 
         protected abstract T self();
 

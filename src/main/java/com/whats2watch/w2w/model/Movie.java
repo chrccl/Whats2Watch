@@ -6,7 +6,7 @@ public class Movie extends Media{
 
     private String director;
 
-    private Movie(Builder builder) {
+    private Movie(MediaBuilder builder) {
         super(builder);
         this.director = builder.director;
     }
@@ -32,11 +32,11 @@ public class Movie extends Media{
         return result;
     }
 
-    public static class Builder extends Media.Builder<Builder> {
+    public static class MediaBuilder extends Media.MediaBuilder<MediaBuilder> {
         private String director;
 
         @Override
-        protected Builder self() {
+        protected MediaBuilder self() {
             return this;
         }
 

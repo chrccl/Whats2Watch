@@ -6,13 +6,12 @@ public class MediaFactory {
         throw new UnsupportedOperationException("MediaFactory is a utility class and cannot be instantiated.");
     }
 
-    public static <T extends Media> Media.Builder createInstance(Class<T> mediaClass) {
-        if (mediaClass == Movie.class) {
-            return new Movie.Builder();
-        } else if (mediaClass == TVSeries.class) {
-            return new TVSeries.Builder();
-        } else {
-            throw new IllegalArgumentException("Unsupported media type: " + mediaClass.getSimpleName());
-        }
+    public static <T extends Media> Movie.MediaBuilder createMovieInstance(Class<T> mediaClass) {
+        return new Movie.MediaBuilder();
     }
+
+    public static <T extends Media> TVSeries.MediaBuilder createTVSeriesInstance(Class<T> mediaClass) {
+        return new TVSeries.MediaBuilder();
+    }
+
 }
