@@ -141,7 +141,7 @@ public abstract class Media {
         return Objects.hash(title, year);
     }
 
-    public static abstract class Builder<T extends Builder<T>> {
+    public abstract static class Builder<T extends Builder<T>> {
         protected String title;
         protected String plot;
         protected String posterUrl;
