@@ -1,5 +1,6 @@
 package com.whats2watch.w2w.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class TVSerie extends Media{
@@ -23,4 +24,16 @@ public class TVSerie extends Media{
         this.numberOfSeasons = numberOfSeasons;
     }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof TVSerie)) return false;
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Objects.hashCode(getNumberOfSeasons());
+        return result;
+    }
 }

@@ -1,5 +1,6 @@
 package com.whats2watch.w2w.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Movie extends Media{
@@ -22,4 +23,16 @@ public class Movie extends Media{
         this.director = director;
     }
 
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Movie)) return false;
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Objects.hashCode(getDirector());
+        return result;
+    }
 }
