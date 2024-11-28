@@ -27,7 +27,7 @@ public abstract class Media {
 
     protected Set<WatchProvider> watchProviders;
 
-    public Media(String title, String plot, String posterUrl, String videoUrl, Double popularity, Double voteAverage,
+    protected Media(String title, String plot, String posterUrl, String videoUrl, Double popularity, Double voteAverage,
                  Integer year, Set<Character> characters, Set<String> genres,
                  Set<ProductionCompany> productionCompanies, Set<WatchProvider> watchProviders) {
         this.title = title;
