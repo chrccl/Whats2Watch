@@ -27,20 +27,18 @@ public abstract class Media {
 
     protected Set<WatchProvider> watchProviders;
 
-    protected Media(String title, String plot, String posterUrl, String videoUrl, Double popularity, Double voteAverage,
-                 Integer year, Set<Character> characters, Set<String> genres,
-                 Set<ProductionCompany> productionCompanies, Set<WatchProvider> watchProviders) {
-        this.title = title;
-        this.plot = plot;
-        this.posterUrl = posterUrl;
-        this.videoUrl = videoUrl;
-        this.popularity = popularity;
-        this.voteAverage = voteAverage;
-        this.year = year;
-        this.characters = characters;
-        this.genres = genres;
-        this.productionCompanies = productionCompanies;
-        this.watchProviders = watchProviders;
+    protected Media(Builder<?> builder) {
+        this.title = builder.title;
+        this.plot = builder.plot;
+        this.posterUrl = builder.posterUrl;
+        this.videoUrl = builder.videoUrl;
+        this.popularity = builder.popularity;
+        this.voteAverage = builder.voteAverage;
+        this.year = builder.year;
+        this.characters = builder.characters;
+        this.genres = builder.genres;
+        this.productionCompanies = builder.productionCompanies;
+        this.watchProviders = builder.watchProviders;
     }
 
     public String getTitle() {
@@ -141,5 +139,85 @@ public abstract class Media {
     @Override
     public int hashCode() {
         return Objects.hash(title, year);
+    }
+
+    public static abstract class Builder<T extends Builder<T>> {
+        protected String title;
+        protected String plot;
+        protected String posterUrl;
+        protected String videoUrl;
+        protected Double popularity;
+        protected Double voteAverage;
+        protected Integer year;
+        protected Set<Character> characters = Set.of();
+        protected Set<String> genres = Set.of();
+        protected Set<ProductionCompany> productionCompanies = Set.of();
+        protected Set<WatchProvider> watchProviders = Set.of();
+
+        public T title(String title) {
+            this.title = title;
+            return self();
+        }
+
+        public T plot(String plot) {
+            this.plot = plot;
+            return self();
+        }
+
+        public T posterUrl(String posterUrl) {
+            this.posterUrl = posterUrl;
+            return self();
+        }
+
+        public T videoUrl(String videoUrl) {
+            this.videoUrl = videoUrl;
+            return self();
+        }
+
+        public T popularity(Double popularity) {
+            this.popularity = popularity;
+            return self();
+        }
+
+        public T voteAverage(Double voteAverage) {
+            this.voteAverage = voteAverage;
+            return self();
+        }
+
+        public T year(Integer year) {
+            this.year = year;
+            return self();
+        }
+
+        public T characters(Set<Character> characters) {
+            this.characters = characters;
+            return self();
+        }
+
+        public T genres(Set<String> genres) {
+            this.genres = genres;
+            return self();
+        }
+
+        public T productionCompanies(Set<ProductionCompany> productionCompanies) {
+            this.productionCompanies = productionCompanies;
+            return self();
+        }
+
+        public T watchProviders(Set<WatchProvider> watchProviders) {
+            this.watchProviders = watchProviders;
+            return self();
+        }
+
+
+        protected abstract T self();
+
+        public abstract Media build();
+
+        protected void validate() {
+            if (title == null || year == null) {
+                throw new IllegalStateException("Title and year are required fields.");
+            }
+        }
     }
 }
