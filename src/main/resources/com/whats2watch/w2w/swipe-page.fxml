@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" styleClass="home-container" fx:controller="com.whats2watch.w2w.HelloController">
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="home-container">
 
     <!-- Header Section -->
     <HBox fx:id="homeHeader" styleClass="home-header">

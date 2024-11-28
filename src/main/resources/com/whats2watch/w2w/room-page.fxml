@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" styleClass="app-container" alignment="CENTER" fx:controller="com.whats2watch.w2w.HelloController">
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="app-container" alignment="CENTER">
     <!-- Header -->
     <HBox fx:id="headerWrapper" styleClass="header-wrapper">
         <Label text="Whats2Watch" styleClass="app-title" />
