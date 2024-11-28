@@ -6,11 +6,11 @@ public class MediaFactory {
         throw new UnsupportedOperationException("MediaFactory is a utility class and cannot be instantiated.");
     }
 
-    public static <T extends Media> Movie.MediaBuilder createMovieInstance(Class<T> mediaClass) {
+    public static Movie.MediaBuilder createMovieInstance() {
         return new Movie.MediaBuilder();
     }
 
-    public static <T extends Media> TVSeries.MediaBuilder createTVSeriesInstance(Class<T> mediaClass) {
+    public static TVSeries.MediaBuilder createTVSeriesInstance() {
         return new TVSeries.MediaBuilder();
     }
 
