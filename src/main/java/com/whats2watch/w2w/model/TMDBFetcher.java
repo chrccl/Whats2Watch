@@ -1,5 +1,6 @@
 package com.whats2watch.w2w.model;
 
+import com.whats2watch.w2w.config.Config;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,8 +14,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TMDBFetcher {
-    private static final String API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZjY4MTU5NjlmOGNkZjllMWNiYzRiZDU1YTk5MGRlYSIsIm5iZiI6MTczMDEzMzU0OS4zMjIzNTcsInN1YiI6IjY3MTY2YTlmNGJmMzdjODgzY2I3MjBlYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.AyXTT2E_LYX2z72RkgPX7jzIWOQgs7k-6J-17J86iyc";
+    private static final String RESULTS = "results";
+    private static final String UNKNOWN = "unknown";
     private static final String BASE_URL = "https://api.themoviedb.org/3";
+    private static final String API_KEY = Config.loadTMDBApiKey();
 
     private final HttpClient httpClient;
 
@@ -24,10 +27,9 @@ public class TMDBFetcher {
 
     public List<Movie> fetchTopMovies(int year) throws URISyntaxException, IOException, InterruptedException {
         List<Movie> movies = new ArrayList<>();
-
         for (int page = 1; page <= 25; page++) {  // 20 movies per page, 25 pages for 500 movies
-            String url = String.format("%s/discover/movie?api_key=%s&sort_by=popularity.desc&primary_release_year=%d&page=%d",
-                    BASE_URL, API_KEY, year, page);
+            String url = String.format("%s/discover/movie?sort_by=popularity.desc&primary_release_year=%d&page=%d",
+                    BASE_URL, year, page);
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .GET()
@@ -35,12 +37,11 @@ public class TMDBFetcher {
                     .setHeader("Authorization", "Bearer " + API_KEY)
                     .build();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            JSONArray results = new JSONObject(response.body()).getJSONArray("results");
+            JSONArray results = new JSONObject(response.body()).getJSONArray(RESULTS);
 
             for (int i = 0; i < results.length(); i++) {
                 int movieId = results.getJSONObject(i).getInt("id");
                 Movie movie = fetchMovieDetails(movieId, year);
-                System.out.println(movie);
                 movies.add(movie);
             }
         }
@@ -49,8 +50,7 @@ public class TMDBFetcher {
     }
 
     private Movie fetchMovieDetails(int movieId, int year) throws URISyntaxException, IOException, InterruptedException {
-        String url = String.format("%s/movie/%d?api_key=%s&append_to_response=credits,watch/providers,videos",
-                BASE_URL, movieId, API_KEY);
+        String url = String.format("%s/movie/%d?append_to_response=credits,watch/providers,videos", BASE_URL, movieId);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(url))
                 .GET()
@@ -82,7 +82,7 @@ public class TMDBFetcher {
     }
 
     private String parseTrailerUrl(JSONObject json) {
-        JSONArray videos = json.optJSONObject("videos").optJSONArray("results");
+        JSONArray videos = json.optJSONObject("videos").optJSONArray(RESULTS);
         if (videos != null) {
             for (int i = 0; i < videos.length(); i++) {
                 JSONObject video = videos.getJSONObject(i);
@@ -119,29 +119,43 @@ public class TMDBFetcher {
 
     private Set<WatchProvider> parseWatchProviders(JSONObject json) {
         Set<WatchProvider> providers = new HashSet<>();
-        String baseUrl = "https://image.tmdb.org/t/p/w500/";
-        JSONObject watchProviders = json.optJSONObject("watch/providers").optJSONObject("results");
-        if (watchProviders != null && watchProviders.has("US")) { // Example: focus on US providers
-            JSONArray streamingOptions = watchProviders.getJSONObject("US").optJSONArray("flatrate");
+        JSONObject watchProviders = getWatchProvidersForRegion(json);
+        if (watchProviders != null) {
+            JSONArray streamingOptions = watchProviders.optJSONArray("flatrate");
             if (streamingOptions != null) {
-                for (int i = 0; i < streamingOptions.length(); i++) {
-                    JSONObject provider = streamingOptions.getJSONObject(i);
-                    String providerName = provider.getString("provider_name").toLowerCase();
-
-                    // Filter only popular streaming providers
-                    if (providerName.contains("netflix") || providerName.contains("disney") ||
-                            providerName.contains("prime") || providerName.contains("hulu") ||
-                            providerName.contains("hbo") || providerName.contains("apple tv")) {
-                        String logoPath = provider.optString("logo_path", "");
-                        String logoUrl = logoPath.isEmpty() ? "" : baseUrl + logoPath;
-                        providers.add(new WatchProvider(provider.getString("provider_name"), logoUrl));
-                    }
-                }
+                extractStreamingProviders(streamingOptions, providers);
             }
         }
         return providers;
     }
 
+    private JSONObject getWatchProvidersForRegion(JSONObject json) {
+        JSONObject watchProviders = json.optJSONObject("watch/providers").optJSONObject(RESULTS);
+        return (watchProviders != null && watchProviders.has("US")) ? watchProviders.getJSONObject("US") : null;
+    }
+
+    private void extractStreamingProviders(JSONArray streamingOptions, Set<WatchProvider> providers) {
+        String baseUrl = "https://image.tmdb.org/t/p/w500/";
+        Set<String> popularProviders = Set.of("netflix", "disney", "prime", "hulu", "hbo", "apple tv");
+
+        for (int i = 0; i < streamingOptions.length(); i++) {
+            JSONObject provider = streamingOptions.getJSONObject(i);
+            String providerName = provider.getString("provider_name").toLowerCase();
+
+            if (isPopularProvider(providerName, popularProviders)) {
+                String logoUrl = buildLogoUrl(provider.optString("logo_path", ""), baseUrl);
+                providers.add(new WatchProvider(provider.getString("provider_name"), logoUrl));
+            }
+        }
+    }
+
+    private boolean isPopularProvider(String providerName, Set<String> popularProviders) {
+        return popularProviders.stream().anyMatch(providerName::contains);
+    }
+
+    private String buildLogoUrl(String logoPath, String baseUrl) {
+        return logoPath.isEmpty() ? "" : baseUrl + logoPath;
+    }
 
     private String parseDirector(JSONArray crewJson) {
         for (int i = 0; i < crewJson.length(); i++) {
@@ -150,7 +164,7 @@ public class TMDBFetcher {
                 return crewMember.getString("name");
             }
         }
-        return "Unknown";
+        return UNKNOWN;
     }
 
     private Set<Character> parseCharacters(JSONArray castJson) {
@@ -163,8 +177,8 @@ public class TMDBFetcher {
         });
         for (int i = 0; i < castJson.length(); i++) {
             JSONObject castMember = castJson.getJSONObject(i);
-            String characterName = castMember.optString("character", "Unknown");
-            String actorName = castMember.optString("name", "Unknown");
+            String characterName = castMember.optString("character", UNKNOWN);
+            String actorName = castMember.optString("name", UNKNOWN);
             double popularity = castMember.optDouble("popularity", 0.0);
             int genderIndex = castMember.optInt("gender", 0);
             Gender gender = (genderIndex > 2 || genderIndex < 0) ? Gender.UNKNOWN : Gender.values()[genderIndex];
