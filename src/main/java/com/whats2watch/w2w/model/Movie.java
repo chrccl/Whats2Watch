@@ -32,8 +32,31 @@ public class Movie extends Media{
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "title='" + title + '\'' +
+                ", plot='" + plot + '\'' +
+                ", year=" + year +
+                ", genres=" + genres +
+                ", characters=" + characters +
+                ", director='" + director + '\'' +
+                ", productionCompanies=" + productionCompanies +
+                ", watchProviders=" + watchProviders +
+                ", popularity=" + popularity +
+                ", voteAverage=" + voteAverage +
+                ", posterUrl='" + posterUrl + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
+                '}';
+    }
+
     public static class MediaBuilder extends Media.MediaBuilder<MediaBuilder> {
         private String director;
+
+        public MediaBuilder director(String director) {
+            this.director = director;
+            return this;
+        }
 
         @Override
         protected MediaBuilder self() {
