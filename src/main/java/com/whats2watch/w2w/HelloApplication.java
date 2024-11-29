@@ -1,15 +1,12 @@
 package com.whats2watch.w2w;
 
-import com.whats2watch.w2w.model.Gender;
-import com.whats2watch.w2w.model.Movie;
-import com.whats2watch.w2w.model.TMDBFetcher;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
+
 import java.util.Objects;
 
 public class HelloApplication extends Application {
@@ -29,15 +26,6 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        TMDBFetcher tmdb = new TMDBFetcher();
-        try {
-            List<Movie> movies = tmdb.fetchTopMovies(2024);
-            for (Movie movie : movies) {
-                System.out.println(movie);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        //launch();
+        launch();
     }
 }
