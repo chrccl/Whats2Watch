@@ -1,10 +1,11 @@
 package com.whats2watch.w2w.model;
 
-import com.whats2watch.w2w.model.exceptions.TMDBFetchException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -21,7 +22,7 @@ public class TMDBFetcher {
         this.httpClient = HttpClient.newHttpClient();
     }
 
-    public List<Movie> fetchTopMovies(int year) throws TMDBFetchException {
+    public List<Movie> fetchTopMovies(int year) throws URISyntaxException, IOException, InterruptedException {
         List<Movie> movies = new ArrayList<>();
 
         for (int page = 1; page <= 25; page++) {  // 20 movies per page, 25 pages for 500 movies
@@ -47,7 +48,7 @@ public class TMDBFetcher {
         return movies;
     }
 
-    private Movie fetchMovieDetails(int movieId, int year) throws TMDBFetchException {
+    private Movie fetchMovieDetails(int movieId, int year) throws URISyntaxException, IOException, InterruptedException {
         String url = String.format("%s/movie/%d?api_key=%s&append_to_response=credits,watch/providers,videos",
                 BASE_URL, movieId, API_KEY);
         HttpRequest request = HttpRequest.newBuilder()
