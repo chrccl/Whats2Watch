@@ -6,6 +6,8 @@ module com.whats2watch.w2w {
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.net.http;
+    requires org.json;
 
     opens com.whats2watch.w2w to javafx.fxml;
     exports com.whats2watch.w2w;
