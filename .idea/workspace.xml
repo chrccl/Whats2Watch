@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="" />
+    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/TMDBFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/TMDBFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/exceptions/TMDBFetchException.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,8 +58,7 @@
     "Application.HelloApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -68,9 +70,6 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch\src\main\resources" />
-      <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch\src\main\resources\com\whats2watch\w2w\config" />
-      <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch\src\main\resources\com\whats2watch\w2w" />
       <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch" />
     </key>
   </component>
@@ -93,9 +92,7 @@
       <workItem from="1732725495489" duration="7819000" />
       <workItem from="1732798960087" duration="63000" />
       <workItem from="1732805654989" duration="182000" />
-      <workItem from="1732893663059" duration="10059000" />
-      <workItem from="1732904990843" duration="95000" />
-      <workItem from="1732905098572" duration="1468000" />
+      <workItem from="1732893663059" duration="6671000" />
     </task>
     <servers />
   </component>
