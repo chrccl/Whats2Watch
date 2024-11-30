@@ -8,14 +8,6 @@ import java.util.List;
 
 public class TVSeriesTMDBFetcher extends MediaTMDBFetcher<TVSeries> {
 
-    private static TVSeriesTMDBFetcher INSTANCE;
-
-    private TVSeriesTMDBFetcher() { }
-
-    public synchronized static TVSeriesTMDBFetcher getInstance() {
-        return INSTANCE == null ? new TVSeriesTMDBFetcher() : INSTANCE;
-    }
-
     public List<TVSeries> fetchTopTVSeries(int year) throws URISyntaxException, IOException, InterruptedException {
         return fetchTopMedia(year, "tv");
     }

@@ -9,14 +9,6 @@ import java.util.List;
 
 public class MovieTMDBFetcher extends MediaTMDBFetcher<Movie> {
 
-    private static MovieTMDBFetcher INSTANCE;
-
-    private MovieTMDBFetcher() {}
-
-    public synchronized static MovieTMDBFetcher getInstance() {
-        return INSTANCE == null ? INSTANCE = new MovieTMDBFetcher() : INSTANCE;
-    }
-
     public List<Movie> fetchTopMovies(int year) throws URISyntaxException, IOException, InterruptedException {
         return fetchTopMedia(year, "movie");
     }

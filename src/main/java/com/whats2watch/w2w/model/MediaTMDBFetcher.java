@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public abstract class MediaTMDBFetcher<T extends Media> {
     private static final String BASE_URL = "https://api.themoviedb.org/3";
     private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/";
+    private static final String RESULTS = "results";
     private static final String API_KEY = Config.loadTMDBApiKey();
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -32,13 +33,11 @@ public abstract class MediaTMDBFetcher<T extends Media> {
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            JSONArray results = new JSONObject(response.body()).getJSONArray("results");
+            JSONArray results = new JSONObject(response.body()).getJSONArray(RESULTS);
 
             for (int i = 0; i < results.length(); i++) {
                 int mediaId = results.getJSONObject(i).getInt("id");
-                T media = fetchMediaDetails(mediaId, year, mediaType);
-                System.out.println(media);
-                mediaList.add(media);
+                mediaList.add(fetchMediaDetails(mediaId, year, mediaType));
             }
         }
         return mediaList;
@@ -114,7 +113,7 @@ public abstract class MediaTMDBFetcher<T extends Media> {
     }
 
     protected String parseTrailerUrl(JSONObject json) {
-        JSONArray videos = json.optJSONObject("videos").optJSONArray("results");
+        JSONArray videos = json.optJSONObject("videos").optJSONArray(RESULTS);
         if (videos != null) {
             for (int i = 0; i < videos.length(); i++) {
                 JSONObject video = videos.getJSONObject(i);
@@ -127,7 +126,7 @@ public abstract class MediaTMDBFetcher<T extends Media> {
     }
 
     private JSONObject getWatchProvidersForRegion(JSONObject json) {
-        JSONObject watchProviders = json.optJSONObject("watch/providers").optJSONObject("results");
+        JSONObject watchProviders = json.optJSONObject("watch/providers").optJSONObject(RESULTS);
         return (watchProviders != null && watchProviders.has("US")) ? watchProviders.getJSONObject("US") : null;
     }
 
