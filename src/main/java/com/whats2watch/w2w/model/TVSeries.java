@@ -6,9 +6,12 @@ public class TVSeries extends Media{
 
     private Integer numberOfSeasons;
 
+    private Integer numberOfEpisodes;
+
     private TVSeries(MediaBuilder builder) {
         super(builder);
         this.numberOfSeasons = builder.numberOfSeasons;
+        this.numberOfEpisodes = builder.numberOfEpisodes;
     }
 
     public Integer getNumberOfSeasons() {
@@ -17,6 +20,14 @@ public class TVSeries extends Media{
 
     public void setNumberOfSeasons(Integer numberOfSeasons) {
         this.numberOfSeasons = numberOfSeasons;
+    }
+
+    public Integer getNumberOfEpisodes() {
+        return numberOfEpisodes;
+    }
+
+    public void setNumberOfEpisodes(Integer numberOfEpisodes) {
+        this.numberOfEpisodes = numberOfEpisodes;
     }
 
     @Override
@@ -32,11 +43,42 @@ public class TVSeries extends Media{
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "TVSeries{" +
+                "title='" + title + '\'' +
+                ", plot='" + plot + '\'' +
+                ", year=" + year +
+                ", genres=" + genres +
+                ", numberOfSeasons=" + numberOfSeasons +
+                ", numberOfEpisodes=" + numberOfEpisodes +
+                ", watchProviders=" + watchProviders +
+                ", characters=" + characters +
+                ", productionCompanies=" + productionCompanies +
+                ", popularity=" + popularity +
+                ", voteAverage=" + voteAverage +
+                ", posterUrl='" + posterUrl + '\'' +
+                ", videoUrl='" + videoUrl + '\'' +
+                '}';
+    }
+
     public static class MediaBuilder extends Media.MediaBuilder<MediaBuilder> {
         private Integer numberOfSeasons;
+        private Integer numberOfEpisodes;
 
-        public MediaBuilder seasons(Integer numberOfSeasons) {
+        public MediaBuilder seasons(Integer numberOfSeasons, Integer numberOfEpisodes) {
             this.numberOfSeasons = numberOfSeasons;
+            this.numberOfEpisodes = numberOfEpisodes;
+            return this;
+        }
+
+        public MediaBuilder numberOfSeasons(Integer numberOfSeasons) {
+            this.numberOfSeasons = numberOfSeasons;
+            return this;
+        }
+
+        public MediaBuilder numberOfEpisodes(Integer numberOfEpisodes) {
+            this.numberOfEpisodes = numberOfEpisodes;
             return this;
         }
 
