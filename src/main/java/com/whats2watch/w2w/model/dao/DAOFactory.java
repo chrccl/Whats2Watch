@@ -1,6 +1,11 @@
 package com.whats2watch.w2w.model.dao;
 
 public class DAOFactory {
+
+    private DAOFactory() {
+        throw new UnsupportedOperationException("DAOFactory is a utility class and cannot be instantiated.");
+    }
+
     public static <T> GenericDAO<T> getDAO(Class<T> clazz, PersistanceType type) {
         switch (type) {
             case DATABASE:
