@@ -21,7 +21,7 @@ public abstract class Media {
 
     protected Set<Character> characters;
 
-    protected Set<String> genres;
+    protected Set<Genre> genres;
 
     protected Set<ProductionCompany> productionCompanies;
 
@@ -105,11 +105,11 @@ public abstract class Media {
         this.characters = characters;
     }
 
-    public Set<String> getGenres() {
+    public Set<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(Set<String> genres) {
+    public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
 
@@ -150,7 +150,7 @@ public abstract class Media {
         protected Double voteAverage;
         protected Integer year;
         protected Set<Character> characters = Set.of();
-        protected Set<String> genres = Set.of();
+        protected Set<Genre> genres = Set.of();
         protected Set<ProductionCompany> productionCompanies = Set.of();
         protected Set<WatchProvider> watchProviders = Set.of();
 
@@ -194,7 +194,7 @@ public abstract class Media {
             return self();
         }
 
-        public T genres(Set<String> genres) {
+        public T genres(Set<Genre> genres) {
             this.genres = genres;
             return self();
         }

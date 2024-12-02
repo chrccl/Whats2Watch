@@ -60,10 +60,10 @@ public abstract class MediaTMDBFetcher<T extends Media> {
     }
 
 
-    protected Set<String> parseGenres(JSONArray genresJson) {
-        Set<String> genres = new HashSet<>();
+    protected Set<Genre> parseGenres(JSONArray genresJson) {
+        Set<Genre> genres = new HashSet<>();
         for (int i = 0; i < genresJson.length(); i++) {
-            genres.add(genresJson.getJSONObject(i).getString("name"));
+            genres.add(Genre.of(genresJson.getJSONObject(i).getString("name")));
         }
         return genres;
     }
