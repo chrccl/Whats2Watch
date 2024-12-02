@@ -1,5 +1,6 @@
 package com.whats2watch.w2w.model;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,10 +12,10 @@ public class RoomMember {
 
     private Set<Media> passedMedia;
 
-    public RoomMember(User user, Set<Media> likedMedia, Set<Media> passedMedia) {
+    public RoomMember(User user) {
         this.user = user;
-        this.likedMedia = likedMedia;
-        this.passedMedia = passedMedia;
+        this.likedMedia = new HashSet<>();
+        this.passedMedia = new HashSet<>();
     }
 
     public User getUser() {
