@@ -1,15 +1,17 @@
 package com.whats2watch.w2w.model.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.whats2watch.w2w.annotations.PrimaryKey;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class FileSystemDAO<T> implements GenericDAO<T> {
+public class FileSystemDAO<T> implements DAO<T> {
+
     private final String baseDirectory;
     private final ObjectMapper objectMapper;
     private final Class<T> type;
@@ -22,84 +24,112 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
 
     @Override
     public Boolean save(T entity) throws DAOException {
-        try {
-            String fileName = getFileName();
-            File file = new File(baseDirectory + fileName);
-            List<T> entities = file.exists() ? readEntitiesFromFile(file) : new ArrayList<>();
-
-            entities.add(entity);
-            objectMapper.writeValue(file, entities);
-            return true;
-        } catch (IOException e) {
-            throw new DAOException("Error saving entity to file system", e);
-        }
+        List<T> entities = readEntities();
+        entities.add(entity);
+        writeEntities(entities);
+        return true;
     }
 
     @Override
-    public T findById(Map<String, Object> compositeKey) throws DAOException {
-        try {
-            String fileName = getFileName();
-            File file = new File(baseDirectory + fileName);
-
-            if (!file.exists()) {
-                throw new EntityNotFoundException("Entity file not found: " + fileName);
-            }
-
-            List<T> entities = readEntitiesFromFile(file);
-            return entities.stream()
-                    .filter(entity -> matchesCompositeKey(entity, compositeKey))
-                    .findFirst()
-                    .orElseThrow(() -> new EntityNotFoundException("Entity not found for given key: " + compositeKey));
-        } catch (IOException e) {
-            throw new DAOException("Error reading from file system", e);
-        }
+    public T findById(T entityId) throws DAOException {
+        List<T> entities = readEntities();
+        Map<String, Object> compositeKey = getCompositeKey(entityId);
+        return entities.stream()
+                .filter(e -> matchesCompositeKey(e, compositeKey))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + compositeKey));
     }
 
     @Override
-    public Boolean delete(Map<String, Object> compositeKey) throws DAOException {
-        try {
-            String fileName = getFileName();
-            File file = new File(baseDirectory + fileName);
+    public Boolean deleteById(T entityId) throws DAOException {
+        List<T> entities = readEntities();
+        Map<String, Object> compositeKey = getCompositeKey(entityId);
+        boolean removed = entities.removeIf(e -> matchesCompositeKey(e, compositeKey));
+        if (removed) {
+            writeEntities(entities);
+        }
+        return removed;
+    }
 
-            if (!file.exists()) {
-                throw new EntityNotFoundException("Entity file not found: " + fileName);
-            }
+    @Override
+    public Boolean updateById(T entityId) throws DAOException {
+        List<T> entities = readEntities();
+        Map<String, Object> compositeKey = getCompositeKey(entityId);
 
-            List<T> entities = readEntitiesFromFile(file);
-            List<T> filteredEntities = entities.stream()
-                    .filter(entity -> !matchesCompositeKey(entity, compositeKey))
-                    .collect(Collectors.toList());
-
-            if (filteredEntities.size() < entities.size()) {
-                objectMapper.writeValue(file, filteredEntities);
+        for (int i = 0; i < entities.size(); i++) {
+            if (matchesCompositeKey(entities.get(i), compositeKey)) {
+                updateEntity(entities.get(i), entityId);
+                writeEntities(entities);
                 return true;
             }
-            return false;
-        } catch (IOException e) {
-            throw new DAOException("Error deleting entity from file system", e);
+        }
+        return false;
+    }
+
+    private void updateEntity(T existingEntity, T newEntity) throws DAOException {
+        try {
+            for (Field field : type.getDeclaredFields()) {
+                field.setAccessible(true);
+                if (!field.isAnnotationPresent(PrimaryKey.class)) {
+                    Object newValue = field.get(newEntity);
+                    if (newValue != null) {
+                        field.set(existingEntity, newValue);
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new DAOException("Error updating entity", e);
         }
     }
 
-    private List<T> readEntitiesFromFile(File file) throws IOException {
-        return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, type));
-    }
-
-    private String getFileName() {
-        return type.getSimpleName().toLowerCase() + ".json";
+    private Map<String, Object> getCompositeKey(T entity) throws DAOException {
+        Map<String, Object> compositeKey = new HashMap<>();
+        try {
+            for (Field field : type.getDeclaredFields()) {
+                field.setAccessible(true);
+                if (field.isAnnotationPresent(PrimaryKey.class)) {
+                    compositeKey.put(field.getName(), field.get(entity));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new DAOException("Error extracting primary key", e);
+        }
+        return compositeKey;
     }
 
     private boolean matchesCompositeKey(T entity, Map<String, Object> compositeKey) {
-        for (Map.Entry<String, Object> entry : compositeKey.entrySet()) {
+        return compositeKey.entrySet().stream().allMatch(entry -> {
             try {
-                var field = type.getDeclaredField(entry.getKey());
+                Field field = type.getDeclaredField(entry.getKey());
                 field.setAccessible(true);
-                if (!Objects.equals(field.get(entity), entry.getValue())) {
-                    return false;
-                }
+                return Objects.equals(field.get(entity), entry.getValue());
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 return false;
             }
+        });
+    }
+
+    private List<T> readEntities() throws DAOException {
+        File file = getFile();
+        if (!file.exists()) {
+            return new ArrayList<>();
         }
-        return true;
+        try {
+            return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, type));
+        } catch (IOException e) {
+            throw new DAOException("Error reading entities from file", e);
+        }
+    }
+
+    private void writeEntities(List<T> entities) throws DAOException {
+        try {
+            objectMapper.writeValue(getFile(), entities);
+        } catch (IOException e) {
+            throw new DAOException("Error writing entities to file", e);
+        }
+    }
+
+    private File getFile() {
+        return new File(baseDirectory + type.getSimpleName().toLowerCase() + ".json");
     }
 }
