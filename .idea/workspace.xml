@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/exceptions/DAOException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/exceptions/DAOException.java" afterDir="false" />
-    </list>
+    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,7 +103,7 @@
       <workItem from="1733142526617" duration="2025000" />
       <workItem from="1733154962577" duration="95000" />
       <workItem from="1733156900828" duration="301000" />
-      <workItem from="1733157214128" duration="7942000" />
+      <workItem from="1733157214128" duration="8283000" />
     </task>
     <servers />
   </component>

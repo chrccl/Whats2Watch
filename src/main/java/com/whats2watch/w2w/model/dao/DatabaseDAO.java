@@ -71,7 +71,7 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
         }
     }
 
-    private String buildInsertQuery(String tableName, T entity) {
+    private String buildInsertQuery(String tableName, T entity) throws DAOException {
         StringBuilder columns = new StringBuilder();
         StringBuilder values = new StringBuilder();
 
@@ -87,7 +87,7 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
             values.deleteCharAt(values.length() - 1);
 
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Error while building insert query", e);
+            throw new DAOException("Error while building insert query", e);
         }
 
         return String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, columns, values);
@@ -133,7 +133,7 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
         }
     }
 
-    private T mapResultSetToEntity(ResultSet rs) throws SQLException {
+    private T mapResultSetToEntity(ResultSet rs) throws SQLException, DAOException {
         try {
             T entity = type.getDeclaredConstructor().newInstance();
             for (var field : type.getDeclaredFields()) {
@@ -142,7 +142,7 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
             }
             return entity;
         } catch (Exception e) {
-            throw new RuntimeException("Error mapping ResultSet to entity", e);
+            throw new DAOException("Error mapping ResultSet to entity", e);
         }
     }
 }
