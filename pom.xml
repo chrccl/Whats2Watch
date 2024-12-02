@@ -13,6 +13,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
         <tmdb.api.key>src/main/resources/conf.properties</tmdb.api.key>
+        <db.conf.url>src/main/resources/conf.properties</db.conf.url>
+        <db.conf.username>src/main/resources/conf.properties</db.conf.username>
+        <db.conf.password>src/main/resources/conf.properties</db.conf.password>
     </properties>
 
     <dependencies>
@@ -70,6 +73,11 @@
             <version>20240303</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -90,13 +98,6 @@
                             </target>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
                     <execution>
                         <phase>validate</phase>
                         <goals>
@@ -106,12 +107,15 @@
                             <target>
                                 <echo>Print TMDB API key</echo>
                                 <echo>API KEY : "${tmdb.api.key}"</echo>
+                                <echo>Print DB config parameters</echo>
+                                <echo>URL : "${db.conf.url}"</echo>
+                                <echo>USERNAME : "${db.conf.username}"</echo>
+                                <echo>PASSWORD : "${db.conf.password}"</echo>
                             </target>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

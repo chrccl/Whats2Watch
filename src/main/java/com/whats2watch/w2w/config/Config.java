@@ -10,7 +10,7 @@ public class Config {
         throw new UnsupportedOperationException("Config is a utility class and cannot be instantiated.");
     }
 
-    public static String loadTMDBApiKey() {
+    public static String loadPropertyByName(String propertyName) {
         Properties properties = new Properties();
         URL url = ClassLoader.getSystemResource("conf.properties");
 
@@ -19,7 +19,7 @@ public class Config {
         } catch (IOException e) {
             return "";
         }
-        return properties.getProperty("tmdb.api.key");
+        return properties.getProperty(propertyName);
     }
 
 }

@@ -17,7 +17,7 @@ public abstract class MediaTMDBFetcher<T extends Media> {
     private static final String BASE_URL = "https://api.themoviedb.org/3";
     private static final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500/";
     private static final String RESULTS = "results";
-    private static final String API_KEY = Config.loadTMDBApiKey();
+    private static final String API_KEY = Config.loadPropertyByName("tmdb.api.key");
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     protected List<T> fetchTopMedia(int year, String mediaType) throws URISyntaxException, IOException, InterruptedException {
