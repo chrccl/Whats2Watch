@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="" />
+    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/Room.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/RoomMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -97,6 +103,8 @@
       <workItem from="1732905098572" duration="1046000" />
       <workItem from="1732980285908" duration="4582000" />
       <workItem from="1732985034429" duration="256000" />
+      <workItem from="1733141735298" duration="536000" />
+      <workItem from="1733142526617" duration="1416000" />
     </task>
     <servers />
   </component>
