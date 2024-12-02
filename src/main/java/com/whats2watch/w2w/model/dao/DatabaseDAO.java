@@ -1,5 +1,7 @@
 package com.whats2watch.w2w.model.dao;
 
+import com.whats2watch.w2w.exceptions.DAOException;
+
 import java.sql.*;
 import java.util.Map;
 
@@ -7,17 +9,17 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
     private final Class<T> type;
     private final Connection connection;
 
-    public DatabaseDAO(Class<T> type) {
+    public DatabaseDAO(Class<T> type) throws DAOException {
         this.type = type;
         try {
             this.connection = ConnectionManager.getConnection();
         } catch (SQLException e) {
-            throw new RuntimeException("Error establishing database connection", e);
+            throw new DAOException("Error establishing database connection", e);
         }
     }
 
     @Override
-    public Boolean save(T entity) {
+    public Boolean save(T entity) throws DAOException {
         String tableName = type.getSimpleName().toLowerCase();
         String sql = buildInsertQuery(tableName, entity);
 
@@ -26,12 +28,12 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while saving entity to DB", e);
+            throw new DAOException("Error while saving entity to DB", e);
         }
     }
 
     @Override
-    public T findById(Map<String, Object> compositeKey) {
+    public T findById(Map<String, Object> compositeKey) throws DAOException {
         if (compositeKey == null || compositeKey.isEmpty()) {
             throw new IllegalArgumentException("Composite key cannot be null or empty.");
         }
@@ -46,13 +48,13 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
                 return mapResultSetToEntity(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error while reading from DB", e);
+            throw new DAOException("Error while reading from DB", e);
         }
         return null;
     }
 
     @Override
-    public Boolean delete(Map<String, Object> compositeKey) {
+    public Boolean delete(Map<String, Object> compositeKey) throws DAOException {
         if (compositeKey == null || compositeKey.isEmpty()) {
             throw new IllegalArgumentException("Composite key cannot be null or empty.");
         }
@@ -65,7 +67,7 @@ public class DatabaseDAO<T> implements GenericDAO<T> {
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while deleting from DB", e);
+            throw new DAOException("Error while deleting from DB", e);
         }
     }
 

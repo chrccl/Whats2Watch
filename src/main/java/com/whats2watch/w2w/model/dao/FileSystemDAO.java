@@ -2,6 +2,9 @@ package com.whats2watch.w2w.model.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,57 +21,48 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
     }
 
     @Override
-    public Boolean save(T entity) {
+    public Boolean save(T entity) throws DAOException {
         try {
             String fileName = getFileName();
             File file = new File(baseDirectory + fileName);
-
-            List<T> entities = new ArrayList<>();
-            if (file.exists()) {
-                entities = readEntitiesFromFile(file);
-            }
+            List<T> entities = file.exists() ? readEntitiesFromFile(file) : new ArrayList<>();
 
             entities.add(entity);
-
             objectMapper.writeValue(file, entities);
             return true;
         } catch (IOException e) {
-            System.out.println("Error saving entity to file system: " + e.getMessage());
-            return false;
+            throw new DAOException("Error saving entity to file system", e);
         }
     }
 
     @Override
-    public T findById(Map<String, Object> compositeKey) {
+    public T findById(Map<String, Object> compositeKey) throws DAOException {
         try {
             String fileName = getFileName();
             File file = new File(baseDirectory + fileName);
 
             if (!file.exists()) {
-                return null;  // File does not exist
+                throw new EntityNotFoundException("Entity file not found: " + fileName);
             }
 
             List<T> entities = readEntitiesFromFile(file);
-
-            for (T entity : entities) {
-                if (matchesCompositeKey(entity, compositeKey)) {
-                    return entity;
-                }
-            }
+            return entities.stream()
+                    .filter(entity -> matchesCompositeKey(entity, compositeKey))
+                    .findFirst()
+                    .orElseThrow(() -> new EntityNotFoundException("Entity not found for given key: " + compositeKey));
         } catch (IOException e) {
-            System.out.println("Error reading from file system: " + e.getMessage());
+            throw new DAOException("Error reading from file system", e);
         }
-        return null;
     }
 
     @Override
-    public Boolean delete(Map<String, Object> compositeKey) {
+    public Boolean delete(Map<String, Object> compositeKey) throws DAOException {
         try {
             String fileName = getFileName();
             File file = new File(baseDirectory + fileName);
 
             if (!file.exists()) {
-                return false;  // File does not exist
+                throw new EntityNotFoundException("Entity file not found: " + fileName);
             }
 
             List<T> entities = readEntitiesFromFile(file);
@@ -80,11 +74,10 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
                 objectMapper.writeValue(file, filteredEntities);
                 return true;
             }
-
+            return false;
         } catch (IOException e) {
-            System.out.println("Error deleting from file system: " + e.getMessage());
+            throw new DAOException("Error deleting entity from file system", e);
         }
-        return false;
     }
 
     private List<T> readEntitiesFromFile(File file) throws IOException {
@@ -96,13 +89,11 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
     }
 
     private boolean matchesCompositeKey(T entity, Map<String, Object> compositeKey) {
-        // Check if the entity matches the composite key
         for (Map.Entry<String, Object> entry : compositeKey.entrySet()) {
             try {
                 var field = type.getDeclaredField(entry.getKey());
                 field.setAccessible(true);
-                Object fieldValue = field.get(entity);
-                if (!Objects.equals(fieldValue, entry.getValue())) {
+                if (!Objects.equals(field.get(entity), entry.getValue())) {
                     return false;
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {
