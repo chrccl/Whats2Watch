@@ -41,7 +41,7 @@ public class DatabaseDAO<T> implements DAO<T> {
     @Override
     public T findById(T entityId) throws DAOException {
         String tableName = type.getSimpleName().toLowerCase();
-        String sql = buildFindByIdQuery(tableName, entityId);
+        String sql = buildFindByIdQuery(tableName);
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setPreparedStatementValues(stmt, entityId, true); // true: only primary key values
@@ -128,7 +128,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         return String.format("UPDATE %s SET %s WHERE %s", tableName, setClause, whereClause);
     }
 
-    private String buildFindByIdQuery(String tableName, T entityId) throws DAOException {
+    private String buildFindByIdQuery(String tableName) {
         StringBuilder whereClause = new StringBuilder();
 
         for (Field field : type.getDeclaredFields()) {
@@ -141,7 +141,7 @@ public class DatabaseDAO<T> implements DAO<T> {
     }
 
     private String buildDeleteQuery(String tableName, T entityId) throws DAOException {
-        return buildFindByIdQuery(tableName, entityId).replace("SELECT *", "DELETE");
+        return buildFindByIdQuery(tableName).replace("SELECT *", "DELETE");
     }
 
     // --- Helper Methods ---
@@ -254,31 +254,24 @@ public class DatabaseDAO<T> implements DAO<T> {
 
     private DAO<?> getDaoForEntity(Class<?> fkEntityClass) throws DAOException {
         try {
-            // Construct the DAO class name based on the entity class name (assumes DAO class follows the naming convention)
             String daoClassName = fkEntityClass.getPackage().getName() + ".dao." + fkEntityClass.getSimpleName() + "DAO";
-
-            // Load the DAO class dynamically
             Class<?> daoClass = Class.forName(daoClassName);
 
-            // Ensure the DAO class implements the DAO interface
             if (DAO.class.isAssignableFrom(daoClass)) {
-                // Try to invoke the singleton getInstance() method
-                try {
-                    // Get the constructor for the DAO class that takes Class<T> as a parameter
-                    Constructor<?> constructor = daoClass.getConstructor(Class.class);
-
-                    // Return the DAO instance by passing the entity class
-                    return (DAO<?>) constructor.newInstance(fkEntityClass);
-                } catch (NoSuchMethodException e) {
-                    throw new DAOException("No getInstance() method found in DAO class: " + daoClassName, e);
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e);
-                }
+                return createDaoInstance(daoClass, fkEntityClass);
             } else {
-                throw new DAOException("DAO class does not implement DAO: " + daoClassName);
+                throw new DAOException("DAO class does not implement DAO interface: " + daoClassName);
             }
-        } catch (ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {
+        } catch (ClassNotFoundException e) {
             throw new DAOException("Error while creating DAO for entity: " + fkEntityClass.getSimpleName(), e);
         }
     }
-}
+
+    private DAO<?> createDaoInstance(Class<?> daoClass, Class<?> fkEntityClass) throws DAOException {
+        try {
+            Constructor<?> constructor = daoClass.getConstructor(Class.class);
+            return (DAO<?>) constructor.newInstance(fkEntityClass);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new DAOException("Error creating DAO instance: " + daoClass.getSimpleName(), e);
+        }
+    }}
