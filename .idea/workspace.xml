@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/GenericDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaTMDBFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaTMDBFetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/conf.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/conf.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/DAOFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +104,7 @@
       <workItem from="1733142526617" duration="2025000" />
       <workItem from="1733154962577" duration="95000" />
       <workItem from="1733156900828" duration="301000" />
-      <workItem from="1733157214128" duration="7166000" />
+      <workItem from="1733157214128" duration="7495000" />
     </task>
     <servers />
   </component>

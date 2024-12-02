@@ -7,13 +7,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class FileSystemDAO<T> implements GenericDAO<T> {
-    private final String BASE_DIRECTORY;
+    private final String baseDirectory;
     private final ObjectMapper objectMapper;
     private final Class<T> type;
 
     public FileSystemDAO(Class<T> type) {
         this.type = type;
-        this.BASE_DIRECTORY = FileSystemManager.getBaseDirectory();
+        this.baseDirectory = FileSystemManager.getBaseDirectory();
         this.objectMapper = FileSystemManager.getObjectMapper();
     }
 
@@ -21,7 +21,7 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
     public Boolean save(T entity) {
         try {
             String fileName = getFileName();
-            File file = new File(BASE_DIRECTORY + fileName);
+            File file = new File(baseDirectory + fileName);
 
             List<T> entities = new ArrayList<>();
             if (file.exists()) {
@@ -42,7 +42,7 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
     public T findById(Map<String, Object> compositeKey) {
         try {
             String fileName = getFileName();
-            File file = new File(BASE_DIRECTORY + fileName);
+            File file = new File(baseDirectory + fileName);
 
             if (!file.exists()) {
                 return null;  // File does not exist
@@ -65,7 +65,7 @@ public class FileSystemDAO<T> implements GenericDAO<T> {
     public Boolean delete(Map<String, Object> compositeKey) {
         try {
             String fileName = getFileName();
-            File file = new File(BASE_DIRECTORY + fileName);
+            File file = new File(baseDirectory + fileName);
 
             if (!file.exists()) {
                 return false;  // File does not exist
