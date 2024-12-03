@@ -41,6 +41,9 @@ public abstract class Media {
         this.watchProviders = builder.watchProviders;
     }
 
+    protected Media() {
+    }
+
     public String getTitle() {
         return title;
     }

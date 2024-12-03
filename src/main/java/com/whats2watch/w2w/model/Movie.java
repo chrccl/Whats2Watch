@@ -1,10 +1,15 @@
 package com.whats2watch.w2w.model;
 
+import com.whats2watch.w2w.annotations.PersistenceConstructor;
+
 import java.util.Objects;
 
 public class Movie extends Media{
 
     private String director;
+
+    @PersistenceConstructor
+    Movie() { } //Package-Private Constructor
 
     private Movie(MediaBuilder builder) {
         super(builder);
