@@ -235,7 +235,6 @@ public class DatabaseDAO<T> implements DAO<T> {
             if (isCollectionField(field) && field.isAnnotationPresent(ForeignKey.class)) {
                 // Get the join table name and FK class type
                 String joinTableName = getJoinTableName(type, field);
-                Class<?> fkClass = getCollectionGenericType(field);
 
                 // Make the field accessible and retrieve the collection
                 field.setAccessible(true);
@@ -270,7 +269,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         }
     }
 
-    private void populateCollectionFKs(T entity) throws SQLException, DAOException, ClassNotFoundException, IllegalAccessException {
+    private void populateCollectionFKs(T entity) throws DAOException, ClassNotFoundException, IllegalAccessException {
         for (Field field : type.getDeclaredFields()) {
             if (isCollectionField(field) && field.isAnnotationPresent(ForeignKey.class)) {
                 String joinTableName = getJoinTableName(type, field);
