@@ -4,12 +4,15 @@ import com.whats2watch.w2w.annotations.ForeignKey;
 import com.whats2watch.w2w.annotations.PrimaryKey;
 
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.model.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatabaseDAO<T> implements DAO<T> {
     private final Class<T> type;
@@ -196,83 +199,114 @@ public class DatabaseDAO<T> implements DAO<T> {
 
     private T mapResultSetToEntity(ResultSet rs) throws SQLException, DAOException {
         try {
-            T entity = type.getDeclaredConstructor().newInstance();
+            T entity = createEntityInstance(type);
 
             for (Field field : type.getDeclaredFields()) {
                 field.setAccessible(true);
 
                 if (field.isAnnotationPresent(ForeignKey.class)) {
-                    // Handle foreign key fields
-                    String fkColumnName = field.getName();
-                    Object fkValue = rs.getObject(fkColumnName);
+                    // Identify all fields referencing the same FK class
+                    String fkClassName = getFkClassName(field.getName());
+                    Class<?> fkClass = Class.forName("com.whats2watch.w2w.model." + fkClassName);
 
-                    if (fkValue != null) {
-                        // Extract FK entity class from field name that has this syntax: "FKClassName_FKPKFieldName_fk"
-                        String fkEntityClassName = field.getName().substring(0, field.getName().indexOf("_"));
-                        Class<?> fkEntityClass = Class.forName("com.whats2watch.w2w.model." + fkEntityClassName);
-
-                        // Fetch the related entity using its primary key (which is fkValue)
-                        Object fkEntity = getEntityByPrimaryKey(fkEntityClass, fkValue);
-
-                        // Set the related entity in the current entity's foreign key field
-                        field.set(entity, fkEntity);
+                    // Collect all related FK fields for this FK class
+                    Map<String, Object> fkFieldValues = new HashMap<>();
+                    for (Field relatedField : type.getDeclaredFields()) {
+                        if (relatedField.getName().startsWith(fkClassName) && relatedField.isAnnotationPresent(ForeignKey.class)) {
+                            String fkFieldName = extractFkFieldName(relatedField.getName());
+                            fkFieldValues.put(fkFieldName, rs.getObject(relatedField.getName()));
+                        }
                     }
+
+                    // Fetch the FK entity using the collected values
+                    Object fkEntity = fetchFKEntity(fkClass, fkFieldValues);
+                    field.set(entity, fkEntity);
                 } else {
-                    // Set other fields as usual
+                    // Set non-FK fields normally
                     field.set(entity, rs.getObject(field.getName()));
                 }
             }
+
             return entity;
         } catch (Exception e) {
             throw new DAOException("Error mapping ResultSet to entity", e);
         }
     }
 
-    private Object getEntityByPrimaryKey(Class<?> fkEntityClass, Object fkValue) throws DAOException {
-        try {
-            // Assuming you have a DAO for each entity
-            DAO<?> fkDao = getDaoForEntity(fkEntityClass);
+    private Object fetchFKEntity(Class<?> fkClass, Map<String, Object> fkFieldValues) throws Exception {
+        if (fkClass.equals(Room.class)) {
+            return createRoomWithFactory(fkFieldValues);
+        } else if (fkClass.equals(Movie.class) || fkClass.equals(TVSeries.class)) {
+            return createMediaWithFactory(fkClass, fkFieldValues);
+        } else {
+            // Default case: Use empty constructor
+            Object fkEntity = fkClass.getDeclaredConstructor().newInstance();
 
-            // Create a temporary entity with the primary key value set
-            Object fkEntity = fkEntityClass.getDeclaredConstructor().newInstance();
-
-            // Set the primary key on the entity
-            for (Field field : fkEntityClass.getDeclaredFields()) {
-                field.setAccessible(true);
-                if (field.isAnnotationPresent(PrimaryKey.class)) {
-                    field.set(fkEntity, fkValue);
+            // Set primary key fields dynamically
+            for (Field fkField : fkClass.getDeclaredFields()) {
+                fkField.setAccessible(true);
+                if (fkField.isAnnotationPresent(PrimaryKey.class)) {
+                    Object value = fkFieldValues.get(fkField.getName());
+                    if (value != null) {
+                        fkField.set(fkEntity, value);
+                    }
                 }
             }
-
-            // Use reflection to invoke the correct findById method
-            Method findByIdMethod = fkDao.getClass().getMethod("findById", fkEntityClass); // Dynamically get the method
-            return findByIdMethod.invoke(fkDao, fkEntity);
-        } catch (Exception e) {
-            throw new DAOException("Error retrieving foreign key entity by primary key", e);
+            return fkEntity;
         }
     }
 
-    private DAO<?> getDaoForEntity(Class<?> fkEntityClass) throws DAOException {
-        try {
-            String daoClassName = fkEntityClass.getPackage().getName() + ".dao." + fkEntityClass.getSimpleName() + "DAO";
-            Class<?> daoClass = Class.forName(daoClassName);
+    private Object createRoomWithFactory(Map<String, Object> fkFieldValues) throws Exception {
+        Method factoryMethod = RoomFactory.class.getDeclaredMethod("createRoomInstance");
+        Object builder = factoryMethod.invoke(null);
 
-            if (DAO.class.isAssignableFrom(daoClass)) {
-                return createDaoInstance(daoClass, fkEntityClass);
-            } else {
-                throw new DAOException("DAO class does not implement DAO interface: " + daoClassName);
+        populateBuilder(builder, fkFieldValues);
+
+        Method buildMethod = builder.getClass().getMethod("build");
+        return buildMethod.invoke(builder);
+    }
+
+    private Object createMediaWithFactory(Class<?> fkClass, Map<String, Object> fkFieldValues) throws Exception {
+        String factoryMethodName = "create" + fkClass.getSimpleName() + "Instance";
+        Method factoryMethod = MediaFactory.class.getDeclaredMethod(factoryMethodName);
+        Object builder = factoryMethod.invoke(null);
+
+        populateBuilder(builder, fkFieldValues);
+
+        Method buildMethod = builder.getClass().getMethod("build");
+        return buildMethod.invoke(builder);
+    }
+
+    private void populateBuilder(Object builder, Map<String, Object> fkFieldValues) throws Exception {
+        for (Map.Entry<String, Object> entry : fkFieldValues.entrySet()) {
+            String fieldName = entry.getKey();
+            Object fieldValue = entry.getValue();
+
+            try {
+                Method setterMethod = builder.getClass().getMethod(fieldName, fieldValue.getClass());
+                setterMethod.invoke(builder, fieldValue);
+            } catch (NoSuchMethodException ignored) {
+                System.out.println("No setter method found for: " + fieldName);
             }
-        } catch (ClassNotFoundException e) {
-            throw new DAOException("Error while creating DAO for entity: " + fkEntityClass.getSimpleName(), e);
         }
     }
 
-    private DAO<?> createDaoInstance(Class<?> daoClass, Class<?> fkEntityClass) throws DAOException {
-        try {
-            Constructor<?> constructor = daoClass.getConstructor(Class.class);
-            return (DAO<?>) constructor.newInstance(fkEntityClass);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new DAOException("Error creating DAO instance: " + daoClass.getSimpleName(), e);
+    private T createEntityInstance(Class<T> type) throws Exception {
+        if (type.equals(Room.class)) {
+            return (T) createRoomWithFactory(new HashMap<>()); // Assume no arguments for Room
+        } else if (type.equals(Movie.class) || type.equals(TVSeries.class)) {
+            return (T) createMediaWithFactory(type, new HashMap<>()); // Assume no arguments for Media
+        } else {
+            return type.getDeclaredConstructor().newInstance(); // Default case
         }
     }
+
+    private String getFkClassName(String fieldName) {
+        return fieldName.split("_")[0]; // Extracts FKClassName from FKClassName_FKFieldX_fk
+    }
+
+    private String extractFkFieldName(String fieldName) {
+        return fieldName.split("_")[1]; // Extracts FKFieldX from FKClassName_FKFieldX_fk
+    }
+
 }
