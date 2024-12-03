@@ -18,9 +18,9 @@
       <list>
         <option value="Enum" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Exception" />
         <option value="AnnotationType" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -110,7 +110,7 @@
       <workItem from="1733157214128" duration="8410000" />
       <workItem from="1733165956172" duration="9386000" />
       <workItem from="1733184390523" duration="67000" />
-      <workItem from="1733215305904" duration="1759000" />
+      <workItem from="1733215305904" duration="3390000" />
     </task>
     <servers />
   </component>
