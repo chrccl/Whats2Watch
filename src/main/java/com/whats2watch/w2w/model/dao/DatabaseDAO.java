@@ -202,12 +202,12 @@ public class DatabaseDAO<T> implements DAO<T> {
                 field.setAccessible(true);
 
                 if (field.isAnnotationPresent(ForeignKey.class)) {
-                    // Handle foreign key fields (represented as primitive types)
-                    String fkColumnName = field.getName() + "_fk";
+                    // Handle foreign key fields
+                    String fkColumnName = field.getName();
                     Object fkValue = rs.getObject(fkColumnName);
 
                     if (fkValue != null) {
-                        // Extract FK entity class from field name
+                        // Extract FK entity class from field name that has this syntax: "FKClassName_FKPKFieldName_fk"
                         String fkEntityClassName = field.getName().substring(0, field.getName().indexOf("_"));
                         Class<?> fkEntityClass = Class.forName("com.whats2watch.w2w.model." + fkEntityClassName);
 
@@ -274,4 +274,5 @@ public class DatabaseDAO<T> implements DAO<T> {
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new DAOException("Error creating DAO instance: " + daoClass.getSimpleName(), e);
         }
-    }}
+    }
+}
