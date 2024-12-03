@@ -253,48 +253,129 @@ public class DatabaseDAO<T> implements DAO<T> {
         }
     }
 
+    private void populateCollectionFKs(T entity) throws DAOException, ClassNotFoundException, IllegalAccessException {
+        // Iterate over the fields of the entity
+        for (Field field : type.getDeclaredFields()) {
+            field.setAccessible(true);
+
+            // Check if the field is a collection and is annotated with ForeignKey
+            if (isCollectionField(field) && field.isAnnotationPresent(ForeignKey.class)) {
+                String joinTableName = getJoinTableName(type, field);  // Get the join table name
+                Class<?> fkClass = getCollectionGenericType(field);    // Get the class of the foreign key entity
+
+                // Fetch and set the foreign key entities into the collection
+                Collection<Object> fkEntities = fetchFKEntitiesFromJoinTable(entity, joinTableName, fkClass);
+                field.set(entity, fkEntities); // Populate the collection field with the fetched foreign key entities
+            }
+        }
+    }
+
+
     private void insertIntoJoinTable(String joinTableName, T entity, Object fkEntity) throws SQLException, DAOException {
-        // Construct the SQL query to insert the primary entity and FK entity into the join table
-        String sql = String.format("INSERT INTO %s (primary_id, fk_id) VALUES (?, ?)", joinTableName);
+        // Get the primary key columns and values
+        List<String> pkColumns = getPrimaryKeyColumns(type);
+        List<Object> pkValues = new ArrayList<>();
+        for (String pkColumn : pkColumns) {
+            pkValues.add(getPrimaryKeyValue(entity, pkColumn));
+        }
 
+        // Get the foreign key columns and values
+        List<String> fkColumns = getPrimaryKeyColumns(fkEntity.getClass()); // Assuming the foreign key entity also has composite primary key
+        List<Object> fkValues = new ArrayList<>();
+        for (String fkColumn : fkColumns) {
+            fkValues.add(getPrimaryKeyValue(fkEntity, fkColumn));
+        }
+
+        // Generate the SQL query
+        String columns = generateJoinTableColumns(pkColumns, fkColumns);
+        String values = generateJoinTableValues(pkValues, fkValues);
+
+        String sql = String.format("INSERT INTO %s (%s) VALUES (%s)", joinTableName, columns, values);
+
+        // Execute the query
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            // Set the primary key value of the entity
-            stmt.setObject(1, getPrimaryKeyValue(entity));
+            int index = 1;
 
-            // Set the primary key value of the foreign key entity
-            stmt.setObject(2, getPrimaryKeyValue(fkEntity));
+            // Set the primary key values
+            for (Object pkValue : pkValues) {
+                stmt.setObject(index++, pkValue);
+            }
 
-            // Execute the insert statement
+            // Set the foreign key values
+            for (Object fkValue : fkValues) {
+                stmt.setObject(index++, fkValue);
+            }
+
             stmt.executeUpdate();
         }
     }
 
-    private void populateCollectionFKs(T entity) throws DAOException, ClassNotFoundException, IllegalAccessException {
-        for (Field field : type.getDeclaredFields()) {
-            if (isCollectionField(field) && field.isAnnotationPresent(ForeignKey.class)) {
-                String joinTableName = getJoinTableName(type, field);
-                Class<?> fkClass = getCollectionGenericType(field);
-                Collection<Object> fkEntities = fetchFKEntitiesFromJoinTable(entity, joinTableName, fkClass);
-                field.set(entity, fkEntities);
-            }
+    private String generateJoinTableColumns(List<String> pkColumns, List<String> fkColumns) {
+        StringBuilder columns = new StringBuilder();
+
+        // Add primary key columns
+        for (String pkColumn : pkColumns) {
+            columns.append(pkColumn).append(", ");
         }
+
+        // Add foreign key columns
+        for (String fkColumn : fkColumns) {
+            columns.append(fkColumn).append(", ");
+        }
+
+        // Remove the trailing comma and space
+        columns.delete(columns.length() - 2, columns.length());
+
+        return columns.toString();
     }
 
+    private String generateJoinTableValues(List<Object> pkValues, List<Object> fkValues) {
+        StringBuilder values = new StringBuilder();
+
+        // Add primary key values
+        for (Object pkValue : pkValues) {
+            values.append("?, ");
+        }
+
+        // Add foreign key values
+        for (Object fkValue : fkValues) {
+            values.append("?, ");
+        }
+
+        // Remove the trailing comma and space
+        values.delete(values.length() - 2, values.length());
+
+        return values.toString();
+    }
     private Collection<Object> fetchFKEntitiesFromJoinTable(T entity, String joinTableName, Class<?> fkClass) throws DAOException {
         Collection<Object> fkEntities = new ArrayList<>();
-        Object primaryKeyValue = getPrimaryKeyValue(entity);
 
-        String query = String.format("SELECT fk_id FROM %s WHERE primary_id = ?", joinTableName);
+        // Get the primary key values from the entity
+        Map<String, Object> primaryKeyValues = getPrimaryKeyValues(entity); // Fetch primary key values for the main entity
+
+        // Build the WHERE clause for the join table query (e.g., WHERE roomId = ? AND locationId = ?)
+        StringBuilder whereClause = new StringBuilder();
+        for (String pkColumn : primaryKeyValues.keySet()) {
+            whereClause.append(pkColumn).append(" = ? AND ");
+        }
+        whereClause.delete(whereClause.length() - 5, whereClause.length()); // Remove trailing " AND "
+
+        String query = String.format("SELECT fk_id FROM %s WHERE %s", joinTableName, whereClause.toString());
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setObject(1, primaryKeyValue);
-            ResultSet resultSet = stmt.executeQuery();
-
-            while (resultSet.next()) {
-                Object fkEntityId = resultSet.getObject("fk_id");
-                Object fkEntity = fetchFKEntity(fkClass, Map.of(getPrimaryKeyColumn(fkClass), fkEntityId));
-                fkEntities.add(fkEntity);
+            // Set the primary key values as parameters for the WHERE clause
+            int index = 1;
+            for (Object pkValue : primaryKeyValues.values()) {
+                stmt.setObject(index++, pkValue);
             }
-        } catch (Exception e) {
+
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                Object fkEntityId = resultSet.getObject("fk_id"); // Get the foreign key ID from the join table
+                Object fkEntity = fetchFKEntity(fkClass, Map.of(getPrimaryKeyColumn(fkClass), fkEntityId));
+                fkEntities.add(fkEntity); // Add the foreign key entity to the collection
+            }
+        } catch (SQLException | IllegalAccessException | NoSuchMethodException |
+                 InvocationTargetException | InstantiationException e) {
             throw new DAOException("Error fetching fk entities from join table", e);
         }
         return fkEntities;
@@ -349,19 +430,35 @@ public class DatabaseDAO<T> implements DAO<T> {
         field.set(entity, fkEntity);
     }
 
-    private Object getPrimaryKeyValue(Object entity) throws DAOException {
+    private Object getPrimaryKeyValue(Object entity, String pkColumn) throws DAOException {
+        try {
+            Field field = entity.getClass().getDeclaredField(pkColumn); // Access the specific primary key field
+            field.setAccessible(true);
+            return field.get(entity); // Return the value of that specific primary key field
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new DAOException("Error accessing primary key field: " + pkColumn, e);
+        }
+    }
+
+    private Map<String, Object> getPrimaryKeyValues(Object entity) throws DAOException {
+        Map<String, Object> pkValues = new HashMap<>();
         for (Field field : entity.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             if (field.isAnnotationPresent(PrimaryKey.class)) {
                 try {
-                    return field.get(entity);
+                    pkValues.put(field.getName(), field.get(entity)); // Add primary key field value to map
                 } catch (IllegalAccessException e) {
-                    throw new DAOException("Error accessing primary key field", e);
+                    throw new DAOException("Error accessing primary key field: " + field.getName(), e);
                 }
             }
         }
-        throw new DAOException("No primary key found for entity: " + entity.getClass().getName());
+        if (pkValues.isEmpty()) {
+            throw new DAOException("No primary key found for entity: " + entity.getClass().getName());
+        }
+        return pkValues; // Return a map of primary key field names and their values
     }
+
+
 
     // Method to extract the foreign key class name from a field's name
     private String getFkClassName(String fieldName) {
@@ -380,6 +477,20 @@ public class DatabaseDAO<T> implements DAO<T> {
         throw new IllegalArgumentException("No primary key found in class: " + cls.getName());
     }
 
+    private List<String> getPrimaryKeyColumns(Class<?> cls) {
+        List<String> pkColumns = new ArrayList<>();
+        for (Field field : cls.getDeclaredFields()) {
+            if (field.isAnnotationPresent(PrimaryKey.class)) {
+                pkColumns.add(field.getName()); // Add the name of the primary key field
+            }
+        }
+        if (pkColumns.isEmpty()) {
+            throw new IllegalArgumentException("No primary key found in class: " + cls.getName());
+        }
+        return pkColumns;
+    }
+
+
     // Method to extract the foreign key field name from a field's name (i.e., FKFieldName from FKClassName_FKFieldName_fk)
     private String extractFkFieldName(String fieldName) {
         // Assuming the format is FKClassName_FKFieldName_fk, we extract the FK field name
@@ -389,5 +500,4 @@ public class DatabaseDAO<T> implements DAO<T> {
         }
         throw new IllegalArgumentException("Invalid foreign key field name: " + fieldName);
     }
-
 }
