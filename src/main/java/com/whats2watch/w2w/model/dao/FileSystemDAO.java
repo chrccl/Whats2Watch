@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class FileSystemDAO<T, ID> implements DAO<T, ID> {
+public class FileSystemDAO<T, K> implements DAO<T, K> {
 
     private static final Logger logger = LoggerFactory.getLogger(FileSystemDAO.class);
 
@@ -29,48 +29,33 @@ public class FileSystemDAO<T, ID> implements DAO<T, ID> {
 
     @Override
     public void save(T entity) throws DAOException {
-        try {
-            handleOneToManySave(entity); // Handle relationships
-            List<T> entities = readEntities();
-            entities.add(entity);
-            writeEntities(entities);
-            logger.info("Entity saved: {}", entity);
-        } catch (Exception e) {
-            logger.error("Error saving entity: {}", entity, e);
-            throw new DAOException("Error saving entity", e);
-        }
+        handleOneToManySave(entity); // Handle relationships
+        List<T> entities = readEntities();
+        entities.add(entity);
+        writeEntities(entities);
+        logger.info("Entity saved: {}", entity);
     }
 
     @Override
     public T findById(Object entityId) throws DAOException {
-        try {
-            List<T> entities = readEntities();
-            Map<String, Object> compositeKey = getCompositeKey(entityId);
-            return entities.stream()
-                    .filter(e -> matchesCompositeKey(e, compositeKey))
-                    .findFirst()
-                    .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + compositeKey));
-        } catch (Exception e) {
-            logger.error("Error finding entity with ID: {}", entityId, e);
-            throw new DAOException("Error finding entity by ID", e);
-        }
+        List<T> entities = readEntities();
+        Map<String, Object> compositeKey = getCompositeKey(entityId);
+        return entities.stream()
+                .filter(e -> matchesCompositeKey(e, compositeKey))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + compositeKey));
     }
 
     @Override
     public void deleteById(Object entityId) throws DAOException {
-        try {
-            List<T> entities = readEntities();
-            Map<String, Object> compositeKey = getCompositeKey(entityId);
-            boolean removed = entities.removeIf(e -> matchesCompositeKey(e, compositeKey));
-            if (removed) {
-                writeEntities(entities);
-                logger.info("Entity deleted: {}", entityId);
-            } else {
-                throw new EntityNotFoundException("Entity not found for deletion: " + compositeKey);
-            }
-        } catch (Exception e) {
-            logger.error("Error deleting entity with ID: {}", entityId, e);
-            throw new DAOException("Error deleting entity by ID", e);
+        List<T> entities = readEntities();
+        Map<String, Object> compositeKey = getCompositeKey(entityId);
+        boolean removed = entities.removeIf(e -> matchesCompositeKey(e, compositeKey));
+        if (removed) {
+            writeEntities(entities);
+            logger.info("Entity deleted: {}", entityId);
+        } else {
+            throw new EntityNotFoundException("Entity not found for deletion: " + compositeKey);
         }
     }
 
@@ -152,7 +137,7 @@ public class FileSystemDAO<T, ID> implements DAO<T, ID> {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (IllegalAccessException e) {
             logger.error("Error handling one-to-many relationship for entity: {}", entity, e);
             throw new DAOException("Error handling one-to-many relationship", e);
         }

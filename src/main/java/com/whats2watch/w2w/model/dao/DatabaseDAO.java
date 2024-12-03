@@ -10,7 +10,7 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DatabaseDAO<T, ID> implements DAO<T, ID> {
+public class DatabaseDAO<T, K> implements DAO<T, K> {
     private final Class<T> type;
     private final Connection connection;
     private final String tableName;
@@ -28,10 +28,10 @@ public class DatabaseDAO<T, ID> implements DAO<T, ID> {
     }
 
     @Override
-    public T findById(ID id) {
-        String query = String.format("SELECT * FROM %s WHERE id = ?", tableName);
+    public T findById(K k) {
+        String query = String.format("SELECT * FROM %s WHERE k = ?", tableName);
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setObject(1, id);
+            stmt.setObject(1, k);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     T entity = mapRowToEntity(rs);
@@ -39,7 +39,7 @@ public class DatabaseDAO<T, ID> implements DAO<T, ID> {
                     return entity;
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             logger.error(e.getMessage());
         }
         return null;
@@ -56,7 +56,7 @@ public class DatabaseDAO<T, ID> implements DAO<T, ID> {
                 loadRelationships(entity);
                 entities.add(entity);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | DAOException e) {
             logger.error(e.getMessage());
         }
         return entities;
@@ -86,17 +86,17 @@ public class DatabaseDAO<T, ID> implements DAO<T, ID> {
     }
 
     @Override
-    public void deleteById(ID id) {
-        String query = String.format("DELETE FROM %s WHERE id = ?", tableName);
+    public void deleteById(K k) {
+        String query = String.format("DELETE FROM %s WHERE k = ?", tableName);
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setObject(1, id);
+            stmt.setObject(1, k);
             stmt.executeUpdate();
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
     }
 
-    private T mapRowToEntity(ResultSet rs) throws SQLException {
+    private T mapRowToEntity(ResultSet rs) throws SQLException, DAOException {
         try {
             T entity = type.getDeclaredConstructor().newInstance();
             for (Field field : type.getDeclaredFields()) {
@@ -107,8 +107,9 @@ public class DatabaseDAO<T, ID> implements DAO<T, ID> {
             }
             return entity;
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new SQLException("Failed to map row to entity", e);
+            String errorMessage = String.format("Error mapping row to entity of type %s", type.getName());
+            logger.error(errorMessage, e);
+            throw new DAOException(errorMessage, e);
         }
     }
 
@@ -375,8 +376,9 @@ public class DatabaseDAO<T, ID> implements DAO<T, ID> {
             FileSystemDAO<Object, Object> relatedDAO = new FileSystemDAO<>((Class<Object>) relatedEntity.getClass());
             relatedDAO.save(relatedEntity);
         } catch (Exception e) {
-            logger.error("Error saving related entity: {}", relatedEntity, e);
-            throw new DAOException("Error saving related entity", e);
+            String errorMessage = String.format("Error saveRelatedEntity of type: %s", relatedEntity.getClass());
+            logger.error(errorMessage, e);
+            throw new DAOException(errorMessage, e);
         }
     }
 

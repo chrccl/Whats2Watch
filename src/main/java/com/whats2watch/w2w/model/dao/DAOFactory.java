@@ -8,12 +8,12 @@ public class DAOFactory {
         throw new UnsupportedOperationException("DAOFactory is a utility class and cannot be instantiated.");
     }
 
-    public static <T, ID> DAO<T, ID> getDAO(Class<T> clazz, PersistanceType type) throws DAOException {
+    public static <T, K> DAO<T, K> getDAO(Class<T> clazz, PersistanceType type) throws DAOException {
         switch (type) {
             case DATABASE:
-                return new DatabaseDAO<T, ID>(clazz);
+                return new DatabaseDAO<T, K>(clazz);
             case FILESYSTEM:
-                return new FileSystemDAO<T, ID>(clazz);
+                return new FileSystemDAO<T, K>(clazz);
             default:
                 throw new IllegalArgumentException("PersistanceType not supported: " + type);
         }
