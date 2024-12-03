@@ -5,6 +5,7 @@ import com.whats2watch.w2w.annotations.PrimaryKey;
 import com.whats2watch.w2w.exceptions.DAOException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.sql.*;
 import java.util.*;
@@ -35,10 +36,8 @@ public class DatabaseDAO<T> implements DAO<T> {
             saveCollectionFKs(entity);
 
             return rowsAffected > 0;
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new DAOException("Error while saving entity to DB", e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -249,13 +248,13 @@ public class DatabaseDAO<T> implements DAO<T> {
 
                 // Iterate over the collection of foreign key entities
                 for (Object fkEntity : fkEntities) {
-                    insertIntoJoinTable(joinTableName, entity, fkEntity, fkClass);
+                    insertIntoJoinTable(joinTableName, entity, fkEntity);
                 }
             }
         }
     }
 
-    private void insertIntoJoinTable(String joinTableName, T entity, Object fkEntity, Class<?> fkClass) throws SQLException, DAOException {
+    private void insertIntoJoinTable(String joinTableName, T entity, Object fkEntity) throws SQLException, DAOException {
         // Construct the SQL query to insert the primary entity and FK entity into the join table
         String sql = String.format("INSERT INTO %s (primary_id, fk_id) VALUES (?, ?)", joinTableName);
 
@@ -282,9 +281,8 @@ public class DatabaseDAO<T> implements DAO<T> {
         }
     }
 
-    private Collection<Object> fetchFKEntitiesFromJoinTable(T entity, String joinTableName, Class<?> fkClass) throws SQLException, DAOException {
+    private Collection<Object> fetchFKEntitiesFromJoinTable(T entity, String joinTableName, Class<?> fkClass) throws DAOException {
         Collection<Object> fkEntities = new ArrayList<>();
-        String primaryKeyColumn = getPrimaryKeyColumn(type);
         Object primaryKeyValue = getPrimaryKeyValue(entity);
 
         String query = String.format("SELECT fk_id FROM %s WHERE primary_id = ?", joinTableName);
@@ -303,7 +301,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         return fkEntities;
     }
 
-    private Object fetchFKEntity(Class<?> fkClass, Map<String, Object> fkFieldValues) throws Exception {
+    private Object fetchFKEntity(Class<?> fkClass, Map<String, Object> fkFieldValues) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Object fkEntity = fkClass.getDeclaredConstructor().newInstance();
 
         for (Field fkField : fkClass.getDeclaredFields()) {
@@ -319,7 +317,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         return fkEntity;
     }
 
-    private T createEntityInstance(Class<T> type) throws Exception {
+    private T createEntityInstance(Class<T> type) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         return type.getDeclaredConstructor().newInstance();
     }
 
@@ -336,7 +334,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         return Class.forName(typeName);
     }
 
-    private void handleSingleFKField(ResultSet rs, T entity, Field field) throws Exception {
+    private void handleSingleFKField(ResultSet rs, T entity, Field field) throws ClassNotFoundException, SQLException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         String fkClassName = getFkClassName(field.getName());
         Class<?> fkClass = Class.forName("com.whats2watch.w2w.model." + fkClassName);
 
