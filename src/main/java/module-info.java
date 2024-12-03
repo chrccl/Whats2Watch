@@ -10,6 +10,7 @@ module com.whats2watch.w2w {
     requires org.json;
     requires com.fasterxml.jackson.databind;
     requires java.sql;
+    requires org.slf4j;
 
     opens com.whats2watch.w2w to javafx.fxml;
     exports com.whats2watch.w2w;

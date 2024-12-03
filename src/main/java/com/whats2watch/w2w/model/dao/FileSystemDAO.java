@@ -1,16 +1,21 @@
 package com.whats2watch.w2w.model.dao;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.whats2watch.w2w.annotations.OneToMany;
 import com.whats2watch.w2w.annotations.PrimaryKey;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.exceptions.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class FileSystemDAO<T> implements DAO<T> {
+public class FileSystemDAO<T, ID> implements DAO<T, ID> {
+
+    private static final Logger logger = LoggerFactory.getLogger(FileSystemDAO.class);
 
     private final String baseDirectory;
     private final ObjectMapper objectMapper;
@@ -23,66 +28,63 @@ public class FileSystemDAO<T> implements DAO<T> {
     }
 
     @Override
-    public Boolean save(T entity) throws DAOException {
-        List<T> entities = readEntities();
-        entities.add(entity);
-        writeEntities(entities);
-        return true;
-    }
-
-    @Override
-    public T findById(T entityId) throws DAOException {
-        List<T> entities = readEntities();
-        Map<String, Object> compositeKey = getCompositeKey(entityId);
-        return entities.stream()
-                .filter(e -> matchesCompositeKey(e, compositeKey))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + compositeKey));
-    }
-
-    @Override
-    public Boolean deleteById(T entityId) throws DAOException {
-        List<T> entities = readEntities();
-        Map<String, Object> compositeKey = getCompositeKey(entityId);
-        boolean removed = entities.removeIf(e -> matchesCompositeKey(e, compositeKey));
-        if (removed) {
-            writeEntities(entities);
-        }
-        return removed;
-    }
-
-    @Override
-    public Boolean updateById(T entityId) throws DAOException {
-        List<T> entities = readEntities();
-        Map<String, Object> compositeKey = getCompositeKey(entityId);
-
-        for (int i = 0; i < entities.size(); i++) {
-            if (matchesCompositeKey(entities.get(i), compositeKey)) {
-                updateEntity(entities.get(i), entityId);
-                writeEntities(entities);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void updateEntity(T existingEntity, T newEntity) throws DAOException {
+    public void save(T entity) throws DAOException {
         try {
-            for (Field field : type.getDeclaredFields()) {
-                field.setAccessible(true);
-                if (!field.isAnnotationPresent(PrimaryKey.class)) {
-                    Object newValue = field.get(newEntity);
-                    if (newValue != null) {
-                        field.set(existingEntity, newValue);
-                    }
-                }
-            }
-        } catch (IllegalAccessException e) {
-            throw new DAOException("Error updating entity", e);
+            handleOneToManySave(entity); // Handle relationships
+            List<T> entities = readEntities();
+            entities.add(entity);
+            writeEntities(entities);
+            logger.info("Entity saved: {}", entity);
+        } catch (Exception e) {
+            logger.error("Error saving entity: {}", entity, e);
+            throw new DAOException("Error saving entity", e);
         }
     }
 
-    private Map<String, Object> getCompositeKey(T entity) throws DAOException {
+    @Override
+    public T findById(Object entityId) throws DAOException {
+        try {
+            List<T> entities = readEntities();
+            Map<String, Object> compositeKey = getCompositeKey(entityId);
+            return entities.stream()
+                    .filter(e -> matchesCompositeKey(e, compositeKey))
+                    .findFirst()
+                    .orElseThrow(() -> new EntityNotFoundException("Entity not found: " + compositeKey));
+        } catch (Exception e) {
+            logger.error("Error finding entity with ID: {}", entityId, e);
+            throw new DAOException("Error finding entity by ID", e);
+        }
+    }
+
+    @Override
+    public void deleteById(Object entityId) throws DAOException {
+        try {
+            List<T> entities = readEntities();
+            Map<String, Object> compositeKey = getCompositeKey(entityId);
+            boolean removed = entities.removeIf(e -> matchesCompositeKey(e, compositeKey));
+            if (removed) {
+                writeEntities(entities);
+                logger.info("Entity deleted: {}", entityId);
+            } else {
+                throw new EntityNotFoundException("Entity not found for deletion: " + compositeKey);
+            }
+        } catch (Exception e) {
+            logger.error("Error deleting entity with ID: {}", entityId, e);
+            throw new DAOException("Error deleting entity by ID", e);
+        }
+    }
+
+    @Override
+    public List<T> findAll() {
+        try {
+            return readEntities();
+        } catch (DAOException e) {
+            logger.error("Error reading all entities", e);
+        }
+        return List.of();
+    }
+
+    private Map<String, Object> getCompositeKey(Object entity) throws DAOException {
         Map<String, Object> compositeKey = new HashMap<>();
         try {
             for (Field field : type.getDeclaredFields()) {
@@ -92,7 +94,8 @@ public class FileSystemDAO<T> implements DAO<T> {
                 }
             }
         } catch (IllegalAccessException e) {
-            throw new DAOException("Error extracting primary key", e);
+            logger.error("Error extracting composite key for entity: {}", entity, e);
+            throw new DAOException("Error extracting composite key", e);
         }
         return compositeKey;
     }
@@ -104,6 +107,7 @@ public class FileSystemDAO<T> implements DAO<T> {
                 field.setAccessible(true);
                 return Objects.equals(field.get(entity), entry.getValue());
             } catch (NoSuchFieldException | IllegalAccessException e) {
+                logger.warn("Error matching composite key for entity: {}", entity, e);
                 return false;
             }
         });
@@ -117,6 +121,7 @@ public class FileSystemDAO<T> implements DAO<T> {
         try {
             return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, type));
         } catch (IOException e) {
+            logger.error("Error reading entities from file", e);
             throw new DAOException("Error reading entities from file", e);
         }
     }
@@ -125,6 +130,7 @@ public class FileSystemDAO<T> implements DAO<T> {
         try {
             objectMapper.writeValue(getFile(), entities);
         } catch (IOException e) {
+            logger.error("Error writing entities to file", e);
             throw new DAOException("Error writing entities to file", e);
         }
     }
@@ -132,4 +138,28 @@ public class FileSystemDAO<T> implements DAO<T> {
     private File getFile() {
         return new File(baseDirectory + type.getSimpleName().toLowerCase() + ".json");
     }
+
+    private void handleOneToManySave(T entity) throws DAOException {
+        try {
+            for (Field field : type.getDeclaredFields()) {
+                field.setAccessible(true);
+                if (field.isAnnotationPresent(OneToMany.class)) {
+                    List<?> relatedEntities = (List<?>) field.get(entity);
+                    if (relatedEntities != null) {
+                        for (Object relatedEntity : relatedEntities) {
+                            saveRelatedEntity(relatedEntity);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error handling one-to-many relationship for entity: {}", entity, e);
+            throw new DAOException("Error handling one-to-many relationship", e);
+        }
+    }
+
+    private void saveRelatedEntity(Object relatedEntity) throws DAOException {
+        DatabaseDAO.saveEntity(relatedEntity, logger);
+    }
+
 }
