@@ -4,6 +4,7 @@ import com.whats2watch.w2w.annotations.*;
 import com.whats2watch.w2w.exceptions.DAOException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.*;
 
@@ -106,7 +107,7 @@ public class DatabaseDAO<T, K> implements DAO<T, K> {
                 }
             }
             return entity;
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             String errorMessage = String.format("Error mapping row to entity of type %s", type.getName());
             logger.error(errorMessage, e);
             throw new DAOException(errorMessage, e);
@@ -375,7 +376,7 @@ public class DatabaseDAO<T, K> implements DAO<T, K> {
             @SuppressWarnings("unchecked")
             FileSystemDAO<Object, Object> relatedDAO = new FileSystemDAO<>((Class<Object>) relatedEntity.getClass());
             relatedDAO.save(relatedEntity);
-        } catch (Exception e) {
+        } catch (DAOException e) {
             String errorMessage = String.format("Error saveRelatedEntity of type: %s", relatedEntity.getClass());
             logger.error(errorMessage, e);
             throw new DAOException(errorMessage, e);
