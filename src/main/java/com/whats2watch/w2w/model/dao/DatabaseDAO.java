@@ -36,7 +36,7 @@ public class DatabaseDAO<T> implements DAO<T> {
             saveCollectionFKs(entity);
 
             return rowsAffected > 0;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new DAOException("Error while saving entity to DB", e);
         }
     }
@@ -229,7 +229,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         }
     }
 
-    private void saveCollectionFKs(T entity) throws SQLException, DAOException, ClassNotFoundException {
+    private void saveCollectionFKs(T entity) throws SQLException, DAOException {
         // Iterate over the declared fields of the entity
         for (Field field : type.getDeclaredFields()) {
             if (isCollectionField(field) && field.isAnnotationPresent(ForeignKey.class)) {
