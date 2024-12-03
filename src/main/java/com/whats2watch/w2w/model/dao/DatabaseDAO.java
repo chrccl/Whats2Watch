@@ -58,7 +58,7 @@ public class DatabaseDAO<T> implements DAO<T> {
     @Override
     public Boolean deleteById(T entityId) throws DAOException {
         String tableName = type.getSimpleName().toLowerCase();
-        String sql = buildDeleteQuery(tableName, entityId);
+        String sql = buildDeleteQuery(tableName);
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             setPreparedStatementValues(stmt, entityId, true); // true: only primary key values
@@ -140,7 +140,7 @@ public class DatabaseDAO<T> implements DAO<T> {
         return String.format("SELECT * FROM %s WHERE %s", tableName, whereClause);
     }
 
-    private String buildDeleteQuery(String tableName, T entityId) throws DAOException {
+    private String buildDeleteQuery(String tableName) {
         return buildFindByIdQuery(tableName).replace("SELECT *", "DELETE");
     }
 
