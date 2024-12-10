@@ -1,6 +1,7 @@
 package com.whats2watch.w2w.model.dao;
 
 import com.whats2watch.w2w.config.Config;
+import com.whats2watch.w2w.exceptions.DAOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,7 +13,7 @@ public class ConnectionManager {
 
     private ConnectionManager() {}
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws DAOException {
         if (instance == null) {
             synchronized (ConnectionManager.class) {
                 if (instance == null) {
@@ -23,7 +24,7 @@ public class ConnectionManager {
 
                         instance = DriverManager.getConnection(url, user, password);
                     } catch (SQLException e) {
-                        throw new SQLException("Error connecting to the database", e);
+                        throw new DAOException("Error connecting to the database", e);
                     }
                 }
             }

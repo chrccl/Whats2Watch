@@ -1,7 +1,5 @@
 package com.whats2watch.w2w.model;
 
-import com.whats2watch.w2w.annotations.PersistenceConstructor;
-
 import java.util.Objects;
 
 public class TVSeries extends Media{
@@ -9,9 +7,6 @@ public class TVSeries extends Media{
     private Integer numberOfSeasons;
 
     private Integer numberOfEpisodes;
-
-    @PersistenceConstructor
-    TVSeries() { } //Package-Private Constructor
 
     private TVSeries(MediaBuilder builder) {
         super(builder);

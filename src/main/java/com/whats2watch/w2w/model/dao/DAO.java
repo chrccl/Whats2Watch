@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DAO<T, K> {
     void save(T entity) throws DAOException;
-    T findById(K entityK) throws DAOException;
-    void deleteById(K entityK) throws DAOException;
+    T findById(K entityKey) throws DAOException;
+    void deleteById(K entityKey) throws DAOException;
     List<T> findAll();
 }
