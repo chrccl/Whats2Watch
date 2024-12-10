@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FileSystemManager {
 
     private static volatile ObjectMapper objectMapper;
-    private static final String baseDirectory = "./data/";
+    private static final String BASE_DIRECTORY = "./data/";
 
     private FileSystemManager() {}
 
