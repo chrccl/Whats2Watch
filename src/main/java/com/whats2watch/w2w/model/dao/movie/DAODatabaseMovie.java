@@ -1,17 +1,23 @@
-package com.whats2watch.w2w.model.dao;
+package com.whats2watch.w2w.model.dao.movie;
 
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.Movie;
+import com.whats2watch.w2w.model.dao.DAO;
 
-import java.util.*;
+import java.sql.Connection;
+import java.util.List;
 
-public class DAODemoMovie implements DAO<Movie, Integer>{
+public class DAODatabaseMovie implements DAO<Movie, Integer> {
 
-    private static final Set<Movie> movies = new HashSet<>();
+    private Connection conn;
+
+    public DAODatabaseMovie(Connection conn) {
+        this.conn = conn;
+    }
 
     @Override
     public void save(Movie entity) throws DAOException {
-
+        //TODO
     }
 
     @Override
@@ -21,11 +27,11 @@ public class DAODemoMovie implements DAO<Movie, Integer>{
 
     @Override
     public void deleteById(Integer entityKey) throws DAOException {
-
+        //TODO
     }
 
     @Override
     public List<Movie> findAll() {
-        return new ArrayList<>(movies);
+        return List.of();
     }
 }

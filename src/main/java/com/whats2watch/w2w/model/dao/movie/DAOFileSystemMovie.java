@@ -1,22 +1,23 @@
-package com.whats2watch.w2w.model.dao;
+package com.whats2watch.w2w.model.dao.movie;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.Movie;
+import com.whats2watch.w2w.model.dao.DAO;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class DAODatabaseMovie implements DAO<Movie, Integer>{
+public class DAOFileSystemMovie implements DAO<Movie, Integer> {
 
-    private Connection conn;
+    private ObjectMapper mapper = new ObjectMapper();
 
-    public DAODatabaseMovie(Connection conn) {
-        this.conn = conn;
+    public DAOFileSystemMovie(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override
     public void save(Movie entity) throws DAOException {
-
+        //TODO
     }
 
     @Override
@@ -26,7 +27,7 @@ public class DAODatabaseMovie implements DAO<Movie, Integer>{
 
     @Override
     public void deleteById(Integer entityKey) throws DAOException {
-
+        //TODO
     }
 
     @Override
