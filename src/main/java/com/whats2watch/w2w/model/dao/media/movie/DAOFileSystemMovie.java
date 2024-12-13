@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.model.dao.movie;
+package com.whats2watch.w2w.model.dao.media.movie;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whats2watch.w2w.exceptions.DAOException;

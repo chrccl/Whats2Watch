@@ -1,7 +1,5 @@
 package com.whats2watch.w2w.model;
 
-import com.whats2watch.w2w.annotations.PersistenceConstructor;
-
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
@@ -25,9 +23,6 @@ public class Room {
     private Set<ProductionCompany> allowedProductionCompanies;
 
     private Set<RoomMember> roomMembers;
-
-    @PersistenceConstructor
-    Room() { } //Package-Private Constructor
 
     private Room(RoomBuilder builder) {
         this.code = builder.code;

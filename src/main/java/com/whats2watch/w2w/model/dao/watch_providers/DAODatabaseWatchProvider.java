@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.model.dao.watchProviders;
+package com.whats2watch.w2w.model.dao.watch_providers;
 
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.MediaId;
