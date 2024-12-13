@@ -17,7 +17,7 @@ public class MovieTMDBFetcher extends MediaTMDBFetcher<Movie> {
     protected Movie buildMedia(JSONObject json, int year) {
         JSONObject credits = json.getJSONObject("credits");
         return MediaFactory.createMovieInstance()
-                .mediaId(new MediaId(json.getString("title"), String.valueOf(year)))
+                .mediaId(new MediaId(json.getString("title"), year))
                 .plot(json.optString("overview", ""))
                 .posterUrl(json.optString("poster_path", ""))
                 .videoUrl(parseTrailerUrl(json))

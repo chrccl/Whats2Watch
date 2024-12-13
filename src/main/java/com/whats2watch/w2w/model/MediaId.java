@@ -6,9 +6,9 @@ public class MediaId {
 
     private String title;
 
-    private String year;
+    private Integer year;
 
-    public MediaId(String title, String year) {
+    public MediaId(String title, Integer year) {
         this.title = title;
         this.year = year;
     }
@@ -21,11 +21,11 @@ public class MediaId {
         this.title = title;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

@@ -27,7 +27,7 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
     }
 
     @Override
-    public List<Movie> findAll() {
-        return new ArrayList<>(movies);
+    public Set<Movie> findAll() throws DAOException  {
+        return movies;
     }
 }

@@ -6,7 +6,7 @@ import com.whats2watch.w2w.model.MediaId;
 import com.whats2watch.w2w.model.Movie;
 import com.whats2watch.w2w.model.dao.DAO;
 
-import java.util.List;
+import java.util.Set;
 
 public class DAOFileSystemMovie implements DAO<Movie, MediaId> {
 
@@ -32,7 +32,7 @@ public class DAOFileSystemMovie implements DAO<Movie, MediaId> {
     }
 
     @Override
-    public List<Movie> findAll() {
-        return List.of();
+    public Set<Movie> findAll() throws DAOException  {
+        return Set.of();
     }
 }

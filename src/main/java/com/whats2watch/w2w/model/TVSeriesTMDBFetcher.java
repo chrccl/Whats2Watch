@@ -15,7 +15,7 @@ public class TVSeriesTMDBFetcher extends MediaTMDBFetcher<TVSeries> {
     @Override
     protected TVSeries buildMedia(JSONObject json, int year) {
         return MediaFactory.createTVSeriesInstance()
-                .mediaId(new MediaId(json.getString("name"), String.valueOf(year)))
+                .mediaId(new MediaId(json.getString("name"), year))
                 .plot(json.optString("overview", ""))
                 .posterUrl(json.optString("poster_path", ""))
                 .videoUrl(parseTrailerUrl(json))
