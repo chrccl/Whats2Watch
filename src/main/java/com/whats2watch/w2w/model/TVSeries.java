@@ -46,9 +46,9 @@ public class TVSeries extends Media{
     @Override
     public String toString() {
         return "TVSeries{" +
-                "title='" + title + '\'' +
+                "title='" + mediaId.getTitle() + '\'' +
                 ", plot='" + plot + '\'' +
-                ", year=" + year +
+                ", year=" + mediaId.getYear() +
                 ", genres=" + genres +
                 ", numberOfSeasons=" + numberOfSeasons +
                 ", numberOfEpisodes=" + numberOfEpisodes +
@@ -89,7 +89,6 @@ public class TVSeries extends Media{
 
         @Override
         public TVSeries build() {
-            validate();
             return new TVSeries(this);
         }
     }

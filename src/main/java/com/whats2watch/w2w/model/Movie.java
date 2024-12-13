@@ -35,9 +35,9 @@ public class Movie extends Media{
     @Override
     public String toString() {
         return "Movie{" +
-                "title='" + title + '\'' +
+                "title='" + mediaId.getTitle() + '\'' +
                 ", plot='" + plot + '\'' +
-                ", year=" + year +
+                ", year=" + mediaId.getYear() +
                 ", genres=" + genres +
                 ", characters=" + characters +
                 ", director='" + director + '\'' +
@@ -65,7 +65,6 @@ public class Movie extends Media{
 
         @Override
         public Movie build() {
-            validate();
             return new Movie(this);
         }
     }

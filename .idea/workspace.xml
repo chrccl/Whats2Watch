@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="" />
+    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/Media.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/Media.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/movie/DAODatabaseMovie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/movie/DAODatabaseMovie.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,8 +83,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.145" />
       </set>
     </attachedChunks>
   </component>
@@ -113,7 +117,12 @@
       <workItem from="1733246217731" duration="47000" />
       <workItem from="1733246580830" duration="1462000" />
       <workItem from="1733397657152" duration="830000" />
-      <workItem from="1733848304477" duration="4017000" />
+      <workItem from="1733848304477" duration="4236000" />
+      <workItem from="1733852742691" duration="26000" />
+      <workItem from="1733942213834" duration="997000" />
+      <workItem from="1734016067640" duration="104000" />
+      <workItem from="1734023812014" duration="1358000" />
+      <workItem from="1734099567242" duration="1296000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,7 @@ import java.util.Set;
 
 public abstract class Media {
 
-    protected String title;
+    protected MediaId mediaId;
 
     protected String plot;
 
@@ -17,8 +17,6 @@ public abstract class Media {
 
     protected Double voteAverage;
 
-    protected Integer year;
-
     protected Set<Character> characters;
 
     protected Set<Genre> genres;
@@ -28,28 +26,24 @@ public abstract class Media {
     protected Set<WatchProvider> watchProviders;
 
     protected Media(MediaBuilder<?> builder) {
-        this.title = builder.title;
+        this.mediaId = builder.mediaId;
         this.plot = builder.plot;
         this.posterUrl = builder.posterUrl;
         this.videoUrl = builder.videoUrl;
         this.popularity = builder.popularity;
         this.voteAverage = builder.voteAverage;
-        this.year = builder.year;
         this.characters = builder.characters;
         this.genres = builder.genres;
         this.productionCompanies = builder.productionCompanies;
         this.watchProviders = builder.watchProviders;
     }
 
-    protected Media() {
+    public MediaId getMediaId() {
+        return mediaId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setMediaId(MediaId mediaId) {
+        this.mediaId = mediaId;
     }
 
     public String getPlot() {
@@ -82,14 +76,6 @@ public abstract class Media {
 
     public void setPopularity(Double popularity) {
         this.popularity = popularity;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
     }
 
     public Double getVoteAverage() {
@@ -135,17 +121,18 @@ public abstract class Media {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Media)) return false;
+
         Media media = (Media) o;
-        return Objects.equals(title, media.title) && Objects.equals(year, media.year);
+        return Objects.equals(getMediaId(), media.getMediaId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, year);
+        return Objects.hashCode(getMediaId());
     }
 
     public abstract static class MediaBuilder<T extends MediaBuilder<T>>{
-        protected String title;
+        protected MediaId mediaId;
         protected String plot;
         protected String posterUrl;
         protected String videoUrl;
@@ -157,8 +144,8 @@ public abstract class Media {
         protected Set<ProductionCompany> productionCompanies = Set.of();
         protected Set<WatchProvider> watchProviders = Set.of();
 
-        public T title(String title) {
-            this.title = title;
+        public T mediaId(MediaId mediaId) {
+            this.mediaId = mediaId;
             return self();
         }
 
@@ -187,11 +174,6 @@ public abstract class Media {
             return self();
         }
 
-        public T year(Integer year) {
-            this.year = year;
-            return self();
-        }
-
         public T characters(Set<Character> characters) {
             this.characters = characters;
             return self();
@@ -216,10 +198,5 @@ public abstract class Media {
 
         public abstract Media build();
 
-        protected void validate() {
-            if (title == null || year == null) {
-                throw new IllegalStateException("Title and year are required fields.");
-            }
-        }
     }
 }

@@ -17,13 +17,12 @@ public class MovieTMDBFetcher extends MediaTMDBFetcher<Movie> {
     protected Movie buildMedia(JSONObject json, int year) {
         JSONObject credits = json.getJSONObject("credits");
         return MediaFactory.createMovieInstance()
-                .title(json.getString("title"))
+                .mediaId(new MediaId(json.getString("title"), String.valueOf(year)))
                 .plot(json.optString("overview", ""))
                 .posterUrl(json.optString("poster_path", ""))
                 .videoUrl(parseTrailerUrl(json))
                 .popularity(json.optDouble("popularity"))
                 .voteAverage(json.optDouble("vote_average"))
-                .year(year)
                 .genres(parseGenres(json.getJSONArray("genres")))
                 .productionCompanies(parseProductionCompanies(json.getJSONArray("production_companies")))
                 .watchProviders(parseWatchProviders(json))
