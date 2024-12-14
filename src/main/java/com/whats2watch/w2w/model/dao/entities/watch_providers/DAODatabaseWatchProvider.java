@@ -1,8 +1,7 @@
 package com.whats2watch.w2w.model.dao.entities.watch_providers;
 
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.MediaId;
-import com.whats2watch.w2w.model.WatchProvider;
+import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 
 import java.sql.*;
@@ -66,17 +65,22 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
     }
 
     public Set<WatchProvider> findByMovieId(MediaId mediaId) throws DAOException {
-        String sql = "SELECT wp.provider_name, wp.logo_url " +
-                "FROM watch_providers wp " +
-                "JOIN movie_watch_providers mwp ON wp.provider_name = mwp.provider_name " +
-                "WHERE mwp.title = ? AND mwp.year = ?";
+        return findByMediaId(mediaId, Movie.class);
+    }
+
+    public Set<WatchProvider> findByTVSeriesId(MediaId mediaId) throws DAOException {
+        return findByMediaId(mediaId, TVSeries.class);
+    }
+
+    private Set<WatchProvider> findByMediaId(MediaId mediaId, Class<? extends Media> clazz) throws DAOException {
+        String sql = buildWatchProviderSqlForMedia(clazz);
         Set<WatchProvider> providers = new HashSet<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, mediaId.getTitle());
             stmt.setInt(2, mediaId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    providers.add(new WatchProvider(rs.getString("provider_name"),
+                    providers.add(new WatchProvider(rs.getString("watch_provider"),
                             rs.getString("logo_url")));
                 }
             }
@@ -84,6 +88,22 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
             throw new DAOException("Error finding watch providers by movie ID", e);
         }
         return providers;
+    }
+
+    private String buildWatchProviderSqlForMedia(Class<? extends Media> clazz) {
+        String sql;
+        if(clazz.equals(Media.class)) {
+            sql = "SELECT wp.provider_name, wp.logo_url " +
+                    "FROM watch_providers wp " +
+                    "JOIN movie_watch_providers mwp ON wp.provider_name = mwp.watch_provider " +
+                    "WHERE mwp.title = ? AND mwp.year = ?";
+        }else{
+            sql = "SELECT wp.provider_name, wp.logo_url " +
+                    "FROM watch_providers wp " +
+                    "JOIN tvseries_watch_providers mwp ON wp.provider_name = mwp.watch_provider " +
+                    "WHERE mwp.title = ? AND mwp.year = ?";
+        }
+        return sql;
     }
 
     public Set<WatchProvider> findByRoomCode(String roomCode) throws DAOException {

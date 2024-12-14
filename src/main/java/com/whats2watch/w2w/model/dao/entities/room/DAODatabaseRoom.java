@@ -25,7 +25,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     @Override
     public void save(Room entity) throws DAOException {
-        String query = "INSERT INTO room (code, name, creation_date, media_type, decade) " +
+        String query = "INSERT INTO rooms (code, name, creation_date, media_type, decade) " +
                 "VALUES (?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE name = VALUES(name), creation_date = VALUES(creation_date), " +
                 "media_type = VALUES(media_type), decade = VALUES(decade);";
@@ -46,7 +46,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     @Override
     public Room findById(String entityKey) throws DAOException {
-        String query = "SELECT * FROM room WHERE code = ?";
+        String query = "SELECT * FROM rooms WHERE code = ?";
         Room room = null;
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, entityKey);
@@ -77,7 +77,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     @Override
     public void deleteById(String entityKey) throws DAOException {
-        String query = "DELETE FROM room WHERE code = ?";
+        String query = "DELETE FROM rooms WHERE code = ?";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, entityKey);
             ps.executeUpdate();
@@ -88,7 +88,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     @Override
     public Set<Room> findAll() throws DAOException {
-        String query = "SELECT * FROM room;";
+        String query = "SELECT * FROM rooms;";
         Set<Room> rooms = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)){
             while(rs.next()){
@@ -116,11 +116,19 @@ public class DAODatabaseRoom implements DAO<Room, String> {
     }
 
     public void updateLikedMedia(String roomCode, User user, Set<Media> media) throws DAOException {
-        addMediaToMember(roomCode, user.getEmail(), media, "room_member_liked_media");
+        if(media.stream().allMatch(element -> element instanceof Movie)){
+            addMediaToMember(roomCode, user.getEmail(), media, "room_member_liked_movies");
+        }else{
+            addMediaToMember(roomCode, user.getEmail(), media, "room_member_liked_tvseries");
+        }
     }
 
     public void updatePassedMedia(String roomCode, User user, Set<Media> media) throws DAOException {
-        addMediaToMember(roomCode, user.getEmail(), media, "room_member_passed_media");
+        if(media.stream().allMatch(element -> element instanceof Movie)){
+            addMediaToMember(roomCode, user.getEmail(), media, "room_member_passed_movies");
+        }else{
+            addMediaToMember(roomCode, user.getEmail(), media, "room_member_passed_tvseries");
+        }
     }
 
     private void saveAllowedGenres(Room room) throws SQLException {
@@ -252,7 +260,12 @@ public class DAODatabaseRoom implements DAO<Room, String> {
     }
 
     private void fetchLikedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia mediaDAO) throws SQLException, DAOException {
-        String likedMediaQuery = "SELECT title, year FROM room_member_liked_media WHERE room_code = ? AND user_email = ?";
+        String likedMediaQuery;
+        if(mediaDAO.getClass().equals(DAODatabaseMovie.class)){
+            likedMediaQuery = "SELECT title, year FROM room_member_liked_movies WHERE room_code = ? AND user_email = ?";
+        }else{
+            likedMediaQuery = "SELECT title, year FROM room_member_liked_tvseries WHERE room_code = ? AND user_email = ?";
+        }
 
         try (PreparedStatement likedPs = conn.prepareStatement(likedMediaQuery)) {
             likedPs.setString(1, roomCode);
@@ -267,8 +280,12 @@ public class DAODatabaseRoom implements DAO<Room, String> {
     }
 
     private void fetchPassedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia mediaDAO) throws SQLException, DAOException {
-        String passedMediaQuery = "SELECT title, year FROM room_member_passed_media WHERE room_code = ? AND user_email = ?";
-
+        String passedMediaQuery;
+        if(mediaDAO.getClass().equals(DAODatabaseMovie.class)){
+            passedMediaQuery = "SELECT title, year FROM room_member_passed_movies WHERE room_code = ? AND user_email = ?";
+        }else{
+            passedMediaQuery = "SELECT title, year FROM room_member_passed_tvseries WHERE room_code = ? AND user_email = ?";
+        }
         try (PreparedStatement passedPs = conn.prepareStatement(passedMediaQuery)) {
             passedPs.setString(1, roomCode);
             passedPs.setString(2, userEmail);

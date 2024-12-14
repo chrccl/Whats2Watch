@@ -50,7 +50,7 @@ public class DAODatabaseMovie extends DAODatabaseMedia<Movie> {
 
     @Override
     protected String getTableName() {
-        return "movies";
+        return "movie";
     }
 }
 

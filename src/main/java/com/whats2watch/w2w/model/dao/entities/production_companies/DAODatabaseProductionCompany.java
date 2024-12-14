@@ -1,8 +1,7 @@
 package com.whats2watch.w2w.model.dao.entities.production_companies;
 
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.MediaId;
-import com.whats2watch.w2w.model.ProductionCompany;
+import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 
 import java.sql.*;
@@ -65,17 +64,22 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
     }
 
     public Set<ProductionCompany> findByMovieId(MediaId movieId) throws DAOException {
-        String sql = "SELECT pc.company_name, pc.logo_url " +
-                "FROM production_companies pc " +
-                "JOIN movie_production_companies mpc ON pc.company_name = mpc.company_name " +
-                "WHERE mpc.title = ? AND mpc.year = ?";
+       return findByMediaId(movieId, Movie.class);
+    }
+
+    public Set<ProductionCompany> findByTVSeriesId(MediaId movieId) throws DAOException {
+        return findByMediaId(movieId, TVSeries.class);
+    }
+
+    private Set<ProductionCompany> findByMediaId(MediaId movieId, Class<? extends Media> clazz) throws DAOException {
+        String sql = buildProductionCompanyQueryForMedia(clazz);
         Set<ProductionCompany> companies = new HashSet<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, movieId.getTitle());
             stmt.setInt(2, movieId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    companies.add(new ProductionCompany(rs.getString("company_name"),
+                    companies.add(new ProductionCompany(rs.getString("production_company"),
                             rs.getString("logo_url")));
                 }
             }
@@ -83,6 +87,22 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
             throw new DAOException("Error finding production companies by movie ID", e);
         }
         return companies;
+    }
+
+    private String buildProductionCompanyQueryForMedia(Class<? extends Media> clazz) {
+        String sql;
+        if(clazz.equals(Movie.class)) {
+            sql = "SELECT pc.company_name, pc.logo_url " +
+                    "FROM production_companies pc " +
+                    "JOIN movie_production_companies mpc ON pc.company_name = mpc.production_company " +
+                    "WHERE mpc.title = ? AND mpc.year = ?";
+        }else{
+            sql = "SELECT pc.company_name, pc.logo_url " +
+                    "FROM production_companies pc " +
+                    "JOIN tvseries_production_companies mpc ON pc.company_name = mpc.production_company " +
+                    "WHERE mpc.title = ? AND mpc.year = ?";
+        }
+        return sql;
     }
 
     public Set<ProductionCompany> findByRoomCode(String roomCode) throws DAOException {

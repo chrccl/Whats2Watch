@@ -1,10 +1,8 @@
 package com.whats2watch.w2w.model.dao.entities.character;
 
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.Actor;
+import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.Character;
-import com.whats2watch.w2w.model.Gender;
-import com.whats2watch.w2w.model.MediaId;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.actor.DAODatabaseActor;
 
@@ -57,7 +55,6 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
     public Character findById(String entityKey) throws DAOException {
         String sql = "SELECT c.character_name, a.full_name, a.popularity, a.gender " +
                 "FROM characters c " +
-                "JOIN movie_characters mc ON c.character_name = mc.character_name " +
                 "JOIN actors a ON c.actor_name = a.full_name " +
                 "WHERE c.character_name = ?;";
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -80,11 +77,15 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
     }
 
     public Set<Character> findByMovieId(MediaId mediaId) throws DAOException {
-        String sql = "SELECT c.character_name, a.full_name, a.popularity, a.gender " +
-                "FROM characters c " +
-                "JOIN movie_characters mc ON c.character_name = mc.character_name " +
-                "JOIN actors a ON c.actor_name = a.full_name " +
-                "WHERE mc.title = ? AND mc.year = ?;";
+        return findByMediaId(mediaId, Movie.class);
+    }
+
+    public Set<Character> findByTVSeriesId(MediaId mediaId) throws DAOException {
+        return findByMediaId(mediaId, TVSeries.class);
+    }
+
+    private Set<Character> findByMediaId(MediaId mediaId, Class<? extends Media> clazz) throws DAOException {
+        String sql = buildCharacterQueryForMedia(clazz);
         Set<Character> characters = new HashSet<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, mediaId.getTitle());
@@ -94,13 +95,31 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
                     Actor actor = new Actor(rs.getString("full_name"),
                             rs.getDouble("popularity"),
                             Gender.valueOf(rs.getString("gender").toUpperCase()));
-                    characters.add(new Character(rs.getString("character_name"), actor));
+                    characters.add(new Character(rs.getString("character"), actor));
                 }
                 return characters;
             }
         } catch (SQLException e) {
             throw new DAOException("Error finding characters by movie ID", e);
         }
+    }
+
+    private String buildCharacterQueryForMedia(Class<? extends Media> clazz) {
+        String sql;
+        if(clazz.equals(Movie.class)){
+            sql ="SELECT c.character_name, a.full_name, a.popularity, a.gender " +
+                    "FROM characters c " +
+                    "JOIN movie_characters mc ON c.character_name = mc.character " +
+                    "JOIN actors a ON c.actor_name = a.full_name " +
+                    "WHERE mc.title = ? AND mc.year = ?;";
+        } else{
+            sql ="SELECT c.character_name, a.full_name, a.popularity, a.gender " +
+                    "FROM characters c " +
+                    "JOIN tvseries_characters mc ON c.character_name = mc.character " +
+                    "JOIN actors a ON c.actor_name = a.full_name " +
+                    "WHERE mc.title = ? AND mc.year = ?;";
+        }
+        return sql;
     }
 
     @Override

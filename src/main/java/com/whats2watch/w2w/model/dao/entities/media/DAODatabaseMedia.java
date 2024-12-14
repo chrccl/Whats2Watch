@@ -27,17 +27,19 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaGenres(T entity) throws SQLException {
-        String deleteQuery = "DELETE FROM " + getTableName() + "_genre WHERE title = ?";
+        String deleteQuery = "DELETE FROM " + getTableName() + "_genres WHERE title = ? AND year = ?";
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
+            deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = "INSERT INTO " + getTableName() + "_genre (title, genre) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO " + getTableName() + "_genres (title, year, genre) VALUES (?, ?, ?)";
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)) {
             for (Genre genre : entity.getGenres()) {
                 insertPs.setString(1, entity.getMediaId().getTitle());
-                insertPs.setString(2, genre.name());
+                insertPs.setInt(2, entity.getMediaId().getYear());
+                insertPs.setString(3, genre.name());
                 insertPs.addBatch();
             }
             insertPs.executeBatch();
@@ -45,17 +47,19 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaCharacters(T entity) throws SQLException {
-        String deleteQuery = "DELETE FROM " + getTableName() + "_character WHERE title = ?";
+        String deleteQuery = "DELETE FROM " + getTableName() + "_characters WHERE title = ? AND year = ?";
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
+            deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = "INSERT INTO" + getTableName() + "_genre (title, character) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO" + getTableName() + "_characters (title, year, character) VALUES (?, ?, ?)";
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)) {
             for (Character character: entity.getCharacters()) {
                 insertPs.setString(1, entity.getMediaId().getTitle());
-                insertPs.setString(2, character.getCharacterName());
+                insertPs.setInt(2, entity.getMediaId().getYear());
+                insertPs.setString(3, character.getCharacterName());
                 insertPs.addBatch();
             }
             insertPs.executeBatch();
@@ -63,17 +67,19 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaProductionCompanies(T entity) throws SQLException {
-        String deleteQuery = "DELETE FROM " + getTableName() + "_production_company WHERE title = ?";
+        String deleteQuery = "DELETE FROM " + getTableName() + "_production_companies WHERE title = ? AND year = ?";
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
+            deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = "INSERT INTO " + getTableName() + "_production_company (title, production_company) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO " + getTableName() + "_production_companies (title, year, production_company) VALUES (?, ?, ?)";
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)){
             for(ProductionCompany productionCompany: entity.getProductionCompanies()){
                 insertPs.setString(1, entity.getMediaId().getTitle());
-                insertPs.setString(2, productionCompany.getCompanyName());
+                insertPs.setInt(2, entity.getMediaId().getYear());
+                insertPs.setString(3, productionCompany.getCompanyName());
                 insertPs.addBatch();
             }
             insertPs.executeBatch();
@@ -81,17 +87,19 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaWatchProviders(T entity) throws SQLException {
-        String deleteQuery = "DELETE FROM " + getTableName() + "_watch_provider WHERE title = ?";
+        String deleteQuery = "DELETE FROM " + getTableName() + "_watch_providers WHERE title = ? AND year = ?";
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
+            deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = "INSERT INTO " + getTableName() + "_watch_provider (title, watch_provider) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO " + getTableName() + "_watch_providers (title, year, watch_provider) VALUES (?, ?, ?)";
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)){
             for(WatchProvider watchProvider: entity.getWatchProviders()){
                 insertPs.setString(1, entity.getMediaId().getTitle());
-                insertPs.setString(2, watchProvider.getProviderName());
+                insertPs.setInt(2, entity.getMediaId().getYear());
+                insertPs.setString(3, watchProvider.getProviderName());
                 insertPs.addBatch();
             }
             insertPs.executeBatch();
@@ -173,10 +181,26 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     protected void loadAssociations(T.MediaBuilder media, MediaId id) throws DAOException {
-        media.genres(new DAODatabaseGenre(conn).findByMovieId(id));
-        media.characters(new DAODatabaseCharacter(conn).findByMovieId(id));
-        media.productionCompanies(new DAODatabaseProductionCompany(conn).findByMovieId(id));
-        media.watchProviders(new DAODatabaseWatchProvider(conn).findByMovieId(id));
+        media.genres(
+                media instanceof Movie.MediaBuilder ?
+                    new DAODatabaseGenre(conn).findByMovieId(id) :
+                    new DAODatabaseGenre(conn).findByTVSeriesId(id)
+        );
+        media.characters(
+                media instanceof Movie.MediaBuilder ?
+                    new DAODatabaseCharacter(conn).findByMovieId(id) :
+                    new DAODatabaseCharacter(conn).findByTVSeriesId(id)
+        );
+        media.productionCompanies(
+                media instanceof Movie.MediaBuilder ?
+                new DAODatabaseProductionCompany(conn).findByMovieId(id) :
+                new DAODatabaseProductionCompany(conn).findByTVSeriesId(id)
+        );
+        media.watchProviders(
+                media instanceof Movie.MediaBuilder ?
+                new DAODatabaseWatchProvider(conn).findByMovieId(id) :
+                new DAODatabaseWatchProvider(conn).findByTVSeriesId(id)
+        );
     }
 
     protected abstract void saveMedia(T entity) throws DAOException;

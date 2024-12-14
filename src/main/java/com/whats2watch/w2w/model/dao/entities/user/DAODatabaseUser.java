@@ -19,7 +19,7 @@ public class DAODatabaseUser implements DAO<User, String> {
 
     @Override
     public void save(User entity) throws DAOException {
-        String query = "INSERT INTO user (email, name, surname, gender, password) VALUES (?, ?, ?, ?, ?) " +
+        String query = "INSERT INTO users (email, name, surname, gender, password) VALUES (?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE name = VALUES(name), surname = VALUES(surname), gender = VALUES(gender), password = VALUES(password);";
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -36,7 +36,7 @@ public class DAODatabaseUser implements DAO<User, String> {
 
     @Override
     public User findById(String entityKey) throws DAOException {
-        String query = "SELECT * FROM user WHERE email = ?";
+        String query = "SELECT * FROM users WHERE email = ?";
         User user = null;
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -61,7 +61,7 @@ public class DAODatabaseUser implements DAO<User, String> {
 
     @Override
     public void deleteById(String entityKey) throws DAOException {
-        String query = "DELETE FROM user WHERE email = ?";
+        String query = "DELETE FROM users WHERE email = ?";
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, entityKey);
             ps.executeUpdate();
@@ -72,7 +72,7 @@ public class DAODatabaseUser implements DAO<User, String> {
 
     @Override
     public Set<User> findAll() throws DAOException {
-        String query = "SELECT * FROM user";
+        String query = "SELECT * FROM users";
         Set<User> users = new HashSet<>();
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {

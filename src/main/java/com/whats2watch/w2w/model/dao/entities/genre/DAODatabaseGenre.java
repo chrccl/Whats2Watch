@@ -1,8 +1,7 @@
 package com.whats2watch.w2w.model.dao.entities.genre;
 
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.Genre;
-import com.whats2watch.w2w.model.MediaId;
+import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 
 import java.sql.*;
@@ -60,11 +59,16 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
         return null;
     }
 
-    public Set<Genre> findByMovieId(MediaId movieId) throws DAOException {
-        String sql = "SELECT g.genre_name " +
-            "FROM genres g " +
-            "INNER JOIN movie_genres mg ON g.genre_name = mg.genre_name " +
-            "WHERE mg.title = ? AND mg.year = ?;";
+    public Set<Genre> findByMovieId(MediaId mediaId) throws DAOException {
+        return findByMediaId(mediaId, Movie.class);
+    }
+
+    public Set<Genre> findByTVSeriesId(MediaId mediaId) throws DAOException {
+        return findByMediaId(mediaId, TVSeries.class);
+    }
+
+    private Set<Genre> findByMediaId(MediaId movieId, Class<? extends Media> clazz) throws DAOException {
+        String sql = generateGenreSqlForMedia(clazz);
         Set<Genre> genres = new HashSet<>();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -72,7 +76,7 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
             stmt.setInt(2, movieId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    genres.add(Genre.valueOf(rs.getString("genre_name").toUpperCase()));
+                    genres.add(Genre.valueOf(rs.getString("genre").toUpperCase()));
                 }
             }
         } catch (SQLException e) {
@@ -82,6 +86,22 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
         }
 
         return genres;
+    }
+
+    private String generateGenreSqlForMedia(Class<? extends Media> clazz) {
+        String sql;
+        if(clazz.equals(Movie.class)) {
+            sql = "SELECT g.genre_name " +
+                    "FROM genres g " +
+                    "INNER JOIN movie_genres mg ON g.genre_name = mg.genre " +
+                    "WHERE mg.title = ? AND mg.year = ?;";
+        }else{
+            sql = "SELECT g.genre_name " +
+                    "FROM genres g " +
+                    "INNER JOIN tvseries_genres mg ON g.genre_name = mg.genre " +
+                    "WHERE mg.title = ? AND mg.year = ?;";
+        }
+        return sql;
     }
 
     public Set<Genre> findByRoomCode(String roomCode) throws DAOException {
