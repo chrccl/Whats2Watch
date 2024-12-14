@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class DAODatabaseProductionCompany implements DAO<ProductionCompany, String> {
 
-    private Connection conn;
+    private final Connection conn;
 
     public DAODatabaseProductionCompany(Connection conn) {
         this.conn = conn;
@@ -73,6 +73,26 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, movieId.getTitle());
             stmt.setInt(2, movieId.getYear());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    companies.add(new ProductionCompany(rs.getString("company_name"),
+                            rs.getString("logo_url")));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error finding production companies by movie ID", e);
+        }
+        return companies;
+    }
+
+    public Set<ProductionCompany> findByRoomCode(String roomCode) throws DAOException {
+        String sql = "SELECT pc.company_name, pc.logo_url " +
+                "FROM production_companies pc " +
+                "JOIN room_production_company rpc ON pc.company_name = rpc.production_company_name " +
+                "WHERE rpc.room_code = ?";
+        Set<ProductionCompany> companies = new HashSet<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, roomCode);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     companies.add(new ProductionCompany(rs.getString("company_name"),

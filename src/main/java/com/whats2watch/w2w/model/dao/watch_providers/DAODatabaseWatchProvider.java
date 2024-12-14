@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
 
-    private Connection conn;
+    private final Connection conn;
 
     public DAODatabaseWatchProvider(Connection conn) {
         this.conn = conn;
@@ -74,6 +74,26 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, mediaId.getTitle());
             stmt.setInt(2, mediaId.getYear());
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    providers.add(new WatchProvider(rs.getString("provider_name"),
+                            rs.getString("logo_url")));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error finding watch providers by movie ID", e);
+        }
+        return providers;
+    }
+
+    public Set<WatchProvider> findByRoomCode(String roomCode) throws DAOException {
+        String sql = "SELECT wp.provider_name, wp.logo_url " +
+                "FROM watch_providers wp " +
+                "JOIN room_watch_provider rwp ON wp.provider_name = rwp.watch_provider_name " +
+                "WHERE rwp.room_code = ?";
+        Set<WatchProvider> providers = new HashSet<>();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, roomCode);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     providers.add(new WatchProvider(rs.getString("provider_name"),

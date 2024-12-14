@@ -16,7 +16,7 @@ public class Room {
 
     private Integer decade;
 
-    private Set<String> allowedGenres;
+    private Set<Genre> allowedGenres;
 
     private Set<WatchProvider> allowedProviders;
 
@@ -76,11 +76,11 @@ public class Room {
         this.decade = decade;
     }
 
-    public Set<String> getAllowedGenres() {
+    public Set<Genre> getAllowedGenres() {
         return allowedGenres;
     }
 
-    public void setAllowedGenres(Set<String> allowedGenres) {
+    public void setAllowedGenres(Set<Genre> allowedGenres) {
         this.allowedGenres = allowedGenres;
     }
 
@@ -144,7 +144,7 @@ public class Room {
         private LocalDate creationDate;
         private MediaType mediaType;
         private Integer decade;
-        private Set<String> allowedGenres = Set.of();
+        private Set<Genre> allowedGenres = Set.of();
         private Set<WatchProvider> allowedProviders = Set.of();
         private Set<ProductionCompany> allowedProductionCompanies = Set.of();
         private Set<RoomMember> roomMembers = Set.of();
@@ -174,7 +174,7 @@ public class Room {
             return this;
         }
 
-        public RoomBuilder allowedGenres(Set<String> allowedGenres) {
+        public RoomBuilder allowedGenres(Set<Genre> allowedGenres) {
             this.allowedGenres = allowedGenres;
             return this;
         }

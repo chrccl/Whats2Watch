@@ -84,6 +84,29 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
         return genres;
     }
 
+    public Set<Genre> findByRoomCode(String roomCode) throws DAOException {
+        String sql = "SELECT g.genre_name " +
+            "FROM genres g " +
+            "INNER JOIN room_genre rg ON g.genre_name = rg.genre " +
+            "WHERE rg.room_code = ?;";
+        Set<Genre> genres = new HashSet<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, roomCode);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    genres.add(Genre.valueOf(rs.getString("genre").toUpperCase()));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error retrieving genres for room code: " + roomCode, e);
+        } catch (IllegalArgumentException e) {
+            throw new DAOException("Invalid genre found for room code: " + roomCode, e);
+        }
+
+        return genres;
+    }
+
     @Override
     public void deleteById(String entityKey) throws DAOException {
         String sql = "DELETE FROM genres WHERE genre_name = ?;";

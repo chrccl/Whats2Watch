@@ -42,10 +42,10 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             DAO<Actor, String> actorDAO = new DAODatabaseActor(conn);
             for (Character entity : entities) {
+                actorDAO.save(entity.getActor()); // In order to ensure associated actors are saved
                 stmt.setString(1, entity.getCharacterName());
                 stmt.setString(2, entity.getActor().getFullName());
                 stmt.addBatch();
-                actorDAO.save(entity.getActor()); // Ensure associated actors are saved
             }
             stmt.executeBatch();
         } catch (SQLException e) {
