@@ -31,7 +31,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaGenres(T entity) throws SQLException {
-        String deleteQuery = DELETE_FROM + getTableName() + "_genres WHERE title = ? AND year = ?";
+        String deleteQuery = String.format("%s%s%s", DELETE_FROM, getTableName(), "_genres WHERE title = ? AND year = ?");
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
             deletePs.setInt(2, entity.getMediaId().getYear());
