@@ -46,7 +46,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     @Override
     public Room findById(String entityKey) throws DAOException {
-        String query = "SELECT * FROM rooms WHERE code = ?";
+        String query = "SELECT code, name, creation_date, media_type, decade FROM rooms WHERE code = ?";
         Room room = null;
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, entityKey);
@@ -88,7 +88,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     @Override
     public Set<Room> findAll() throws DAOException {
-        String query = "SELECT * FROM rooms;";
+        String query = "SELECT code, name, creation_date, media_type, decade FROM rooms;";
         Set<Room> rooms = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)){
             while(rs.next()){
@@ -207,9 +207,9 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         String query = String.format("INSERT INTO %s (room_code, user_email, title, year) VALUES (?, ?, ?, ?)", tableName);
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, roomCode);
+            ps.setString(2, userEmail);
             for (Media media : mediaSet) {
-                ps.setString(1, roomCode);
-                ps.setString(2, userEmail);
                 ps.setString(3, media.getMediaId().getTitle());
                 ps.setInt(4, media.getMediaId().getYear());
                 ps.addBatch();
@@ -237,7 +237,9 @@ public class DAODatabaseRoom implements DAO<Room, String> {
     private <T extends Media> Set<RoomMember> findRoomMembers(String roomCode, Class<T> mediaType) throws DAOException {
         String memberQuery = "SELECT user_email FROM room_member WHERE room_code = ?";
         Set<RoomMember> members = new HashSet<>();
-        DAODatabaseMedia mediaDAO = mediaType.equals(Movie.class) ? new DAODatabaseMovie(conn) : new DAODatabaseTVSeries(conn);
+        DAODatabaseMedia<? extends Media> mediaDAO = mediaType.equals(Movie.class) ?
+                new DAODatabaseMovie(conn) :
+                new DAODatabaseTVSeries(conn);
 
         try (PreparedStatement memberPs = conn.prepareStatement(memberQuery)) {
             memberPs.setString(1, roomCode);
@@ -259,7 +261,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         return members;
     }
 
-    private void fetchLikedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia mediaDAO) throws SQLException, DAOException {
+    private void fetchLikedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException, DAOException {
         String likedMediaQuery;
         if(mediaDAO.getClass().equals(DAODatabaseMovie.class)){
             likedMediaQuery = "SELECT title, year FROM room_member_liked_movies WHERE room_code = ? AND user_email = ?";
@@ -279,7 +281,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         }
     }
 
-    private void fetchPassedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia mediaDAO) throws SQLException, DAOException {
+    private void fetchPassedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException, DAOException {
         String passedMediaQuery;
         if(mediaDAO.getClass().equals(DAODatabaseMovie.class)){
             passedMediaQuery = "SELECT title, year FROM room_member_passed_movies WHERE room_code = ? AND user_email = ?";
@@ -298,7 +300,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         }
     }
 
-    private Media fetchMediaFromResultSet(ResultSet rs, DAODatabaseMedia mediaDAO) throws SQLException, DAOException {
+    private Media fetchMediaFromResultSet(ResultSet rs, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException, DAOException {
         String title = rs.getString("title");
         Integer year = rs.getInt("year");
         return mediaDAO.findById(new MediaId(title, year));

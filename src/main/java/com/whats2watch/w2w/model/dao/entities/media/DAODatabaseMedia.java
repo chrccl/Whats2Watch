@@ -180,7 +180,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
         }
     }
 
-    protected void loadAssociations(T.MediaBuilder media, MediaId id) throws DAOException {
+    protected void loadAssociations(T.MediaBuilder<?> media, MediaId id) throws DAOException {
         media.genres(
                 media instanceof Movie.MediaBuilder ?
                     new DAODatabaseGenre(conn).findByMovieId(id) :

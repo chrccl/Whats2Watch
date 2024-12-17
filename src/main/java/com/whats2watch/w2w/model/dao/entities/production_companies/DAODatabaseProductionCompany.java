@@ -138,7 +138,7 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
 
     @Override
     public Set<ProductionCompany> findAll() throws DAOException {
-        String sql = "SELECT * FROM production_companies";
+        String sql = "SELECT company_name, logo_url FROM production_companies";
         Set<ProductionCompany> companies = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

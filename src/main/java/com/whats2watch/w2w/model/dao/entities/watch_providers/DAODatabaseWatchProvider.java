@@ -139,7 +139,7 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
 
     @Override
     public Set<WatchProvider> findAll() throws DAOException {
-        String sql = "SELECT * FROM watch_providers";
+        String sql = "SELECT provider_name, logo_url FROM watch_providers";
         Set<WatchProvider> providers = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

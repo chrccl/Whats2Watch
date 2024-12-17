@@ -36,7 +36,7 @@ public class DAODatabaseUser implements DAO<User, String> {
 
     @Override
     public User findById(String entityKey) throws DAOException {
-        String query = "SELECT * FROM users WHERE email = ?";
+        String query = "SELECT email, name, surname, gender, password FROM users WHERE email = ?";
         User user = null;
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
@@ -72,7 +72,7 @@ public class DAODatabaseUser implements DAO<User, String> {
 
     @Override
     public Set<User> findAll() throws DAOException {
-        String query = "SELECT * FROM users";
+        String query = "SELECT email, name, surname, gender, password FROM users";
         Set<User> users = new HashSet<>();
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {

@@ -6,12 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAOFileSystemFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAOFileSystemFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/FileSystemManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/FileSystemManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/actor/DAODatabaseActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/actor/DAODatabaseActor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/character/DAODatabaseCharacter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/character/DAODatabaseCharacter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/movie/DAOFileSystemMovie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/movie/DAOFileSystemMovie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/production_companies/DAODatabaseProductionCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/production_companies/DAODatabaseProductionCompany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/room/DAODatabaseRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/room/DAODatabaseRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/user/DAODatabaseUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/user/DAODatabaseUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/watch_providers/DAODatabaseWatchProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/watch_providers/DAODatabaseWatchProvider.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +154,8 @@
       <workItem from="1734188487578" duration="1209000" />
       <workItem from="1734352129569" duration="38000" />
       <workItem from="1734365701765" duration="3515000" />
-      <workItem from="1734369529214" duration="1769000" />
+      <workItem from="1734369529214" duration="2122000" />
+      <workItem from="1734428180481" duration="783000" />
     </task>
     <servers />
   </component>

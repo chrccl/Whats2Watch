@@ -135,7 +135,7 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
 
     @Override
     public Set<Character> findAll() throws DAOException {
-        String sql = "SELECT * FROM characters";
+        String sql = "SELECT character_name, actor_name FROM characters";
         Set<Character> characters = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

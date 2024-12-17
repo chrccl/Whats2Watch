@@ -18,7 +18,7 @@ public class DAOFileSystemMovie implements DAO<Movie, MediaId> {
     private final Map<MediaId, Movie> movieStorage;
     private final Gson gson;
 
-    public DAOFileSystemMovie(String filePath) {
+    public DAOFileSystemMovie(String filePath) throws DAOException {
         this.filePath = filePath;
         this.movieStorage = new HashMap<>();
         this.gson = new GsonBuilder().setPrettyPrinting().create();
@@ -53,7 +53,7 @@ public class DAOFileSystemMovie implements DAO<Movie, MediaId> {
         return new HashSet<>(movieStorage.values());
     }
 
-    private void loadFromFile() {
+    private void loadFromFile() throws DAOException {
         File file = new File(filePath);
         if (!file.exists()) {
             return; // No file to load from yet.
@@ -64,7 +64,7 @@ public class DAOFileSystemMovie implements DAO<Movie, MediaId> {
                 movieStorage.put(movie.getMediaId(), movie);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load data from file: " + e.getMessage(), e);
+            throw new DAOException("Failed to load data from file: " + e.getMessage(), e);
         }
     }
 

@@ -33,7 +33,7 @@ public class DAODatabaseActor implements DAO<Actor, String> {
 
     @Override
     public Actor findById(String entityKey) throws DAOException {
-        String sql = "SELECT * FROM actors WHERE full_name = ?";
+        String sql = "SELECT full_name, popularity, gender FROM actors WHERE full_name = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, entityKey);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -63,7 +63,7 @@ public class DAODatabaseActor implements DAO<Actor, String> {
 
     @Override
     public Set<Actor> findAll() throws DAOException {
-        String sql = "SELECT * FROM actors";
+        String sql = "SELECT full_name, popularity, gender FROM actors";
         Set<Actor> actors = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
