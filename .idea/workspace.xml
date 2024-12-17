@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAODatabaseFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAODatabaseFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAODemoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAODemoFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAOFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAOFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAOFileSystemFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAOFileSystemFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +16,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Exception" />
         <option value="AnnotationType" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -153,7 +150,8 @@
       <workItem from="1734428180481" duration="1756000" />
       <workItem from="1734430810579" duration="665000" />
       <workItem from="1734444225936" duration="2762000" />
-      <workItem from="1734447554897" duration="1020000" />
+      <workItem from="1734447554897" duration="2403000" />
+      <workItem from="1734450061749" duration="399000" />
     </task>
     <servers />
   </component>
