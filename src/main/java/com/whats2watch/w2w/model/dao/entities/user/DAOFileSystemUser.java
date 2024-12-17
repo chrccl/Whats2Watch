@@ -18,7 +18,7 @@ public class DAOFileSystemUser implements DAO<User, String> {
     private final Map<String, User> userStorage;
     private final Gson gson;
 
-    protected DAOFileSystemUser(String filePath) throws DAOException {
+    public DAOFileSystemUser(String filePath) throws DAOException {
         this.filePath = filePath;
         this.userStorage = new HashMap<>();
         this.gson = new GsonBuilder().setPrettyPrinting().create();

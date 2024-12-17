@@ -1,10 +1,12 @@
 package com.whats2watch.w2w.model.dao.dao_factories;
 
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.MediaId;
-import com.whats2watch.w2w.model.Movie;
+import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.media.movie.DAOFileSystemMovie;
+import com.whats2watch.w2w.model.dao.entities.media.tvseries.DAOFileSystemTVSeries;
+import com.whats2watch.w2w.model.dao.entities.room.DAOFileSystemRoom;
+import com.whats2watch.w2w.model.dao.entities.user.DAOFileSystemUser;
 
 public class DAOFileSystemFactory implements DAOFactory {
 
@@ -13,5 +15,20 @@ public class DAOFileSystemFactory implements DAOFactory {
     @Override
     public DAO<Movie, MediaId> createMovieDAO() throws DAOException {
         return new DAOFileSystemMovie(String.format("%s%s", BASE_DIRECTORY, "movies.json"));
+    }
+
+    @Override
+    public DAO<TVSeries, MediaId> createTVSeriesDAO() throws DAOException {
+        return new DAOFileSystemTVSeries(String.format("%s%s", BASE_DIRECTORY, "tvseries.json"));
+    }
+
+    @Override
+    public DAO<Room, String> createRoomDAO() throws DAOException {
+        return new DAOFileSystemRoom(String.format("%s%s", BASE_DIRECTORY, "rooms.json"));
+    }
+
+    @Override
+    public DAO<User, String> createUserDAO() throws DAOException {
+        return new DAOFileSystemUser(String.format("%s%s", BASE_DIRECTORY, "users.json"));
     }
 }

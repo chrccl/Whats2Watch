@@ -19,7 +19,7 @@ public class DAOFileSystemRoom implements DAO<Room, String> {
     private final Map<String, Room> roomStorage;
     private final Gson gson;
 
-    protected DAOFileSystemRoom(String filePath) throws DAOException {
+    public DAOFileSystemRoom(String filePath) throws DAOException {
         this.filePath = filePath;
         this.roomStorage = new HashMap<>();
         this.gson = new GsonBuilder().setPrettyPrinting().create();
