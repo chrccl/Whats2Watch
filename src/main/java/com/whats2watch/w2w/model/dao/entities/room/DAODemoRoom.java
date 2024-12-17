@@ -19,7 +19,7 @@ public class DAODemoRoom implements DAO<Room, String> {
     @Override
     public Room findById(String entityKey) throws DAOException {
         return rooms.stream()
-                .filter(Room -> Room.getCode().equals(entityKey))
+                .filter(room -> room.getCode().equals(entityKey))
                 .findFirst()
                 .orElse(null);
     }

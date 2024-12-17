@@ -19,7 +19,7 @@ public class DAODemoUser implements DAO<User, String> {
     @Override
     public User findById(String entityKey) throws DAOException {
         return users.stream()
-                .filter(User -> User.getEmail().equals(entityKey))
+                .filter(user -> user.getEmail().equals(entityKey))
                 .findFirst()
                 .orElse(null);
     }

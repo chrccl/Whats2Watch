@@ -20,7 +20,7 @@ public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
     @Override
     public TVSeries findById(MediaId entityKey) throws DAOException {
         return tvSeries.stream()
-                .filter(TVSeries -> TVSeries.getMediaId().equals(entityKey))
+                .filter(tv -> tv.getMediaId().equals(entityKey))
                 .findFirst()
                 .orElse(null);
     }
