@@ -18,12 +18,17 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
 
     @Override
     public Movie findById(MediaId entityKey) throws DAOException {
-        return null;
+        return movies.stream()
+                .filter(movie -> movie.getMediaId().equals(entityKey))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public void deleteById(MediaId entityKey) throws DAOException {
-        movies.remove(findById(entityKey));
+        Movie movie = findById(entityKey);
+        if (movie != null)
+            movies.remove(findById(entityKey));
     }
 
     @Override
