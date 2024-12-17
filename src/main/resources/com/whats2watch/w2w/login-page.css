@@ -57,6 +57,7 @@
     -fx-font-size: 14;
     -fx-text-alignment: center;
     -fx-text-fill: white;
+    -fx-cursor: hand;
 }
 
 /* Login Button */

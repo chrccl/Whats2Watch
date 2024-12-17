@@ -145,7 +145,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.whats2watch.w2w/com.whats2watch.w2w.HelloApplication</mainClass>
+                            <mainClass>com.whats2watch.w2w/com.whats2watch.w2w.WhatsToWatch</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

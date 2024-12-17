@@ -80,6 +80,7 @@
 .login-link {
     -fx-text-fill: white;
     -fx-font-size: 14;
+    -fx-cursor: hand;
 }
 
 .bold-text {

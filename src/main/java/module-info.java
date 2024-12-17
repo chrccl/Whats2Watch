@@ -12,7 +12,7 @@ module com.whats2watch.w2w {
     requires com.google.gson;
     requires java.sql;
 
-    opens com.whats2watch.w2w to javafx.fxml;
+    opens com.whats2watch.w2w.controllers to javafx.fxml;
     opens com.whats2watch.w2w.model to com.google.gson;
     exports com.whats2watch.w2w;
 }
