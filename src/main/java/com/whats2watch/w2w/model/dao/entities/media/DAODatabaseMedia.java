@@ -38,7 +38,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
             deletePs.executeUpdate();
         }
 
-        String insertQuery = INSERT_INTO + getTableName() + "_genres (title, year, genre) VALUES (?, ?, ?)";
+        String insertQuery = String.format("%s%s%s", INSERT_INTO, getTableName(), "_genres (title, year, genre) VALUES (?, ?, ?)");
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)) {
             for (Genre genre : entity.getGenres()) {
                 insertPs.setString(1, entity.getMediaId().getTitle());
@@ -51,14 +51,14 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaCharacters(T entity) throws SQLException {
-        String deleteQuery = DELETE_FROM + getTableName() + "_characters WHERE title = ? AND year = ?";
+        String deleteQuery = String.format("%s%s%s", DELETE_FROM, getTableName(), "_characters WHERE title = ? AND year = ?");
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
             deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = INSERT_INTO + getTableName() + "_characters (title, year, character) VALUES (?, ?, ?)";
+        String insertQuery = String.format("%s%s%s", INSERT_INTO, getTableName(), "_characters (title, year, character) VALUES (?, ?, ?)");
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)) {
             for (Character character: entity.getCharacters()) {
                 insertPs.setString(1, entity.getMediaId().getTitle());
@@ -71,14 +71,14 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaProductionCompanies(T entity) throws SQLException {
-        String deleteQuery = DELETE_FROM + getTableName() + "_production_companies WHERE title = ? AND year = ?";
+        String deleteQuery = String.format("%s%s%s", DELETE_FROM, getTableName(), "_production_companies WHERE title = ? AND year = ?");
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
             deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = INSERT_INTO + getTableName() + "_production_companies (title, year, production_company) VALUES (?, ?, ?)";
+        String insertQuery = String.format("%s%s%s", INSERT_INTO, getTableName(), "_production_companies (title, year, production_company) VALUES (?, ?, ?)");
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)){
             for(ProductionCompany productionCompany: entity.getProductionCompanies()){
                 insertPs.setString(1, entity.getMediaId().getTitle());
@@ -91,14 +91,14 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
     }
 
     private void saveMediaWatchProviders(T entity) throws SQLException {
-        String deleteQuery = DELETE_FROM + getTableName() + "_watch_providers WHERE title = ? AND year = ?";
+        String deleteQuery = String.format("%s%s%s", DELETE_FROM,  getTableName(), "_watch_providers WHERE title = ? AND year = ?");
         try (PreparedStatement deletePs = conn.prepareStatement(deleteQuery)) {
             deletePs.setString(1, entity.getMediaId().getTitle());
             deletePs.setInt(2, entity.getMediaId().getYear());
             deletePs.executeUpdate();
         }
 
-        String insertQuery = INSERT_INTO + getTableName() + "_watch_providers (title, year, watch_provider) VALUES (?, ?, ?)";
+        String insertQuery = String.format("%s%s%s", INSERT_INTO, getTableName(), "_watch_providers (title, year, watch_provider) VALUES (?, ?, ?)");
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)){
             for(WatchProvider watchProvider: entity.getWatchProviders()){
                 insertPs.setString(1, entity.getMediaId().getTitle());
@@ -112,7 +112,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     @Override
     public Set<T> findAll() throws DAOException {
-        String sql = "SELECT * FROM " + getTableName();
+        String sql = String.format("%s%s", "SELECT * FROM ", getTableName());
         Set<T> medias = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -127,7 +127,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     @Override
     public T findById(MediaId entityKey) throws DAOException {
-        String sql = "SELECT * FROM " +  getTableName() + " WHERE title = ? AND year = ?";
+        String sql = String.format("%s%s%s", "SELECT * FROM ", getTableName(), " WHERE title = ? AND year = ?");
         T media = null;
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, entityKey.getTitle());
@@ -145,7 +145,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     @Override
     public void deleteById(MediaId entityKey) throws DAOException {
-        String sql = DELETE_FROM + getTableName() + " WHERE title = ? AND year = ?";
+        String sql = String.format("%s%s%s", DELETE_FROM, getTableName(), " WHERE title = ? AND year = ?");
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, entityKey.getTitle());
             stmt.setInt(2, entityKey.getYear());

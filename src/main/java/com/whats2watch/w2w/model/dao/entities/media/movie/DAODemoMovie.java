@@ -13,7 +13,7 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
 
     @Override
     public void save(Movie entity) throws DAOException {
-        //TODO
+        movies.add(entity);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
 
     @Override
     public void deleteById(MediaId entityKey) throws DAOException {
-        //TODO
+        movies.remove(findById(entityKey));
     }
 
     @Override
