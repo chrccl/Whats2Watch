@@ -12,6 +12,10 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
 
     private final Connection conn;
 
+    private static final String COMPANY_NAME = "company_name";
+
+    private static final String LOGO_URL = "logo_url";
+
     public DAODatabaseProductionCompany(Connection conn) {
         this.conn = conn;
     }
@@ -53,8 +57,8 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
             stmt.setString(1, entityKey);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    pc = new ProductionCompany(rs.getString("company_name"),
-                            rs.getString("logo_url"));
+                    pc = new ProductionCompany(rs.getString(COMPANY_NAME),
+                            rs.getString(LOGO_URL));
                 }
             }
         } catch (SQLException e) {
@@ -80,7 +84,7 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     companies.add(new ProductionCompany(rs.getString("production_company"),
-                            rs.getString("logo_url")));
+                            rs.getString(LOGO_URL)));
                 }
             }
         } catch (SQLException e) {
@@ -115,8 +119,8 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
             stmt.setString(1, roomCode);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    companies.add(new ProductionCompany(rs.getString("company_name"),
-                            rs.getString("logo_url")));
+                    companies.add(new ProductionCompany(rs.getString(COMPANY_NAME),
+                            rs.getString(LOGO_URL)));
                 }
             }
         } catch (SQLException e) {
@@ -142,8 +146,8 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
         Set<ProductionCompany> companies = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                companies.add(new ProductionCompany(rs.getString("company_name"),
-                        rs.getString("logo_url")));
+                companies.add(new ProductionCompany(rs.getString(COMPANY_NAME),
+                        rs.getString(LOGO_URL)));
             }
         } catch (SQLException e) {
             throw new DAOException("Error finding all production companies", e);

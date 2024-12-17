@@ -13,6 +13,10 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
 
     private final Connection conn;
 
+    private static final String PROVIDER_NAME = "provider_name";
+
+    private static final String LOGO_URL = "logo_url";
+
     public DAODatabaseWatchProvider(Connection conn) {
         this.conn = conn;
     }
@@ -48,14 +52,14 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
     @Override
     public WatchProvider findById(String entityKey) throws DAOException {
         String sql = "SELECT pc.provider_name, pc.logo_url " +
-                "FROM watch_providers pc WHERE pc.company_name = ?";
+                "FROM watch_providers pc WHERE pc.provider_name = ?";
         WatchProvider wp = null;
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, entityKey);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    wp = new WatchProvider(rs.getString("provider_name"),
-                            rs.getString("logo_url"));
+                    wp = new WatchProvider(rs.getString(PROVIDER_NAME),
+                            rs.getString(LOGO_URL));
                 }
             }
         } catch (SQLException e) {
@@ -81,7 +85,7 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     providers.add(new WatchProvider(rs.getString("watch_provider"),
-                            rs.getString("logo_url")));
+                            rs.getString(LOGO_URL)));
                 }
             }
         } catch (SQLException e) {
@@ -116,8 +120,8 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
             stmt.setString(1, roomCode);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    providers.add(new WatchProvider(rs.getString("provider_name"),
-                            rs.getString("logo_url")));
+                    providers.add(new WatchProvider(rs.getString(PROVIDER_NAME),
+                            rs.getString(LOGO_URL)));
                 }
             }
         } catch (SQLException e) {
@@ -143,8 +147,8 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
         Set<WatchProvider> providers = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                providers.add(new WatchProvider(rs.getString("provider_name"),
-                        rs.getString("logo_url")));
+                providers.add(new WatchProvider(rs.getString(PROVIDER_NAME),
+                        rs.getString(LOGO_URL)));
             }
         } catch (SQLException e) {
             throw new DAOException("Error finding all watch providers", e);

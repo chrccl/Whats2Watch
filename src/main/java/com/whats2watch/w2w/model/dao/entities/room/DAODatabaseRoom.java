@@ -19,6 +19,8 @@ public class DAODatabaseRoom implements DAO<Room, String> {
 
     private final Connection conn;
 
+    private static final String MEDIA_TYPE = "media_type";
+
     public DAODatabaseRoom(Connection conn) {
         this.conn = conn;
     }
@@ -53,7 +55,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String roomCode = rs.getString("code");
-                MediaType mediaType = MediaType.valueOf(rs.getString("media_type"));
+                MediaType mediaType = MediaType.valueOf(rs.getString(MEDIA_TYPE));
                 Room.RoomBuilder roomBuilder = new Room.RoomBuilder()
                         .code(roomCode)
                         .name(rs.getString("name"))
@@ -93,12 +95,12 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)){
             while(rs.next()){
                 String entityKey = rs.getString("code");
-                MediaType mediaType = MediaType.valueOf(rs.getString("media_type"));
+                MediaType mediaType = MediaType.valueOf(rs.getString(MEDIA_TYPE));
                 Room.RoomBuilder roomBuilder = new Room.RoomBuilder()
                         .code(entityKey)
                         .name(rs.getString("name"))
                         .creationDate(rs.getDate("creation_date").toLocalDate())
-                        .mediaType(MediaType.valueOf(rs.getString("media_type")))
+                        .mediaType(MediaType.valueOf(rs.getString(MEDIA_TYPE)))
                         .decade((Integer) rs.getObject("decade"))
                         .allowedGenres(new DAODatabaseGenre(conn).findByRoomCode(entityKey))
                         .allowedProviders(new DAODatabaseWatchProvider(conn).findByRoomCode(entityKey))
