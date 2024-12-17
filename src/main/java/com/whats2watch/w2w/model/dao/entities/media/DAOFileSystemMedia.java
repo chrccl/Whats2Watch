@@ -16,10 +16,10 @@ import java.util.Set;
 
 public abstract class DAOFileSystemMedia<T extends Media> implements DAO<T, MediaId> {
 
-    private final String filePath;
-    private final Map<MediaId, T> storage;
-    private final Gson gson;
-    private final Type type;
+    protected final String filePath;
+    protected final Map<MediaId, T> storage;
+    protected final Gson gson;
+    protected final Type type;
 
     protected DAOFileSystemMedia(String filePath, Type type) throws DAOException {
         this.filePath = filePath;
@@ -57,7 +57,7 @@ public abstract class DAOFileSystemMedia<T extends Media> implements DAO<T, Medi
         return new HashSet<>(storage.values());
     }
 
-    private void loadFromFile() throws DAOException {
+    protected void loadFromFile() throws DAOException {
         File file = new File(filePath);
         if (!file.exists()) {
             return;
@@ -72,7 +72,7 @@ public abstract class DAOFileSystemMedia<T extends Media> implements DAO<T, Medi
         }
     }
 
-    private void saveToFile() throws DAOException {
+    protected void saveToFile() throws DAOException {
         try (Writer writer = new FileWriter(filePath)) {
             gson.toJson(storage.values(), writer);
         } catch (IOException e) {
