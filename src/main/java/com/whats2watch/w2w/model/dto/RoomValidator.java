@@ -6,6 +6,10 @@ import java.time.LocalDate;
 
 public class RoomValidator {
 
+    private RoomValidator() {
+        throw new UnsupportedOperationException("RoomValidator is a utility class and cannot be instantiated.");
+    }
+
     public static ValidationResult validate(RoomBean room) {
         ValidationResult result = new ValidationResult();
 

@@ -8,10 +8,14 @@ import static com.whats2watch.w2w.model.dto.LoginValidator.checkEmailAndPassword
 
 public class UserValidator {
 
+    private UserValidator() {
+        throw new UnsupportedOperationException("UserValidator is a utility class and cannot be instantiated.");
+    }
+
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
             "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$");
+            "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$");
 
     public static ValidationResult validate(UserBean user) {
         ValidationResult result = new ValidationResult();
