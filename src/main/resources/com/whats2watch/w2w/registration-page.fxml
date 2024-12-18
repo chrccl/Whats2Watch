@@ -44,18 +44,18 @@
                 </VBox>
                 <VBox fx:id="emailGroup" styleClass="form-group">
                     <Label text="Email" styleClass="form-label" />
-                    <TextField fx:id="emailField" styleClass="form-input" />
+                    <TextField fx:id="registerEmailField" styleClass="form-input" />
                 </VBox>
                 <VBox fx:id="passwordGroup" styleClass="form-group">
                     <Label text="Password" styleClass="form-label" />
-                    <PasswordField fx:id="passwordField" styleClass="form-input" />
+                    <PasswordField fx:id="registerPasswordField" styleClass="form-input" />
                 </VBox>
                 <VBox fx:id="confirmPasswordGroup" styleClass="form-group">
                     <Label text="Confirm Password" styleClass="form-label" />
                     <PasswordField fx:id="confirmPasswordField" styleClass="form-input" />
                 </VBox>
                 <Label text="Already have an account? Go to Login" styleClass="login-link" onMouseClicked="#handleGoToLoginPageEvent" />
-                <Button text="Register Now" styleClass="register-button" alignment="CENTER"/>
+                <Button text="Register Now" styleClass="register-button" alignment="CENTER" onMouseClicked="#handleRegister"/>
             </VBox>
         </VBox>
     </VBox>

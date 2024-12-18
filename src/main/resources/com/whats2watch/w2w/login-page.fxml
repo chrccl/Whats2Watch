@@ -21,7 +21,7 @@
     <Label text="Whats2Watch" styleClass="brand-title"/>
 
     <!-- Welcome Text -->
-    <Label fx:id="errorLabel" text="" style="-fx-text-fill: red;" />
+    <Label text="Welcome" styleClass="welcome-text" />
 
     <!-- Form -->
     <VBox spacing="10" styleClass="login-form">
