@@ -9,12 +9,10 @@ import java.util.*;
 
 public class DAODemoMovie implements DAO<Movie, MediaId> {
 
-    private static Set<Movie> movies;
+    private static final Set<Movie> movies = new HashSet<>();
     private static DAODemoMovie instance;
 
-    private DAODemoMovie() {
-        movies = new HashSet<>();
-    }
+    private DAODemoMovie() {}
 
     public static synchronized DAODemoMovie getInstance() {
         if (instance == null) {

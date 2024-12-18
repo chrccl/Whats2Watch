@@ -9,12 +9,10 @@ import java.util.Set;
 
 public class DAODemoUser implements DAO<User, String> {
 
-    private static Set<User> users;
+    private static final Set<User> users = new HashSet<>();
     private static DAODemoUser instance;
 
-    private DAODemoUser() {
-        users = new HashSet<>();
-    }
+    private DAODemoUser() {}
 
     public static synchronized DAODemoUser getInstance() {
         if (instance == null) {

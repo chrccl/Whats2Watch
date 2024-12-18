@@ -7,6 +7,10 @@ import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 
 public class RegisterController {
 
+    private RegisterController() {
+        throw new UnsupportedOperationException("RegisterController is a utility class and cannot be instantiated.");
+    }
+
     public static User login(String email, String password) throws DAOException {
         User user = (User) PersistanceFactory
                 .createDAO(PersistanceType.DEMO)

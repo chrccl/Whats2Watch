@@ -3,19 +3,16 @@ package com.whats2watch.w2w.model.dao.entities.room;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.dao.entities.DAO;
-import com.whats2watch.w2w.model.dao.entities.user.DAODemoUser;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class DAODemoRoom implements DAO<Room, String> {
 
-    private static Set<Room> rooms;
+    private static final Set<Room> rooms = new HashSet<>();
     private static DAODemoRoom instance;
 
-    private DAODemoRoom() {
-        rooms = new HashSet<>();
-    }
+    private DAODemoRoom() {}
 
     public static synchronized DAODemoRoom getInstance() {
         if (instance == null) {
