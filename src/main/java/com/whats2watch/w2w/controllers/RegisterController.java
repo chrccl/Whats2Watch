@@ -1,40 +1,17 @@
 package com.whats2watch.w2w.controllers;
 
-import com.whats2watch.w2w.WhatsToWatch;
-import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-
-import java.io.IOException;
+import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.model.User;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 
 public class RegisterController {
 
-    private WhatsToWatch app;
-
-    public void setMainApp(WhatsToWatch app) {
-        this.app = app;
-    }
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private void handleLogin(MouseEvent event) {
-        System.out.println(emailField.getText());
-        System.out.println(passwordField.getText());
-    }
-
-    @FXML
-    private void handleGoToRegisterPageEvent() throws IOException {
-        this.app.showRegisterPage();
-    }
-
-    @FXML
-    private void handleGoToLoginPageEvent() throws IOException {
-        this.app.showLoginPage();
+    public static User login(String email, String password) throws DAOException {
+        User user = (User) PersistanceFactory
+                .createDAO(PersistanceType.DEMO)
+                .createUserDAO()
+                .findById(email);
+        return user != null && user.getPassword().equals(password) ? user : null;
     }
 }

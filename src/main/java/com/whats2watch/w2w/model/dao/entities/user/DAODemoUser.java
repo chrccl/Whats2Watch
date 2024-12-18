@@ -9,7 +9,19 @@ import java.util.Set;
 
 public class DAODemoUser implements DAO<User, String> {
 
-    private static final Set<User> users = new HashSet<>();
+    private static Set<User> users;
+    private static DAODemoUser instance;
+
+    private DAODemoUser() {
+        users = new HashSet<>();
+    }
+
+    public static synchronized DAODemoUser getInstance() {
+        if (instance == null) {
+            instance = new DAODemoUser();
+        }
+        return instance;
+    }
 
     @Override
     public void save(User entity) throws DAOException {

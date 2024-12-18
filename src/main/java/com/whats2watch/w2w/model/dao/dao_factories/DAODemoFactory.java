@@ -12,22 +12,22 @@ public class DAODemoFactory implements DAOFactory {
 
     @Override
     public DAO<Movie, MediaId> createMovieDAO() throws DAOException {
-        return new DAODemoMovie();
+        return DAODemoMovie.getInstance();
     }
 
     @Override
     public DAO<TVSeries, MediaId> createTVSeriesDAO() throws DAOException {
-        return new DAODemoTVSeries();
+        return DAODemoTVSeries.getInstance();
     }
 
     @Override
     public DAO<Room, String> createRoomDAO() throws DAOException {
-        return new DAODemoRoom();
+        return DAODemoRoom.getInstance();
     }
 
     @Override
     public DAO<User, String> createUserDAO() throws DAOException {
-        return new DAODemoUser();
+        return DAODemoUser.getInstance();
     }
 
 }

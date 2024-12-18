@@ -10,8 +10,19 @@ import java.util.Set;
 
 public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
 
-    private static final Set<TVSeries> tvSeries = new HashSet<>();
+    private static Set<TVSeries> tvSeries;
+    private static DAODemoTVSeries instance;
 
+    private DAODemoTVSeries() {
+        tvSeries = new HashSet<>();
+    }
+
+    public static synchronized DAODemoTVSeries getInstance() {
+        if (instance == null) {
+            instance = new DAODemoTVSeries();
+        }
+        return instance;
+    }
     @Override
     public void save(TVSeries entity) throws DAOException {
         tvSeries.add(entity);

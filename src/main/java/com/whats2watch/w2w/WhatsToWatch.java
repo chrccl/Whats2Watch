@@ -1,6 +1,8 @@
 package com.whats2watch.w2w;
 
-import com.whats2watch.w2w.controllers.RegisterController;
+import com.whats2watch.w2w.boundaries.HomePageBoundary;
+import com.whats2watch.w2w.boundaries.RegisterBoundary;
+import com.whats2watch.w2w.model.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +31,7 @@ public class WhatsToWatch extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("login-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("login-page.fxml"));
         AnchorPane root = fxmlLoader.load();
-        RegisterController controller = fxmlLoader.getController();
+        RegisterBoundary controller = fxmlLoader.getController();
         controller.setMainApp(this);
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("login-page.css")).toExternalForm());
@@ -42,10 +44,23 @@ public class WhatsToWatch extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("registration-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("registration-page.fxml"));
         StackPane root = fxmlLoader.load();
-        RegisterController controller = fxmlLoader.getController();
+        RegisterBoundary controller = fxmlLoader.getController();
         controller.setMainApp(this);
         Scene scene = new Scene(root, WIDTH, HEIGHT);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("registration-page.css")).toExternalForm());
+        stage.setTitle(TITLE);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showHomePage(User user) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("home-page.fxml"));
+        fxmlLoader.setLocation(WhatsToWatch.class.getResource("home-page.fxml"));
+        StackPane root = fxmlLoader.load();
+        HomePageBoundary controller = fxmlLoader.getController();
+        controller.setMainApp(this, user);
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("home-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();

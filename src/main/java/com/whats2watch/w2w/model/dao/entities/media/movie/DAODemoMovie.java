@@ -9,8 +9,19 @@ import java.util.*;
 
 public class DAODemoMovie implements DAO<Movie, MediaId> {
 
-    private static final Set<Movie> movies = new HashSet<>();
+    private static Set<Movie> movies;
+    private static DAODemoMovie instance;
 
+    private DAODemoMovie() {
+        movies = new HashSet<>();
+    }
+
+    public static synchronized DAODemoMovie getInstance() {
+        if (instance == null) {
+            instance = new DAODemoMovie();
+        }
+        return instance;
+    }
     @Override
     public void save(Movie entity) throws DAOException {
         movies.add(entity);
