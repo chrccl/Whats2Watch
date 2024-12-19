@@ -18,7 +18,7 @@
             <Label text="Recent Rooms" styleClass="section-title" />
             <ScrollPane fx:id="roomScrollPaneRoomsSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
                 <HBox fx:id="roomGrid" styleClass="room-grid">
-                    <!-- Room Cards -->
+                    <!-- Room Cards
                     <VBox fx:id="roomCard" styleClass="room-card">
                         <ImageView fx:id="roomImage" styleClass="room-image">
                             <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
@@ -30,6 +30,7 @@
                             <Label text="Genres Room" styleClass="genre-label" />
                         </HBox>
                     </VBox>
+                    -->
                 </HBox >
             </ScrollPane>
         </VBox>
@@ -50,12 +51,12 @@
             </ScrollPane>
         </VBox>
 
-        <!-- Leaderboard Section -->
+        <!-- Leaderboard Section
         <VBox fx:id="leaderboardSection" styleClass="leaderboard-section" alignment="TOP_CENTER">
             <Label text="Leaderboard Action Movies" styleClass="section-title" />
             <ScrollPane fx:id="roomScrollPaneLeaderboardSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
                 <HBox fx:id="leaderboardCard" styleClass="leaderboard-card">
-                    <!-- Movie Entries -->
+                    Movie Entries
                     <HBox fx:id="movieEntry" styleClass="movie-entry">
                         <VBox fx:id="movieInfo">
                             <Label text="#1 - Mad Max: Fury Road" styleClass="movie-title" />
@@ -68,6 +69,7 @@
                 </HBox>
             </ScrollPane>
         </VBox>
+        -->
 
         <!-- Trending Section -->
         <VBox fx:id="trendingSection" styleClass="trending-section" alignment="TOP_CENTER">
@@ -83,12 +85,6 @@
                     </VBox>
                 </HBox>
             </ScrollPane>
-        </VBox>
-
-        <!-- Call to Action Section -->
-        <VBox fx:id="ctaSection" styleClass="cta-section" alignment="CENTER">
-            <Label text="Do you think a film is missing? Request it now by clicking the button right here!" />
-            <Button text="Request Movie" styleClass="cta-button" />
         </VBox>
 
         <!-- Footer Divider -->

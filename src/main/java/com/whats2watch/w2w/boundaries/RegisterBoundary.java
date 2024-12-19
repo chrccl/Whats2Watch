@@ -70,8 +70,8 @@ public class RegisterBoundary {
         String name = nameField.getText().trim();
         String surname = surnameField.getText().trim();
         Gender gender = Gender.valueOf(genderChoice.getValue().toUpperCase());
-        String email = emailField.getText().trim();
-        String password = passwordField.getText().trim();
+        String email = registerEmailField.getText().trim();
+        String password = registerPasswordField.getText().trim();
         String confirmPassword = confirmPasswordField.getText().trim();
         UserBean userBean = new UserBean(name, surname, gender, email, password);
         if(password.equals(confirmPassword)){
@@ -110,8 +110,8 @@ public class RegisterBoundary {
         nameField.clear();
         surnameField.clear();
         genderChoice.setValue("Select gender");
-        emailField.clear();
-        passwordField.clear();
+        registerEmailField.clear();
+        registerPasswordField.clear();
         confirmPasswordField.clear();
     }
 }
