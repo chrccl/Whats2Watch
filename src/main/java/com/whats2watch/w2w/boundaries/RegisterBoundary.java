@@ -5,8 +5,6 @@ import com.whats2watch.w2w.controllers.RegisterController;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.Gender;
 import com.whats2watch.w2w.model.User;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import com.whats2watch.w2w.model.dto.LoginValidator;
 import com.whats2watch.w2w.model.dto.UserValidator;
 import com.whats2watch.w2w.model.dto.ValidationResult;
@@ -20,6 +18,8 @@ import java.io.IOException;
 public class RegisterBoundary {
 
     private WhatsToWatch app;
+
+    private static final String ERROR = "Error";
 
     @FXML
     private TextField nameField;
@@ -58,10 +58,10 @@ public class RegisterBoundary {
             if(user != null){
                 this.app.showHomePage(user);
             }else{
-                showAlert(Alert.AlertType.ERROR, "Error", "Email o Password non sono corretti!");
+                showAlert(Alert.AlertType.ERROR, ERROR, "Email o Password non sono corretti!");
             }
         }else{
-            showAlert(Alert.AlertType.ERROR, "Error", validatorResult.toString());
+            showAlert(Alert.AlertType.ERROR, ERROR, validatorResult.toString());
         }
     }
 
@@ -82,10 +82,10 @@ public class RegisterBoundary {
                 clearForm();
                 this.app.showLoginPage();
             }else{
-                showAlert(Alert.AlertType.ERROR, "Error", validatorResult.toString());
+                showAlert(Alert.AlertType.ERROR, ERROR, validatorResult.toString());
             }
         }else{
-            showAlert(Alert.AlertType.ERROR, "Error", "Password and Confirm Password field must be equals.");
+            showAlert(Alert.AlertType.ERROR, ERROR, "Password and Confirm Password field must be equals.");
         }
     }
 

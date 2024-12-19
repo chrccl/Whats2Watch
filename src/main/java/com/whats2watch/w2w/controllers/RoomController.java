@@ -13,6 +13,10 @@ import java.util.stream.Collectors;
 
 public class RoomController {
 
+    private RoomController() {
+        throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
+    }
+
     public static Set<Room> fetchRecentRooms(User user) throws DAOException {
         return PersistanceFactory
                 .createDAO(PersistanceType.DEMO)
