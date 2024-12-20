@@ -2,8 +2,8 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 
+<?import javafx.scene.shape.SVGPath?>
 <StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.whats2watch.w2w.boundaries.HomePageBoundary">
     <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">
         <VBox fx:id="homeContainer" styleClass="home-container" alignment="CENTER">
@@ -40,13 +40,14 @@
             <Label text="Create Room per Genre" styleClass="section-title" />
             <ScrollPane fx:id="roomScrollPaneGenreSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
                 <HBox fx:id="genreGrid" styleClass="genre-grid">
-                    <!-- Genre Cards -->
+                    <!-- Genre Cards
                     <VBox fx:id="genreCard" styleClass="genre-card">
                         <Label text="Horror Room" styleClass="genre-name" />
                         <ImageView fx:id="genreIcon" styleClass="genre-icon">
                             <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
                         </ImageView>
                     </VBox>
+                    -->
                 </HBox>
             </ScrollPane>
         </VBox>
@@ -76,13 +77,14 @@
             <Label text="Trending Movies" styleClass="section-title" />
             <ScrollPane fx:id="roomScrollPaneTrendingSection" hbarPolicy="ALWAYS" vbarPolicy="NEVER" styleClass="carousel-scroll-pane">
                 <HBox fx:id="trendingGrid">
-                    <!-- Trending Movies -->
+                    <!-- Trending Movies
                     <VBox fx:id="trendingMovie" styleClass="trending-movie">
                         <ImageView fx:id="trendingPoster" styleClass="trending-poster">
                             <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
                         </ImageView>
                         <Label text="Venom: The Last Dance" styleClass="trending-title" />
                     </VBox>
+                    -->
                 </HBox>
             </ScrollPane>
         </VBox>
@@ -92,6 +94,20 @@
 
         <!-- Navigation Bar -->
         <HBox fx:id="navBar" styleClass="nav-bar">
+            <!-- Home Button -->
+            <StackPane styleClass="circle-button">
+                <SVGPath styleClass="icon" content="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8 M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </StackPane>
+
+            <!-- Door Button -->
+            <StackPane styleClass="circle-button">
+                <SVGPath styleClass="icon" content="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14 M2 20h20 M14 12v.01"/>
+            </StackPane>
+
+            <!-- User Button -->
+            <StackPane styleClass="circle-button">
+                <SVGPath styleClass="icon" content="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2 M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/>
+            </StackPane>
         </HBox>
     </VBox>
     </ScrollPane>

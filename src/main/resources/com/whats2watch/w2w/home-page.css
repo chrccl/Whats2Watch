@@ -145,3 +145,23 @@
     -fx-background-color: rgba(0, 0, 0, 0.9);
     -fx-padding: 15;
 }
+
+.nav-bar {
+    -fx-background-color: black;
+    -fx-padding: 15;
+    -fx-spacing: 20; /* Space between buttons */
+}
+
+.circle-button {
+    -fx-background-color: red;
+    -fx-background-radius: 50%; /* Creates a circular shape */
+    -fx-pref-width: 50px; /* Ensures a fixed width */
+    -fx-pref-height: 50px; /* Ensures a fixed height */
+    -fx-alignment: center; /* Centers the content inside */
+}
+
+.icon {
+    -fx-fill: white; /* Sets the SVG fill color */
+    -fx-scale-x: 0.8; /* Optional scaling for better fit */
+    -fx-scale-y: 0.8;
+}
