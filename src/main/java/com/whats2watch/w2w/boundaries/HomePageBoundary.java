@@ -27,19 +27,23 @@ public class HomePageBoundary {
     private static final String DEFAULT_IMAGE_URL = "https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true";
 
     @FXML
-    private HBox roomGrid, genreGrid, trendingGrid;
+    private HBox roomGrid;
+
+    @FXML
+    private HBox genreGrid;
+
+    @FXML
+    private HBox trendingGrid;
 
     public void setMainApp(WhatsToWatch app, User user) {
         this.app = app;
         this.activeUser = user;
         populateGenreSection(RoomController.fetchGenres());
+        populateTrending(RoomController.fetchTrendingMedias());
         try {
             populateRecentRooms(RoomController.fetchRecentRooms(activeUser));
-            populateTrending(RoomController.fetchTrendingMedias());
         }catch(DAOException e) {
             roomGrid.getChildren().add(new Label("Something went wrong."));
-        }catch(IOException | InterruptedException e){
-            trendingGrid.getChildren().add(new Label("Something went wrong fetching the trending movies."));
         }
     }
 

@@ -7,7 +7,6 @@ import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -49,7 +48,7 @@ public class RoomController {
         return new HashSet<>(List.of(Genre.values()));
     }
 
-    public static Set<Media> fetchTrendingMedias() throws IOException, InterruptedException {
+    public static Set<Media> fetchTrendingMedias() {
         Set<Media> trendingMedias = new HashSet<>();
 
         HttpClient client = HttpClient.newHttpClient();
