@@ -1,12 +1,16 @@
 package com.whats2watch.w2w;
 
 import com.whats2watch.w2w.boundaries.HomePageBoundary;
+import com.whats2watch.w2w.boundaries.ProfileBoundary;
 import com.whats2watch.w2w.boundaries.RegisterBoundary;
+import com.whats2watch.w2w.boundaries.RoomBoundary;
 import com.whats2watch.w2w.model.User;
+import com.whats2watch.w2w.model.Genre;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
@@ -59,6 +63,32 @@ public class WhatsToWatch extends Application {
         controller.setMainApp(this, user);
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("home-page.css")).toExternalForm());
+        stage.setTitle(TITLE);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showRoomPage(Genre genre) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("room-page.fxml"));
+        fxmlLoader.setLocation(WhatsToWatch.class.getResource("room-page.fxml"));
+        VBox root = fxmlLoader.load();
+        RoomBoundary controller = fxmlLoader.getController();
+        controller.setMainApp(this, genre);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("room-page.css")).toExternalForm());
+        stage.setTitle(TITLE);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showProfilePage(User user) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("profile-page.fxml"));
+        fxmlLoader.setLocation(WhatsToWatch.class.getResource("profile-page.fxml"));
+        VBox root = fxmlLoader.load();
+        ProfileBoundary controller = fxmlLoader.getController();
+        controller.setMainApp(this, user);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("profile-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();

@@ -108,7 +108,13 @@ public class HomePageBoundary {
             plusButton.getStyleClass().add("plus-button");
             plusButton.setFitWidth(24);  // Set button size
             plusButton.setFitHeight(24);
-            plusButton.setOnMouseClicked(event -> newGenreRoomEvent(genre));
+            plusButton.setOnMouseClicked(event -> {
+                try {
+                    newGenreRoomEvent(genre);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
             HBox genreContent = new HBox(10);
             genreContent.setAlignment(Pos.CENTER_LEFT);
@@ -149,9 +155,18 @@ public class HomePageBoundary {
         }
     }
 
-    private void newGenreRoomEvent(Genre genre){
-        //TODO: send the user to the room page with the field to create a room set to the selected genre.
+    private void newGenreRoomEvent(Genre genre) throws IOException {
+        this.app.showRoomPage(genre);
     }
 
+    @FXML
+    private void GoToRoomPageEvent() throws IOException {
+        this.app.showRoomPage(null);
+    }
+
+    @FXML
+    private void GoToUserPageEvent() throws IOException {
+        this.app.showProfilePage(this.activeUser);
+    }
 
 }

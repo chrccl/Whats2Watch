@@ -100,12 +100,12 @@
             </StackPane>
 
             <!-- Door Button -->
-            <StackPane styleClass="circle-button">
+            <StackPane styleClass="circle-button" onMouseClicked="#GoToRoomPageEvent">
                 <SVGPath styleClass="icon" content="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14 M2 20h20 M14 12v.01"/>
             </StackPane>
 
             <!-- User Button -->
-            <StackPane styleClass="circle-button">
+            <StackPane styleClass="circle-button" onMouseClicked="#GoToUserPageEvent">
                 <SVGPath styleClass="icon" content="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2 M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8"/>
             </StackPane>
         </HBox>
