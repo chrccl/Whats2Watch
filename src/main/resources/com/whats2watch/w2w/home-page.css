@@ -73,10 +73,15 @@
 }
 
 .genre-card {
+    -fx-padding: 10; /* Inner padding */
     -fx-background-color: white;
-    -fx-border-radius: 25;
-    -fx-padding: 10;
-    -fx-alignment: center;
+    -fx-background-radius: 10; /* Rounded corners */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 0);
+    -fx-margin: 10; /* Outer spacing */
+}
+
+.plus-button {
+    -fx-cursor: hand;
 }
 
 .room-image,
@@ -103,6 +108,7 @@
     -fx-text-fill: black;
 }
 
+
 .divider {
     -fx-pref-width: 1;
     -fx-background-color: black;
@@ -119,8 +125,23 @@
 }
 
 .trending-movie {
-    -fx-spacing: 10;
-    -fx-alignment: center;
+    text-align: center;
+    margin: 10px;
+}
+
+.trending-poster {
+    width: 150px; /* Small size for the poster */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: to add rounded corners to the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: adds a shadow effect */
+}
+
+.trending-title {
+    color: white;
+    font-weight: bold;
+    font-size: 24px; /* Large size for the title */
+    margin-top: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: adds a shadow to the text for better contrast */
 }
 
 .cta-section {
@@ -142,14 +163,10 @@
 }
 
 .nav-bar {
-    -fx-background-color: rgba(0, 0, 0, 0.9);
-    -fx-padding: 15;
-}
-
-.nav-bar {
     -fx-background-color: black;
     -fx-padding: 15;
-    -fx-spacing: 20; /* Space between buttons */
+    -fx-spacing: 20; /* Adds space between buttons */
+    -fx-alignment: center; /* Ensures buttons are centered */
 }
 
 .circle-button {
@@ -158,6 +175,13 @@
     -fx-pref-width: 50px; /* Ensures a fixed width */
     -fx-pref-height: 50px; /* Ensures a fixed height */
     -fx-alignment: center; /* Centers the content inside */
+    -fx-cursor: hand; /* Changes the cursor to a hand when hovering */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0, 2); /* Optional: Adds a subtle shadow for aesthetics */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.circle-button:hover {
+    -fx-background-color: darkred; /* Changes background color on hover */
 }
 
 .icon {

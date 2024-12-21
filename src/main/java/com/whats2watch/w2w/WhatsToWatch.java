@@ -16,8 +16,6 @@ import java.util.Objects;
 
 public class WhatsToWatch extends Application {
     private static final String TITLE = "W2W - Whats2Watch";
-    private static final int WIDTH = 1440;
-    private static final int HEIGHT = 1024;
 
     private Stage stage;
 
@@ -33,7 +31,7 @@ public class WhatsToWatch extends Application {
         AnchorPane root = fxmlLoader.load();
         RegisterBoundary controller = fxmlLoader.getController();
         controller.setMainApp(this);
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("login-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
@@ -46,7 +44,7 @@ public class WhatsToWatch extends Application {
         StackPane root = fxmlLoader.load();
         RegisterBoundary controller = fxmlLoader.getController();
         controller.setMainApp(this);
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("registration-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
@@ -59,7 +57,7 @@ public class WhatsToWatch extends Application {
         StackPane root = fxmlLoader.load();
         HomePageBoundary controller = fxmlLoader.getController();
         controller.setMainApp(this, user);
-        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("home-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
