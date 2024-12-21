@@ -39,11 +39,14 @@ public class HomePageBoundary {
         this.app = app;
         this.activeUser = user;
         populateGenreSection(RoomController.fetchGenres());
-        populateTrending(RoomController.fetchTrendingMedias());
         try {
+            populateTrending(RoomController.fetchTrendingMedias());
             populateRecentRooms(RoomController.fetchRecentRooms(activeUser));
         }catch(DAOException e) {
             roomGrid.getChildren().add(new Label("Something went wrong."));
+        }catch(IOException | InterruptedException e){
+            Thread.currentThread().interrupt();
+            trendingGrid.getChildren().add(new Label("Something went wrong."));
         }
     }
 

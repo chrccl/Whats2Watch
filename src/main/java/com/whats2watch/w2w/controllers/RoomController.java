@@ -48,7 +48,7 @@ public class RoomController {
         return new HashSet<>(List.of(Genre.values()));
     }
 
-    public static Set<Media> fetchTrendingMedias() {
+    public static Set<Media> fetchTrendingMedias() throws IOException, InterruptedException {
         Set<Media> trendingMedias = new HashSet<>();
 
         HttpClient client = HttpClient.newHttpClient();
