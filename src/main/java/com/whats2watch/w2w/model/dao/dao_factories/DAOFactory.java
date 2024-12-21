@@ -12,4 +12,9 @@ public interface DAOFactory {
     <T, K> DAO<T, K> createRoomDAO() throws DAOException;
 
     <T, K> DAO<T, K> createUserDAO() throws DAOException;
+
+    <T, K> DAO<T, K> createWatchProviderDAO() throws DAOException;
+
+    <T, K> DAO<T, K> createProductionCompaniesDAO() throws DAOException;
+
 }
