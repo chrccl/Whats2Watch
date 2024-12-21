@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 import java.util.Set;
@@ -43,7 +45,12 @@ public class HomePageBoundary {
             populateTrending(RoomController.fetchTrendingMedias());
             populateRecentRooms(RoomController.fetchRecentRooms(activeUser));
         }catch(DAOException e) {
-            roomGrid.getChildren().add(new Label("Something went wrong."));
+            Label noRoom = new Label("Something went wrong.");
+            noRoom.setMaxWidth(150);
+            noRoom.setMinWidth(150);
+            noRoom.setTextAlignment(TextAlignment.CENTER);
+            noRoom.setTextFill(Color.WHITE);
+            roomGrid.getChildren().add(noRoom);
         }catch(IOException | InterruptedException e){
             Thread.currentThread().interrupt();
             trendingGrid.getChildren().add(new Label("Something went wrong."));
@@ -53,7 +60,12 @@ public class HomePageBoundary {
     private void populateRecentRooms(Set<Room> rooms) {
         roomGrid.getChildren().clear();
         if(rooms.isEmpty()) {
-            roomGrid.getChildren().add(new Label("No recent rooms found."));
+            Label noRoom = new Label("No Recent Rooms found");
+            noRoom.setMaxWidth(500);
+            noRoom.setMinWidth(500);
+            noRoom.setTextAlignment(TextAlignment.CENTER);
+            noRoom.setTextFill(Color.WHITE);
+            roomGrid.getChildren().add(noRoom);
         }else {
             for (Room room : rooms) {
                 VBox roomCard = new VBox();
@@ -120,9 +132,15 @@ public class HomePageBoundary {
 
             ImageView trendingPoster = new ImageView(new Image(String.format("https://image.tmdb.org/t/p/w500%s",movie.getPosterUrl())));
             trendingPoster.getStyleClass().add("trending-poster");
+            trendingPoster.setFitWidth(150);
+            trendingPoster.setPreserveRatio(true);
 
             Label trendingTitle = new Label(movie.getMediaId().getTitle());
-            trendingTitle.getStyleClass().add("trending-title");
+            trendingTitle.setMaxWidth(300);
+            trendingTitle.setMinWidth(300);
+            trendingTitle.setWrapText(true);
+            trendingTitle.setTextAlignment(TextAlignment.CENTER);
+            trendingTitle.setTextFill(Color.WHITE);
 
             trendingMovie.getChildren().addAll(trendingPoster, trendingTitle);
 

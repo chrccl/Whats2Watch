@@ -11,6 +11,7 @@ module com.whats2watch.w2w {
     requires org.slf4j;
     requires com.google.gson;
     requires java.sql;
+    requires java.desktop;
 
     opens com.whats2watch.w2w.boundaries to javafx.fxml;
     opens com.whats2watch.w2w.model to com.google.gson;

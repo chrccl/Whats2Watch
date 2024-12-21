@@ -133,7 +133,6 @@
     width: 150px; /* Small size for the poster */
     height: auto; /* Maintain aspect ratio */
     border-radius: 8px; /* Optional: to add rounded corners to the image */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: adds a shadow effect */
 }
 
 .trending-title {
@@ -141,7 +140,6 @@
     font-weight: bold;
     font-size: 24px; /* Large size for the title */
     margin-top: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Optional: adds a shadow to the text for better contrast */
 }
 
 .cta-section {
