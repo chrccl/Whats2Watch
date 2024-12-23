@@ -2,11 +2,13 @@ package com.whats2watch.w2w;
 
 import com.whats2watch.w2w.boundaries.*;
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.User;
 import com.whats2watch.w2w.model.Genre;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -92,14 +94,27 @@ public class WhatsToWatch extends Application {
         stage.show();
     }
 
-    public void showSwipePage(User user, String roomCode) throws IOException, DAOException {
+    public void showSwipePage(User user, Room room) throws IOException, DAOException {
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("swipe-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("swipe-page.fxml"));
         VBox root = fxmlLoader.load();
         SwipeBoundary controller = fxmlLoader.getController();
-        controller.setMainApp(this, user, roomCode);
+        controller.setMainApp(this, user, room);
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("swipe-page.css")).toExternalForm());
+        stage.setTitle(TITLE);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showMatchesPage(User user, Room room) throws IOException, DAOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("favouritesMediaSwipe-page.fxml"));
+        fxmlLoader.setLocation(WhatsToWatch.class.getResource("favouritesMediaSwipe-page.fxml"));
+        BorderPane root = fxmlLoader.load();
+        SwipeBoundary controller = fxmlLoader.getController();
+        controller.setMainApp(this, user, room);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("favouritesMediaSwipe-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();

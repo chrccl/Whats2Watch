@@ -55,13 +55,15 @@ public class RoomBoundary {
     @FXML
     private void joinRoomEvent() throws DAOException, IOException {
         String roomCode = roomCodeField.getText();
-        if (!roomCode.isEmpty() && !RoomController.addMemberToAnExistingRoom(activeUser, roomCode)) {
+        Room room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
+        if (!roomCode.isEmpty() && room != null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setContentText("No room related to this code.");
             alert.showAndWait();
+        }else{
+            this.app.showSwipePage(activeUser, room);
         }
-        this.app.showSwipePage(activeUser, roomCode);
     }
 
     @FXML
@@ -82,8 +84,8 @@ public class RoomBoundary {
         RoomBean roomBean = new RoomBean(nameField.getText(), MediaType.MOVIE, decade, genres, watchProviders, productionCompanies);
         ValidationResult validationResult = RoomValidator.validate(roomBean);
         if (validationResult.isValid()) {
-            String roomCode = RoomController.saveRoom(activeUser, roomBean);
-            this.app.showSwipePage(activeUser, roomCode);
+            Room room = RoomController.saveRoom(activeUser, roomBean);
+            this.app.showSwipePage(activeUser, room);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");

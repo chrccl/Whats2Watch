@@ -36,13 +36,12 @@ public class RoomController {
         throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
     }
     
-    public static String saveRoom(User organizer, RoomBean roomBean) throws DAOException {
-        String roomCode = IntStream.range(0, 6)
-                .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
-                .map(Object::toString)
-                .collect(Collectors.joining());
+    public static Room saveRoom(User organizer, RoomBean roomBean) throws DAOException {
         Room room = RoomFactory.createRoomInstance()
-                .code(roomCode)
+                .code(IntStream.range(0, 6)
+                        .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
+                        .map(Object::toString)
+                        .collect(Collectors.joining()))
                 .name(roomBean.getName())
                 .creationDate(LocalDate.now())
                 .mediaType(roomBean.getMediaType())
@@ -53,18 +52,16 @@ public class RoomController {
                 .roomMembers(Set.of(new RoomMember(organizer)))
                 .build();
         PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
-        return roomCode;
+        return room;
     }
 
-    public static boolean addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
-        boolean result = false;
+    public static Room addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
         Room room = (Room) PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().findById(roomCode);
         if(room != null) {
             room.getRoomMembers().add(new RoomMember(user));
             PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
-            result = true;
         }
-        return result;
+        return room;
     }
 
     public static Set<Room> fetchRecentRooms(User user) throws DAOException {

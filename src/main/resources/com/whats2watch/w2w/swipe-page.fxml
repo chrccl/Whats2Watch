@@ -16,23 +16,23 @@
     <HBox fx:id="proposedMedia" styleClass="home-proposed-media" spacing="20" alignment="CENTER">
         <!-- Dislike Button -->
 
-        <Button fx:id="dislikeButton" text="Pass" styleClass="home-dislike-btn" />
+        <Button fx:id="dislikeButton" text="Pass" styleClass="home-dislike-btn" onMouseClicked="#passMediaEvent"/>
 
         <!-- Media Card -->
         <VBox fx:id="mediaCard" styleClass="home-media-card" alignment="CENTER">
             <ImageView fx:id="mediaImage" fitWidth="300" fitHeight="400" preserveRatio="true">
                 <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
             </ImageView>
-            <Label text="Creed III" styleClass="home-text3" />
+            <Label fx:id="mediaTitle" text="Creed III" styleClass="home-text3" />
         </VBox>
 
         <!-- Like Button -->
-        <Button fx:id="likeButton" text="Like" styleClass="home-like-btn" />
+        <Button fx:id="likeButton" text="Like" styleClass="home-like-btn" onMouseClicked="#likeMediaEvent"/>
     </HBox>
 
     <!-- Navigation Bar -->
     <HBox fx:id="homeNavbar" styleClass="home-navbar">
-        <Label text="Swipe" styleClass="home-text5" />
-        <Label text="Matches" styleClass="home-text4" />
+        <Label text="Swipe" styleClass="home-text5"/>
+        <Label text="Matches" styleClass="home-text4" onMouseClicked="#goToMatchesPageEvent"/>
     </HBox>
 </VBox>

@@ -2,7 +2,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
-<BorderPane xmlns:fx="http://javafx.com/fxml" stylesheets="@favouritesMediaSwipe-page.css" styleClass="movie-container">
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" styleClass="movie-container" fx:controller="com.whats2watch.w2w.boundaries.SwipeBoundary">
     <top>
         <VBox alignment="CENTER" spacing="10" styleClass="movie-container">
             <HBox spacing="10" alignment="CENTER" styleClass="header-wrapper">
