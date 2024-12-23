@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/RoomBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/RoomBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/room-page.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/room-page.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/room-page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/room-page.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,6 +170,7 @@
       <workItem from="1734942033450" duration="1969000" />
       <workItem from="1734945180241" duration="2889000" />
       <workItem from="1734949202276" duration="1677000" />
+      <workItem from="1734951515118" duration="292000" />
     </task>
     <servers />
   </component>

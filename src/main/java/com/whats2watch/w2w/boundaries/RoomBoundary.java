@@ -122,7 +122,7 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void goToHomePageEvent() throws IOException, DAOException {
+    private void goToHomePageEvent() throws IOException {
         this.app.showHomePage(activeUser);
     }
 
