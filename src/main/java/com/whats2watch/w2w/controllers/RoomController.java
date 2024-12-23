@@ -5,16 +5,17 @@ import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
+import com.whats2watch.w2w.model.dto.beans.RoomBean;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import com.whats2watch.w2w.model.dto.beans.RoomBean;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class RoomController {
 
     private static final String TRENDING_URL = "https://api.themoviedb.org/3/trending/movie/week";
 
-    private static final Random random = new Random();
+    private static final SecureRandom random = new SecureRandom();
 
     private RoomController() {
         throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
