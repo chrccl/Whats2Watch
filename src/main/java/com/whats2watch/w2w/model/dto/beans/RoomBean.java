@@ -8,15 +8,15 @@ public class RoomBean {
 
     private String name;
 
-    private MediaType mediaType;
+    private final MediaType mediaType;
 
-    private Integer decade;
+    private final Integer decade;
 
-    private Set<Genre> allowedGenres;
+    private final Set<Genre> allowedGenres;
 
-    private Set<WatchProvider> allowedProviders;
+    private final Set<WatchProvider> allowedProviders;
 
-    private Set<ProductionCompany> allowedProductionCompanies;
+    private final Set<ProductionCompany> allowedProductionCompanies;
 
     public RoomBean(String name, MediaType mediaType, Integer decade, Set<Genre> allowedGenres,
                     Set<WatchProvider> allowedProviders, Set<ProductionCompany> allowedProductionCompanies) {
@@ -40,40 +40,20 @@ public class RoomBean {
         return mediaType;
     }
 
-    public void setMediaType(MediaType mediaType) {
-        this.mediaType = mediaType;
-    }
-
     public Integer getDecade() {
         return decade;
-    }
-
-    public void setDecade(Integer decade) {
-        this.decade = decade;
     }
 
     public Set<Genre> getAllowedGenres() {
         return allowedGenres;
     }
 
-    public void setAllowedGenres(Set<Genre> allowedGenres) {
-        this.allowedGenres = allowedGenres;
-    }
-
     public Set<WatchProvider> getAllowedProviders() {
         return allowedProviders;
     }
 
-    public void setAllowedProviders(Set<WatchProvider> allowedProviders) {
-        this.allowedProviders = allowedProviders;
-    }
-
     public Set<ProductionCompany> getAllowedProductionCompanies() {
         return allowedProductionCompanies;
-    }
-
-    public void setAllowedProductionCompanies(Set<ProductionCompany> allowedProductionCompanies) {
-        this.allowedProductionCompanies = allowedProductionCompanies;
     }
 
 }
