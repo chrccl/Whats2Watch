@@ -55,6 +55,10 @@ public class RoomController {
         return room;
     }
 
+    public static void updateRoom(Room room) throws DAOException {
+        PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+    }
+
     public static Room addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
         Room room = (Room) PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().findById(roomCode);
         if(room != null) {

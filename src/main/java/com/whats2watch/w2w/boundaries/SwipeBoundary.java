@@ -1,18 +1,21 @@
 package com.whats2watch.w2w.boundaries;
 
 import com.whats2watch.w2w.WhatsToWatch;
+import com.whats2watch.w2w.controllers.RoomController;
+import com.whats2watch.w2w.controllers.SwipeController;
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.model.Media;
 import com.whats2watch.w2w.model.Room;
+import com.whats2watch.w2w.model.RoomMember;
 import com.whats2watch.w2w.model.User;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SwipeBoundary {
 
@@ -22,11 +25,11 @@ public class SwipeBoundary {
 
     private Room room;
 
-    @FXML
-    private Button likeButton;
+    private RoomMember roomMember;
 
-    @FXML
-    private Button dislikeButton;
+    private List<Media> mediaList;
+
+    private Integer currentIndex = 0; // Tracks the current media index
 
     @FXML
     private ImageView mediaImage;
@@ -34,32 +37,51 @@ public class SwipeBoundary {
     @FXML
     private Label mediaTitle;
 
-    @FXML
-    private VBox mediaCard;
-
     public void setMainApp(WhatsToWatch app, User user, Room room) throws DAOException {
         this.app = app;
         this.activeUser = user;
         this.room = room;
-        initializePage();
+        this.roomMember = room.getRoomMembers().stream()
+                .filter(rm -> rm.getUser().equals(user))
+                .findFirst()
+                .orElse(null);
+        recommendMedias();
     }
 
-    private void initializePage() throws DAOException {
-        //TODO: load medias and ?sync room members?
+    private void recommendMedias() throws DAOException {
+        mediaList = SwipeController.recommendMedias(activeUser, room, roomMember);
+        updateMediaCard();
     }
 
     private void updateMediaCard() {
-        //TODO
+        mediaImage.setImage(new Image(mediaList.get(currentIndex).getPosterUrl()));
+        mediaTitle.setText(mediaList.get(currentIndex).getMediaId().getTitle());
+        currentIndex++;
     }
 
     @FXML
-    private void passMediaEvent(){
-        //TODO
+    private void passMediaEvent() throws DAOException {
+        if(currentIndex > 5) {
+            updateRecommendations();
+        }
+        roomMember.getPassedMedia().add(mediaList.get(currentIndex-1));
     }
 
     @FXML
-    private void likeMediaEvent(){
-        //TODO
+    private void likeMediaEvent() throws DAOException {
+        if(currentIndex > 5) {
+            updateRecommendations();
+        }
+        roomMember.getLikedMedia().add(mediaList.get(currentIndex-1));
+    }
+
+    private void updateRecommendations() throws DAOException {
+        // Add updated room member
+        room.getRoomMembers().remove(roomMember);
+        room.getRoomMembers().add(roomMember);
+        RoomController.updateRoom(room);
+        currentIndex = 0;
+        recommendMedias();
     }
 
     @FXML

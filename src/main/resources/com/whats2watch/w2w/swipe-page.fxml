@@ -20,9 +20,7 @@
 
         <!-- Media Card -->
         <VBox fx:id="mediaCard" styleClass="home-media-card" alignment="CENTER">
-            <ImageView fx:id="mediaImage" fitWidth="300" fitHeight="400" preserveRatio="true">
-                <Image url="https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true&amp;apiKey=77557d1d41b3402088175639f97039a4"/>
-            </ImageView>
+            <ImageView fx:id="mediaImage" fitWidth="300" fitHeight="400" preserveRatio="true" />
             <Label fx:id="mediaTitle" text="Creed III" styleClass="home-text3" />
         </VBox>
 
