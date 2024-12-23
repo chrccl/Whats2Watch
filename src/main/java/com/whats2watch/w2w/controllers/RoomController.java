@@ -16,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,9 +33,10 @@ public class RoomController {
     }
     
     public static void saveRoom(User organizer, RoomBean roomBean) throws DAOException {
+        Random random = new Random();
         Room room = RoomFactory.createRoomInstance()
                 .code(IntStream.range(0, 6)
-                        .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(new Random().nextInt(36)))
+                        .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
                         .map(Object::toString)
                         .collect(Collectors.joining()))
                 .name(roomBean.getName())
