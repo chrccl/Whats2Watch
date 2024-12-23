@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.time.Year;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +53,7 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void joinRoomEvent() throws DAOException {
+    private void joinRoomEvent() throws DAOException, IOException {
         String roomCode = roomCodeField.getText();
         if (!roomCode.isEmpty() && !RoomController.addMemberToAnExistingRoom(activeUser, roomCode)) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -60,11 +61,11 @@ public class RoomBoundary {
             alert.setContentText("No room related to this code.");
             alert.showAndWait();
         }
-        //TODO: redirect to the room page with that code
+        this.app.showSwipePage(activeUser, roomCode);
     }
 
     @FXML
-    private void createRoomEvent() throws DAOException {
+    private void createRoomEvent() throws DAOException, IOException {
         Integer decade = Integer.valueOf(decadesField.getSelectionModel().getSelectedItem().replace("s", ""));
         WatchProvider watchProvider = RoomController.getWatchProviderByName(watchProvidersField.getSelectionModel().getSelectedItem());
         ProductionCompany productionCompany = RoomController.getProductionCompanyByName(productionCompaniesField.getSelectionModel().getSelectedItem());
@@ -82,7 +83,7 @@ public class RoomBoundary {
         ValidationResult validationResult = RoomValidator.validate(roomBean);
         if (validationResult.isValid()) {
             String roomCode = RoomController.saveRoom(activeUser, roomBean);
-            //TODO: redirect to the room page with that code
+            this.app.showSwipePage(activeUser, roomCode);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
