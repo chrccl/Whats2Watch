@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
 
 public class SwipeController {
 
-    public static List<Media> recommendMedias(User user, Room room, RoomMember roomMember) throws DAOException {
+    private SwipeController() {
+        throw new UnsupportedOperationException("SwipeController is a utility class and cannot be instantiated.");
+    }
+
+    public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
         List<Media> allMedia = PersistanceFactory.createDAO(PersistanceType.DEMO)
                 .createMovieDAO()
                 .findAll()

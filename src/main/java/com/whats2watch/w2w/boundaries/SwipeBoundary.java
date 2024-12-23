@@ -49,7 +49,7 @@ public class SwipeBoundary {
     }
 
     private void recommendMedias() throws DAOException {
-        mediaList = SwipeController.recommendMedias(activeUser, room, roomMember);
+        mediaList = SwipeController.recommendMedias(room, roomMember);
         updateMediaCard();
     }
 

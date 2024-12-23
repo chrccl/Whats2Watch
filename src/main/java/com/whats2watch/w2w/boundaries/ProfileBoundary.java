@@ -7,7 +7,10 @@ public class ProfileBoundary {
 
     private WhatsToWatch app;
 
+    private User activeUser;
+
     public void setMainApp(WhatsToWatch app, User user) {
         this.app = app;
+        this.activeUser = user;
     }
 }
