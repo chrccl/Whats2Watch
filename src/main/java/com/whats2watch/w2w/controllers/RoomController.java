@@ -11,14 +11,17 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import com.whats2watch.w2w.model.dto.beans.RoomBean;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 
 public class RoomController {
@@ -28,6 +31,35 @@ public class RoomController {
 
     private RoomController() {
         throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
+    }
+    
+    public static void saveRoom(User organizer, RoomBean roomBean) throws DAOException {
+        Room room = RoomFactory.createRoomInstance()
+                .code(IntStream.range(0, 6)
+                        .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(new Random().nextInt(36)))
+                        .map(Object::toString)
+                        .collect(Collectors.joining()))
+                .name(roomBean.getName())
+                .creationDate(LocalDate.now())
+                .mediaType(roomBean.getMediaType())
+                .decade(roomBean.getDecade())
+                .allowedGenres(roomBean.getAllowedGenres())
+                .allowedProviders(roomBean.getAllowedProviders())
+                .allowedProductionCompanies(roomBean.getAllowedProductionCompanies())
+                .roomMembers(Set.of(new RoomMember(organizer)))
+                .build();
+        PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+    }
+
+    public static boolean addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
+        boolean result = false;
+        Room room = (Room) PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().findById(roomCode);
+        if(room != null) {
+            room.getRoomMembers().add(new RoomMember(user));
+            PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+            result = true;
+        }
+        return result;
     }
 
     public static Set<Room> fetchRecentRooms(User user) throws DAOException {
@@ -46,6 +78,44 @@ public class RoomController {
 
     public static Set<Genre> fetchGenres(){
         return new HashSet<>(List.of(Genre.values()));
+    }
+
+    public static Set<WatchProvider> fetchWatchProviders() throws DAOException {
+        return PersistanceFactory
+                .createDAO(PersistanceType.DEMO)
+                .createWatchProviderDAO()
+                .findAll().stream()
+                .map(watchProvider -> (WatchProvider)watchProvider)
+                .collect(Collectors.toSet());
+    }
+
+    public static Set<ProductionCompany> fetchProductionCompanies() throws DAOException {
+        return PersistanceFactory
+                .createDAO(PersistanceType.DEMO)
+                .createProductionCompaniesDAO()
+                .findAll().stream()
+                .map(productionCompany -> (ProductionCompany)productionCompany)
+                .collect(Collectors.toSet());
+    }
+
+    public static WatchProvider getWatchProviderByName(String providerName) throws DAOException {
+        return PersistanceFactory
+                .createDAO(PersistanceType.DEMO)
+                .createWatchProviderDAO()
+                .findAll().stream()
+                .map(watchProvider -> (WatchProvider)watchProvider)
+                .filter(watchProvider -> watchProvider.getProviderName().equals(providerName))
+                .findFirst().orElse(null);
+    }
+
+    public static ProductionCompany getProductionCompanyByName(String companyName) throws DAOException {
+        return PersistanceFactory
+                .createDAO(PersistanceType.DEMO)
+                .createProductionCompaniesDAO()
+                .findAll().stream()
+                .map(productionCompany -> (ProductionCompany)productionCompany)
+                .filter(productionCompany -> productionCompany.getCompanyName().equals(companyName))
+                .findFirst().orElse(null);
     }
 
     public static Set<Media> fetchTrendingMedias() throws IOException, InterruptedException {

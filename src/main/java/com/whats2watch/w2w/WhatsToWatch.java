@@ -4,6 +4,7 @@ import com.whats2watch.w2w.boundaries.HomePageBoundary;
 import com.whats2watch.w2w.boundaries.ProfileBoundary;
 import com.whats2watch.w2w.boundaries.RegisterBoundary;
 import com.whats2watch.w2w.boundaries.RoomBoundary;
+import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.User;
 import com.whats2watch.w2w.model.Genre;
 import javafx.application.Application;
@@ -68,12 +69,12 @@ public class WhatsToWatch extends Application {
         stage.show();
     }
 
-    public void showRoomPage(Genre genre) throws IOException {
+    public void showRoomPage(User user, Genre genre) throws IOException, DAOException {
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("room-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("room-page.fxml"));
         VBox root = fxmlLoader.load();
         RoomBoundary controller = fxmlLoader.getController();
-        controller.setMainApp(this, genre);
+        controller.setMainApp(this, user, genre);
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("room-page.css")).toExternalForm());
         stage.setTitle(TITLE);

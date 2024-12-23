@@ -17,20 +17,31 @@
             <Label text="Join a Room" styleClass="room-title" />
             <Label text="Room Code" styleClass="input-label" />
             <TextField fx:id="roomCodeField" styleClass="room-code-field" promptText="Enter room code" />
-            <Button text="Join" styleClass="room-button" />
+            <Button text="Join" styleClass="room-button" onMouseClicked="#joinRoomEvent"/>
         </VBox>
 
         <!-- Divider -->
         <Pane fx:id="divider" styleClass="divider" />
 
-        <!-- Create Room Section -->
         <VBox fx:id="createRoomContainer" styleClass="room-container">
             <Label text="Create a Room" styleClass="room-title" />
+
+            <Label text="Name" styleClass="input-label" />
+            <TextField fx:id="nameField" styleClass="input-field" promptText="Enter room's name" />
+
             <Label text="Genres" styleClass="input-label" />
-            <TextField fx:id="genresField" styleClass="input-field" promptText="Enter genres" />
-            <Label text="Year" styleClass="input-label" />
-            <TextField fx:id="yearField" styleClass="input-field" promptText="Enter year" />
-            <Button text="Create" styleClass="room-button" />
+            <ComboBox fx:id="genresField" styleClass="input-field" promptText="Select genres" />
+
+            <Label text="Decades" styleClass="input-label" />
+            <ComboBox fx:id="decadesField" styleClass="input-field" promptText="Select decades" />
+
+            <Label text="Watch Providers" styleClass="input-label" />
+            <ComboBox fx:id="watchProvidersField" styleClass="input-field" promptText="Select watch providers" />
+
+            <Label text="Production Companies" styleClass="input-label" />
+            <ComboBox fx:id="productionCompaniesField" styleClass="input-field" promptText="Select production companies" />
+
+            <Button fx:id="createButton" text="Create" styleClass="room-button" onMouseClicked="#createRoomEvent"/>
         </VBox>
     </HBox>
 

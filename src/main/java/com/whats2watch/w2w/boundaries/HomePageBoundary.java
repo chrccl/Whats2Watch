@@ -9,6 +9,7 @@ import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.User;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -111,8 +112,11 @@ public class HomePageBoundary {
             plusButton.setOnMouseClicked(event -> {
                 try {
                     newGenreRoomEvent(genre);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (IOException | DAOException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("ERROR");
+                    alert.setContentText(e.getMessage());
+                    alert.showAndWait();
                 }
             });
 
@@ -155,17 +159,17 @@ public class HomePageBoundary {
         }
     }
 
-    private void newGenreRoomEvent(Genre genre) throws IOException {
-        this.app.showRoomPage(genre);
+    private void newGenreRoomEvent(Genre genre) throws IOException, DAOException {
+        this.app.showRoomPage(activeUser, genre);
     }
 
     @FXML
-    private void GoToRoomPageEvent() throws IOException {
-        this.app.showRoomPage(null);
+    private void goToRoomPageEvent() throws IOException, DAOException {
+        this.app.showRoomPage(activeUser,null);
     }
 
     @FXML
-    private void GoToUserPageEvent() throws IOException {
+    private void goToUserPageEvent() throws IOException {
         this.app.showProfilePage(this.activeUser);
     }
 

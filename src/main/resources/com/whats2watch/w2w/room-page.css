@@ -74,6 +74,7 @@
     -fx-border-radius: 20;
     -fx-alignment: center;
     -fx-margin-top: 10;
+    -fx-cursor: hand;
 }
 
 /* Divider Styling */
