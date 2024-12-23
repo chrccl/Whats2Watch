@@ -64,5 +64,25 @@
     -fx-text-alignment: center;
     -fx-background-color: #272727;
     -fx-text-fill: #fff;
-
 }
+
+/* Navigation Bar */
+.home-navbar {
+    -fx-background-color: #202020;
+    -fx-pref-height: 80;
+    -fx-padding: 0 20;
+    -fx-alignment: center;
+    -fx-spacing: 20;
+}
+
+.home-text4, .home-text5 {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.home-text5 {
+    -fx-text-fill: #ca2000;
+}
+

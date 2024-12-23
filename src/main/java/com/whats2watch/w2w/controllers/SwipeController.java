@@ -25,9 +25,9 @@ public class SwipeController {
         return allMedia.stream()
                 .filter(media -> !hasUserAlreadyInteractedWithMedia(roomMember, media))
                 .sorted((media1, media2) -> Double.compare(
-                        calculateScore(roomMember, media2, room.getMediaType()),
+                        calculateScore(roomMember, media2, room.getMediaType()),    // Sort descending by score
                         calculateScore(roomMember, media1, room.getMediaType())
-                )) // Sort descending by score
+                ))
                 .limit(10)
                 .collect(Collectors.toList());
     }

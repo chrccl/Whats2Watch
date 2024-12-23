@@ -111,7 +111,7 @@ public class WhatsToWatch extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("favouritesMediaSwipe-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("favouritesMediaSwipe-page.fxml"));
         BorderPane root = fxmlLoader.load();
-        SwipeBoundary controller = fxmlLoader.getController();
+        MatchesBoundary controller = fxmlLoader.getController();
         controller.setMainApp(this, user, room);
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("favouritesMediaSwipe-page.css")).toExternalForm());

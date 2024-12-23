@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" styleClass="movie-container" fx:controller="com.whats2watch.w2w.boundaries.SwipeBoundary">
+<BorderPane xmlns:fx="http://javafx.com/fxml" styleClass="movie-container" fx:controller="com.whats2watch.w2w.boundaries.MatchesBoundary">
     <top>
         <VBox alignment="CENTER" spacing="10" styleClass="movie-container">
             <HBox spacing="10" alignment="CENTER" styleClass="header-wrapper">
@@ -19,15 +18,8 @@
             <VBox styleClass="matches-section">
                 <Label text="Room Matches" styleClass="section-title"/>
                 <ScrollPane hbarPolicy="ALWAYS" vbarPolicy="NEVER" fitToHeight="true" fitToWidth="true">
-                    <HBox spacing="15" styleClass="movie-grid">
-                        <!-- Movie Cards -->
-                        <VBox alignment="CENTER" styleClass="movie-card">
-                            <ImageView fitWidth="100" fitHeight="120" styleClass="movie-poster">
-                                <Image url="https://cdn.builder.io/api/v1/image/assets/77557d1d41b3402088175639f97039a4/44dae5e83d6748d60196363d8dc32d46102f36e51e05acbc3b9ddbb3d0780b01?apiKey=77557d1d41b3402088175639f97039a4&amp;"/>
-                            </ImageView>
-                            <Label text="Venom: The Last Dance" styleClass="movie-title"/>
-                        </VBox>
-                        <!-- Repeat other cards similarly -->
+                    <HBox fx:id="movieGridMatches" spacing="15" styleClass="movie-grid">
+                        <!-- Movie cards will be dynamically populated here -->
                     </HBox>
                 </ScrollPane>
             </VBox>
@@ -36,18 +28,17 @@
             <VBox styleClass="likes-section">
                 <Label text="Your Likes" styleClass="section-title"/>
                 <ScrollPane hbarPolicy="ALWAYS" vbarPolicy="NEVER" fitToHeight="true" fitToWidth="true">
-                    <HBox spacing="15" styleClass="movie-grid">
-                        <!-- Movie Cards -->
-                        <VBox alignment="CENTER" styleClass="movie-card">
-                            <ImageView fitWidth="100" fitHeight="120" styleClass="movie-poster">
-                                <Image url="https://cdn.builder.io/api/v1/image/assets/77557d1d41b3402088175639f97039a4/44dae5e83d6748d60196363d8dc32d46102f36e51e05acbc3b9ddbb3d0780b01?apiKey=77557d1d41b3402088175639f97039a4&amp;"/>
-                            </ImageView>
-                            <Label text="Venom: The Last Dance" styleClass="movie-title"/>
-                        </VBox>
-                        <!-- Repeat other cards similarly -->
+                    <HBox fx:id="movieGridLikes" spacing="15" styleClass="movie-grid">
+                        <!-- Movie cards will be dynamically populated here -->
                     </HBox>
                 </ScrollPane>
             </VBox>
         </VBox>
     </center>
+
+    <!-- Navigation Bar -->
+    <HBox fx:id="homeNavbar" styleClass="home-navbar">
+        <Label text="Swipe" styleClass="home-text5" onMouseClicked="#goToSwipePageEvent"/>
+        <Label text="Matches" styleClass="home-text4"/>
+    </HBox>
 </BorderPane>
