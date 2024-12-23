@@ -95,3 +95,31 @@
     -fx-preserve-ratio: true;
     -fx-alignment: center;
 }
+
+.nav-bar {
+    -fx-background-color: black;
+    -fx-padding: 15;
+    -fx-spacing: 20; /* Adds space between buttons */
+    -fx-alignment: center; /* Ensures buttons are centered */
+}
+
+.circle-button {
+    -fx-background-color: red;
+    -fx-background-radius: 50%; /* Creates a circular shape */
+    -fx-pref-width: 50px; /* Ensures a fixed width */
+    -fx-pref-height: 50px; /* Ensures a fixed height */
+    -fx-alignment: center; /* Centers the content inside */
+    -fx-cursor: hand; /* Changes the cursor to a hand when hovering */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0, 2); /* Optional: Adds a subtle shadow for aesthetics */
+    -fx-transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.circle-button:hover {
+    -fx-background-color: darkred; /* Changes background color on hover */
+}
+
+.icon {
+    -fx-fill: white; /* Sets the SVG fill color */
+    -fx-scale-x: 0.8; /* Optional scaling for better fit */
+    -fx-scale-y: 0.8;
+}

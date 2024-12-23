@@ -121,4 +121,14 @@ public class RoomBoundary {
         productionCompaniesField.setEditable(false);
     }
 
+    @FXML
+    private void goToHomePageEvent() throws IOException, DAOException {
+        this.app.showHomePage(activeUser);
+    }
+
+    @FXML
+    private void goToUserPageEvent() throws IOException {
+        this.app.showProfilePage(activeUser);
+    }
+
 }
