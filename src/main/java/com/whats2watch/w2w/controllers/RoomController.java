@@ -26,14 +26,16 @@ import java.util.stream.IntStream;
 public class RoomController {
 
     private static final String API_KEY = Config.loadPropertyByName("tmdb.api.key");
+
     private static final String TRENDING_URL = "https://api.themoviedb.org/3/trending/movie/week";
+
+    private static final Random random = new Random();
 
     private RoomController() {
         throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
     }
     
     public static void saveRoom(User organizer, RoomBean roomBean) throws DAOException {
-        Random random = new Random();
         Room room = RoomFactory.createRoomInstance()
                 .code(IntStream.range(0, 6)
                         .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
