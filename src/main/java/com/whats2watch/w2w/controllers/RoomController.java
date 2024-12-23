@@ -19,9 +19,9 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import java.io.IOException;
-import java.util.stream.IntStream;
 
 
 public class RoomController {
@@ -36,12 +36,13 @@ public class RoomController {
         throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
     }
     
-    public static void saveRoom(User organizer, RoomBean roomBean) throws DAOException {
+    public static String saveRoom(User organizer, RoomBean roomBean) throws DAOException {
+        String roomCode = IntStream.range(0, 6)
+                .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
+                .map(Object::toString)
+                .collect(Collectors.joining());
         Room room = RoomFactory.createRoomInstance()
-                .code(IntStream.range(0, 6)
-                        .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
-                        .map(Object::toString)
-                        .collect(Collectors.joining()))
+                .code(roomCode)
                 .name(roomBean.getName())
                 .creationDate(LocalDate.now())
                 .mediaType(roomBean.getMediaType())
@@ -52,6 +53,7 @@ public class RoomController {
                 .roomMembers(Set.of(new RoomMember(organizer)))
                 .build();
         PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+        return roomCode;
     }
 
     public static boolean addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {

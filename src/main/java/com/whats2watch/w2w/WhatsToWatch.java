@@ -1,9 +1,6 @@
 package com.whats2watch.w2w;
 
-import com.whats2watch.w2w.boundaries.HomePageBoundary;
-import com.whats2watch.w2w.boundaries.ProfileBoundary;
-import com.whats2watch.w2w.boundaries.RegisterBoundary;
-import com.whats2watch.w2w.boundaries.RoomBoundary;
+import com.whats2watch.w2w.boundaries.*;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.User;
 import com.whats2watch.w2w.model.Genre;
@@ -90,6 +87,19 @@ public class WhatsToWatch extends Application {
         controller.setMainApp(this, user);
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("profile-page.css")).toExternalForm());
+        stage.setTitle(TITLE);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void showSwipePage(User user, String roomCode) throws IOException, DAOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("swipe-page.fxml"));
+        fxmlLoader.setLocation(WhatsToWatch.class.getResource("swipe-page.fxml"));
+        VBox root = fxmlLoader.load();
+        SwipeBoundary controller = fxmlLoader.getController();
+        controller.setMainApp(this, user, roomCode);
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("swipe-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();

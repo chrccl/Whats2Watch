@@ -81,7 +81,8 @@ public class RoomBoundary {
         RoomBean roomBean = new RoomBean(nameField.getText(), MediaType.MOVIE, decade, genres, watchProviders, productionCompanies);
         ValidationResult validationResult = RoomValidator.validate(roomBean);
         if (validationResult.isValid()) {
-            RoomController.saveRoom(activeUser, roomBean);
+            String roomCode = RoomController.saveRoom(activeUser, roomBean);
+            //TODO: redirect to the room page with that code
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
@@ -99,7 +100,7 @@ public class RoomBoundary {
         if(genre != null) genresField.getSelectionModel().select(genre.name());
 
         ObservableList<String> decades = FXCollections.observableArrayList(
-                IntStream.rangeClosed(1900, Year.now().getValue()/10)
+                IntStream.rangeClosed(1900, Year.now().getValue())
                         .filter(year -> year % 10 == 0)
                         .mapToObj(year -> year + "s").collect(Collectors.toList())
         );
