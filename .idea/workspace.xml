@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/favouritesMediaSwipe-page.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/favouritesMediaSwipe-page.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/favouritesMediaSwipe-page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/favouritesMediaSwipe-page.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaTMDBFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaTMDBFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/TVSeriesTMDBFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/TVSeriesTMDBFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/DAODatabaseMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/DAODatabaseMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/conf.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/conf.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,12 +180,22 @@
       <workItem from="1734957615263" duration="249000" />
       <workItem from="1734957890693" duration="32000" />
       <workItem from="1734963531076" duration="41000" />
-      <workItem from="1734963631132" duration="8378000" />
+      <workItem from="1734963631132" duration="22831000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="com.mysql.cj.jdbc.exceptions.MysqlDataTruncation" package="com.mysql.cj.jdbc.exceptions" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

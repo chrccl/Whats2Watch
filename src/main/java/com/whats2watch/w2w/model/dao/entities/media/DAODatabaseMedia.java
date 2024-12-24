@@ -19,7 +19,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     private static final String QUERY_FORMAT = "%s%s%s";
 
-    private static final String INSERT_INTO = "INSERT INTO ";
+    private static final String INSERT_INTO = "INSERT IGNORE INTO ";
 
     private static final String DELETE_FROM = "DELETE FROM ";
 
@@ -60,7 +60,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
             deletePs.executeUpdate();
         }
 
-        String insertQuery = String.format(QUERY_FORMAT, INSERT_INTO, getTableName(), "_characters (title, year, character) VALUES (?, ?, ?)");
+        String insertQuery = String.format(QUERY_FORMAT, INSERT_INTO, getTableName(), "_characters (title, year, `character`) VALUES (?, ?, ?)");
         try (PreparedStatement insertPs = conn.prepareStatement(insertQuery)) {
             for (Character character: entity.getCharacters()) {
                 insertPs.setString(1, entity.getMediaId().getTitle());
@@ -182,7 +182,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
             new DAODatabaseWatchProvider(conn).saveAll(media.getWatchProviders());
             saveMediaWatchProviders(media);
         }catch(SQLException e){
-            throw new DAOException("Error saving associations JT of medias");
+            throw new DAOException("Error saving associations JT of medias: " + e.getMessage());
         }
     }
 

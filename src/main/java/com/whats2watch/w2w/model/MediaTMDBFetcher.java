@@ -22,9 +22,15 @@ public abstract class MediaTMDBFetcher<T extends Media> {
 
     protected List<T> fetchTopMedia(int year, String mediaType) throws URISyntaxException, IOException, InterruptedException {
         List<T> mediaList = new ArrayList<>();
-        for (int page = 1; page <= 10; page++) {  // Adjust as needed (20 results per page).
-            String url = String.format("%s/discover/%s?sort_by=popularity.desc&year=%d&page=%d",
-                    BASE_URL, mediaType, year, page);
+        for (int page = 1; page <= 10; page++) {  // 20 results per page.
+            String url;
+            if(mediaType.equals("tv")){
+                url = String.format("%s/discover/%s?sort_by=popularity.desc&first_air_date_year=%d&page=%d",
+                        BASE_URL, mediaType, year, page);
+            }else{
+                url = String.format("%s/discover/%s?sort_by=popularity.desc&year=%d&page=%d",
+                        BASE_URL, mediaType, year, page);
+            }
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .GET()
@@ -37,7 +43,9 @@ public abstract class MediaTMDBFetcher<T extends Media> {
 
             for (int i = 0; i < results.length(); i++) {
                 int mediaId = results.getJSONObject(i).getInt("id");
-                mediaList.add(fetchMediaDetails(mediaId, year, mediaType));
+                T media = fetchMediaDetails(mediaId, year, mediaType);
+                System.out.println(media);
+                mediaList.add(media);
             }
         }
         return mediaList;

@@ -16,18 +16,15 @@ public class SwipeController {
     }
 
     public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
-        List<Media> allMedia = PersistanceFactory.createDAO(PersistanceType.DEMO)
+        return PersistanceFactory.createDAO(PersistanceType.DEMO)
                 .createMovieDAO()
                 .findAll()
                 .stream()
                 .map(movie -> (Media) movie)
-                .collect(Collectors.toList());
-        return allMedia.stream()
                 .filter(media -> !hasUserAlreadyInteractedWithMedia(roomMember, media))
                 .sorted((media1, media2) -> Double.compare(
-                        calculateScore(roomMember, media2, room.getMediaType()),    // Sort descending by score
-                        calculateScore(roomMember, media1, room.getMediaType())
-                ))
+                        calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
+                        calculateScore(roomMember, media1, room.getMediaType())))
                 .limit(10)
                 .collect(Collectors.toList());
     }
@@ -51,13 +48,16 @@ public class SwipeController {
                 .filter(media.getGenres()::contains).count();
         score += (int) (3 * commonGenres); // Matching genres: Multiply by the number of genres in common
 
-        long commonActors = likedMedia.getCharacters().stream()
+        score += likedMedia.getCharacters().stream()
                 .map(Character::getActor)
                 .filter(actor -> media.getCharacters().stream()
                         .map(Character::getActor)
                         .anyMatch(actor::equals))
-                .count();
-        score += (int) (2 * commonActors); // Matching actors: Multiply by the number of actors in common
+                .collect(Collectors.teeing(
+                        Collectors.counting(),
+                        Collectors.averagingDouble(Actor::getPopularity),
+                        (count, avgPopularity) -> count * avgPopularity * 2))
+                .intValue();    // Matching actors: Multiply by the number of actors in common times their popularity
 
         if (mediaType == MediaType.MOVIE) {
             Movie likedMovie = (Movie) likedMedia;

@@ -2,9 +2,9 @@ package com.whats2watch.w2w;
 
 import com.whats2watch.w2w.boundaries.*;
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.Room;
-import com.whats2watch.w2w.model.User;
-import com.whats2watch.w2w.model.Genre;
+import com.whats2watch.w2w.model.*;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +16,8 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Objects;
 
 public class WhatsToWatch extends Application {
@@ -107,7 +109,7 @@ public class WhatsToWatch extends Application {
         stage.show();
     }
 
-    public void showMatchesPage(User user, Room room) throws IOException, DAOException {
+    public void showMatchesPage(User user, Room room) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("favouritesMediaSwipe-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("favouritesMediaSwipe-page.fxml"));
         BorderPane root = fxmlLoader.load();
