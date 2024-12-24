@@ -85,7 +85,7 @@ public class SwipeBoundary {
     }
 
     @FXML
-    private void goToMatchesPageEvent() throws DAOException, IOException {
+    private void goToMatchesPageEvent() throws IOException {
         this.app.showMatchesPage(activeUser, room);
     }
 }

@@ -43,9 +43,7 @@ public abstract class MediaTMDBFetcher<T extends Media> {
 
             for (int i = 0; i < results.length(); i++) {
                 int mediaId = results.getJSONObject(i).getInt("id");
-                T media = fetchMediaDetails(mediaId, year, mediaType);
-                System.out.println(media);
-                mediaList.add(media);
+                mediaList.add(fetchMediaDetails(mediaId, year, mediaType));
             }
         }
         return mediaList;

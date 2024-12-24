@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/movies.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/tvseries.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" afterDir="false" />
@@ -180,7 +182,7 @@
       <workItem from="1734957615263" duration="249000" />
       <workItem from="1734957890693" duration="32000" />
       <workItem from="1734963531076" duration="41000" />
-      <workItem from="1734963631132" duration="22831000" />
+      <workItem from="1734963631132" duration="23867000" />
     </task>
     <servers />
   </component>
