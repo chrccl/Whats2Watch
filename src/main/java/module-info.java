@@ -1,7 +1,6 @@
 module com.whats2watch.w2w {
     requires javafx.controls;
     requires javafx.fxml;
-
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.ikonli.javafx;
@@ -16,4 +15,9 @@ module com.whats2watch.w2w {
     opens com.whats2watch.w2w.boundaries to javafx.fxml;
     opens com.whats2watch.w2w.model to com.google.gson;
     exports com.whats2watch.w2w;
+    exports com.whats2watch.w2w.exceptions;
+    exports com.whats2watch.w2w.model.dao.dao_factories;
+    exports com.whats2watch.w2w.model.dao.entities;
+    exports com.whats2watch.w2w.model;
+    exports com.whats2watch.w2w.controllers;
 }

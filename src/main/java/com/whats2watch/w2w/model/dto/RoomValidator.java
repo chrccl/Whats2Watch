@@ -21,9 +21,7 @@ public class RoomValidator {
             result.addError("Media type must not be null.");
         }
 
-        if (room.getDecade() == null) {
-            result.addError("Decade must not be null.");
-        } else {
+        if (room.getDecade() != null) {
             int currentYear = LocalDate.now().getYear();
             int lastDecade = (currentYear / 10) * 10; // Calculate the last completed decade.
             if(!(room.getDecade() >= 1900 && room.getDecade() <= lastDecade && room.getDecade() % 10 == 0)){

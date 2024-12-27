@@ -68,6 +68,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20240303</version>
@@ -86,12 +92,18 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.11</version>
+            <version>1.4.12</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.29</version>
+            <version>8.0.33</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -110,22 +122,6 @@
                         <configuration>
                             <target>
                                 <propertyfile file="conf.properties"/>
-                            </target>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <echo>Print TMDB API key</echo>
-                                <echo>API KEY : "${tmdb.api.key}"</echo>
-                                <echo>Print DB config parameters</echo>
-                                <echo>URL : "${db.conf.url}"</echo>
-                                <echo>USERNAME : "${db.conf.username}"</echo>
-                                <echo>PASSWORD : "${db.conf.password}"</echo>
                             </target>
                         </configuration>
                     </execution>

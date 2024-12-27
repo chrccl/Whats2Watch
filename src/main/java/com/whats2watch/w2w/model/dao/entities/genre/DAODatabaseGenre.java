@@ -76,7 +76,7 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
             stmt.setInt(2, movieId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    genres.add(Genre.valueOf(rs.getString("genre").toUpperCase()));
+                    genres.add(Genre.valueOf(rs.getString("genre_name").toUpperCase()));
                 }
             }
         } catch (SQLException e) {

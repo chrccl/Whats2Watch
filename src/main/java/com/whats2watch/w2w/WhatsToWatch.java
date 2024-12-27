@@ -36,6 +36,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("login-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -49,6 +50,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("registration-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -62,6 +64,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("home-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -75,6 +78,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("room-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -88,6 +92,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("profile-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -101,6 +106,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("swipe-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 
@@ -114,6 +120,7 @@ public class WhatsToWatch extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("favouritesMediaSwipe-page.css")).toExternalForm());
         stage.setTitle(TITLE);
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

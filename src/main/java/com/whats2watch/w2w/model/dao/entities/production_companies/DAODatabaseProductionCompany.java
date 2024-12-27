@@ -83,8 +83,7 @@ public class DAODatabaseProductionCompany implements DAO<ProductionCompany, Stri
             stmt.setInt(2, movieId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    companies.add(new ProductionCompany(rs.getString("production_company"),
-                            rs.getString(LOGO_URL)));
+                    companies.add(new ProductionCompany(rs.getString(COMPANY_NAME), rs.getString(LOGO_URL)));
                 }
             }
         } catch (SQLException e) {

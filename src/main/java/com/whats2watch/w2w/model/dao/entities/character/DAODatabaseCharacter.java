@@ -95,7 +95,7 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
                     Actor actor = new Actor(rs.getString("full_name"),
                             rs.getDouble("popularity"),
                             Gender.valueOf(rs.getString("gender").toUpperCase()));
-                    characters.add(new Character(rs.getString("character"), actor));
+                    characters.add(new Character(rs.getString("character_name"), actor));
                 }
                 return characters;
             }

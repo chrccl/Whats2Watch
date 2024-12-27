@@ -75,9 +75,13 @@ public class HomePageBoundary {
                 ImageView roomImage = new ImageView(new Image(
                         room.getRoomMembers().stream()
                                 .filter(member -> member.getUser().equals(activeUser)).findFirst()
-                                .map(member -> member.getLikedMedia().iterator().next().getPosterUrl())
+                                .flatMap(member -> member.getLikedMedia().stream().findFirst()
+                                        .map(media -> String.format("https://image.tmdb.org/t/p/w500%s", media.getPosterUrl())))
                                 .orElse(DEFAULT_IMAGE_URL)
                 ));
+                roomImage.setFitHeight(120);
+                roomImage.setFitWidth(100);
+
                 roomImage.getStyleClass().add("room-image");
 
                 Label roomName = new Label(room.getName());
@@ -89,7 +93,7 @@ public class HomePageBoundary {
                 Label members = new Label(room.getRoomMembers().size() + " Members");
                 members.getStyleClass().add("member-count");
 
-                Label genres = new Label(room.getAllowedGenres().iterator().next().toString());
+                Label genres = new Label(room.getAllowedGenres().stream().findFirst().map(Object::toString).orElse("No genres allowed"));
                 genres.getStyleClass().add("genre-label");
 
                 roomInfo.getChildren().addAll(members, genres);

@@ -37,7 +37,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
             ps.setString(2, entity.getName());
             ps.setDate(3, Date.valueOf(entity.getCreationDate()));
             ps.setString(4, entity.getMediaType().name());
-            ps.setInt(5, entity.getDecade());
+            ps.setInt(5, entity.getDecade() != null ? entity.getDecade() : 0);
             ps.executeUpdate();
 
             saveAssociations(entity);
@@ -225,14 +225,11 @@ public class DAODatabaseRoom implements DAO<Room, String> {
     private void saveAssociations(Room entity) throws DAOException {
         try{
             saveRoomMembers(entity);    //this doesn't need to save the User entity because all the user has to be registered to enter a room
-            new DAODatabaseGenre(conn).saveAll(entity.getAllowedGenres());
-            saveAllowedGenres(entity);
-            new DAODatabaseProductionCompany(conn).saveAll(entity.getAllowedProductionCompanies());
-            saveAllowedProductionCompanies(entity);
-            new DAODatabaseWatchProvider(conn).saveAll(entity.getAllowedProviders());
-            saveAllowedProviders(entity);
+            if(entity.getAllowedGenres() != null) saveAllowedGenres(entity);
+            if(entity.getAllowedProductionCompanies() != null) saveAllowedProductionCompanies(entity);
+            if(entity.getAllowedProviders()!= null) saveAllowedProviders(entity);
         }catch(SQLException e){
-            throw new DAOException("Error saving associations JT of room");
+            throw new DAOException("Error saving associations JT of room: " + e.getMessage());
         }
     }
 

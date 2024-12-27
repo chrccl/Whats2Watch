@@ -114,9 +114,18 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     @Override
     public Set<T> findAll() throws DAOException {
-        String sql = String.format("%s%s", "SELECT * FROM ", getTableName());
+        String sql = String.format("%s%s%s", "SELECT * FROM ", getTableName(), " ORDER BY year DESC LIMIT 30");
+        return fetchAllMedia(sql);
+    }
+
+    public Set<T> findAllByOffset(int offset) throws DAOException {
+        String sql = String.format("%s%s%s OFFSET %d", "SELECT * FROM ", getTableName(), " ORDER BY year DESC LIMIT 30", offset);
+        return fetchAllMedia(sql);
+    }
+
+    private Set<T> fetchAllMedia(String sql) throws DAOException {
         Set<T> medias = new HashSet<>();
-        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+        try (Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 T media =  mapRowToMedia(rs);
                 medias.add(media);

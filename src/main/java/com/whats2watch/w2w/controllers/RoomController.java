@@ -5,6 +5,8 @@ import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
+import com.whats2watch.w2w.model.dao.entities.DAO;
+import com.whats2watch.w2w.model.dao.entities.room.DAODatabaseRoom;
 import com.whats2watch.w2w.model.dto.beans.RoomBean;
 
 import java.net.URI;
@@ -51,26 +53,30 @@ public class RoomController {
                 .allowedProductionCompanies(roomBean.getAllowedProductionCompanies())
                 .roomMembers(Set.of(new RoomMember(organizer)))
                 .build();
-        PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+        PersistanceFactory.createDAO(PersistanceType.DATABASE).createRoomDAO().save(room);
         return room;
     }
 
-    public static void updateRoom(Room room) throws DAOException {
-        PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+    public static void updateRoomPreferences(Room room, RoomMember roomMember) throws DAOException {
+        DAO<Room, String> roomDAO = PersistanceFactory.createDAO(PersistanceType.DATABASE).createRoomDAO();
+        if(roomDAO instanceof DAODatabaseRoom) {
+            ((DAODatabaseRoom) roomDAO).updateLikedMedia(room.getCode(), roomMember.getUser(), roomMember.getLikedMedia());
+            ((DAODatabaseRoom) roomDAO).updatePassedMedia(room.getCode(), roomMember.getUser(), roomMember.getLikedMedia());
+        }
     }
 
     public static Room addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
-        Room room = (Room) PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().findById(roomCode);
+        Room room = (Room) PersistanceFactory.createDAO(PersistanceType.DATABASE).createRoomDAO().findById(roomCode);
         if(room != null) {
             room.getRoomMembers().add(new RoomMember(user));
-            PersistanceFactory.createDAO(PersistanceType.DEMO).createRoomDAO().save(room);
+            PersistanceFactory.createDAO(PersistanceType.DATABASE).createRoomDAO().save(room);
         }
         return room;
     }
 
     public static Set<Room> fetchRecentRooms(User user) throws DAOException {
         return PersistanceFactory
-                .createDAO(PersistanceType.DEMO)
+                .createDAO(PersistanceType.DATABASE)
                 .createRoomDAO()
                 .findAll()
                 .stream()
@@ -88,7 +94,7 @@ public class RoomController {
 
     public static Set<WatchProvider> fetchWatchProviders() throws DAOException {
         return PersistanceFactory
-                .createDAO(PersistanceType.DEMO)
+                .createDAO(PersistanceType.DATABASE)
                 .createWatchProviderDAO()
                 .findAll().stream()
                 .map(watchProvider -> (WatchProvider)watchProvider)
@@ -97,7 +103,7 @@ public class RoomController {
 
     public static Set<ProductionCompany> fetchProductionCompanies() throws DAOException {
         return PersistanceFactory
-                .createDAO(PersistanceType.DEMO)
+                .createDAO(PersistanceType.DATABASE)
                 .createProductionCompaniesDAO()
                 .findAll().stream()
                 .map(productionCompany -> (ProductionCompany)productionCompany)
@@ -106,7 +112,7 @@ public class RoomController {
 
     public static WatchProvider getWatchProviderByName(String providerName) throws DAOException {
         return PersistanceFactory
-                .createDAO(PersistanceType.DEMO)
+                .createDAO(PersistanceType.DATABASE)
                 .createWatchProviderDAO()
                 .findAll().stream()
                 .map(watchProvider -> (WatchProvider)watchProvider)
@@ -116,7 +122,7 @@ public class RoomController {
 
     public static ProductionCompany getProductionCompanyByName(String companyName) throws DAOException {
         return PersistanceFactory
-                .createDAO(PersistanceType.DEMO)
+                .createDAO(PersistanceType.DATABASE)
                 .createProductionCompaniesDAO()
                 .findAll().stream()
                 .map(productionCompany -> (ProductionCompany)productionCompany)

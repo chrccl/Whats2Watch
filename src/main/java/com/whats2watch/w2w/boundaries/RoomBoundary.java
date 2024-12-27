@@ -68,18 +68,22 @@ public class RoomBoundary {
 
     @FXML
     private void createRoomEvent() throws DAOException, IOException {
-        Integer decade = Integer.valueOf(decadesField.getSelectionModel().getSelectedItem().replace("s", ""));
-        WatchProvider watchProvider = RoomController.getWatchProviderByName(watchProvidersField.getSelectionModel().getSelectedItem());
-        ProductionCompany productionCompany = RoomController.getProductionCompanyByName(productionCompaniesField.getSelectionModel().getSelectedItem());
+        WatchProvider watchProvider = RoomController.getWatchProviderByName(
+                watchProvidersField.getSelectionModel().getSelectedItem());
+        ProductionCompany productionCompany = RoomController.getProductionCompanyByName(
+                productionCompaniesField.getSelectionModel().getSelectedItem());
+        Integer decade = decadesField.getSelectionModel().getSelectedItem() != null
+                ? Integer.valueOf(decadesField.getSelectionModel().getSelectedItem().replace("s", ""))
+                : null;
         Set<Genre> genres = genresField.getSelectionModel().getSelectedItem() != null
                 ? Set.of(Genre.of(genresField.getSelectionModel().getSelectedItem()))
-                : new HashSet<>(List.of(Genre.values()));
+                : null;
         Set<WatchProvider> watchProviders = watchProvider != null
                 ? Set.of(watchProvider)
-                : RoomController.fetchWatchProviders();
+                : null;
         Set<ProductionCompany> productionCompanies = productionCompany != null
                 ? Set.of(productionCompany)
-                : RoomController.fetchProductionCompanies();
+                : null;
 
         RoomBean roomBean = new RoomBean(nameField.getText(), MediaType.MOVIE, decade, genres, watchProviders, productionCompanies);
         ValidationResult validationResult = RoomValidator.validate(roomBean);
@@ -110,14 +114,16 @@ public class RoomBoundary {
         decadesField.setItems(decades);
         decadesField.setEditable(false);
 
+        Set<WatchProvider> watchProvidersCache = RoomController.fetchWatchProviders();
         ObservableList<String> watchProviders = FXCollections.observableArrayList(
-                RoomController.fetchWatchProviders().stream().map(WatchProvider::getProviderName).collect(Collectors.toList())
+                watchProvidersCache.stream().map(WatchProvider::getProviderName).collect(Collectors.toList())
         );
         watchProvidersField.setItems(watchProviders);
         watchProvidersField.setEditable(false);
 
+        Set<ProductionCompany> productionCompaniesCache = RoomController.fetchProductionCompanies();
         ObservableList<String> productionCompanies = FXCollections.observableArrayList(
-                RoomController.fetchProductionCompanies().stream().map(ProductionCompany::getCompanyName).collect(Collectors.toList())
+                productionCompaniesCache.stream().map(ProductionCompany::getCompanyName).collect(Collectors.toList())
         );
         productionCompaniesField.setItems(productionCompanies);
         productionCompaniesField.setEditable(false);

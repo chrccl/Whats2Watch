@@ -37,6 +37,8 @@ public class SwipeBoundary {
     @FXML
     private Label mediaTitle;
 
+    private static final String DEFAULT_IMAGE_URL = "https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true";
+
     public void setMainApp(WhatsToWatch app, User user, Room room) throws DAOException {
         this.app = app;
         this.activeUser = user;
@@ -50,36 +52,37 @@ public class SwipeBoundary {
 
     private void recommendMedias() throws DAOException {
         mediaList = SwipeController.recommendMedias(room, roomMember);
+        mediaList.forEach(System.out::println);
         updateMediaCard();
     }
 
     private void updateMediaCard() {
-        mediaImage.setImage(new Image(mediaList.get(currentIndex).getPosterUrl()));
+        String posterUrl = mediaList.get(currentIndex).getPosterUrl();
+        mediaImage.setImage(new Image(posterUrl != null && !posterUrl.isEmpty()
+                ? String.format("https://image.tmdb.org/t/p/w500%s", mediaList.get(currentIndex).getPosterUrl())
+                : DEFAULT_IMAGE_URL));
+        mediaImage.setFitHeight(500);
+        mediaImage.setFitWidth(300);
         mediaTitle.setText(mediaList.get(currentIndex).getMediaId().getTitle());
         currentIndex++;
     }
 
     @FXML
     private void passMediaEvent() throws DAOException {
-        if(currentIndex > 5) {
-            updateRecommendations();
-        }
         roomMember.getPassedMedia().add(mediaList.get(currentIndex-1));
+        updateMediaCard();
+        if(currentIndex > 15) updateRecommendations();
     }
 
     @FXML
     private void likeMediaEvent() throws DAOException {
-        if(currentIndex > 5) {
-            updateRecommendations();
-        }
         roomMember.getLikedMedia().add(mediaList.get(currentIndex-1));
+        updateMediaCard();
+        if(currentIndex > 15) updateRecommendations();
     }
 
     private void updateRecommendations() throws DAOException {
-        // Add updated room member
-        room.getRoomMembers().remove(roomMember);
-        room.getRoomMembers().add(roomMember);
-        RoomController.updateRoom(room);
+        RoomController.updateRoomPreferences(room, roomMember);
         currentIndex = 0;
         recommendMedias();
     }

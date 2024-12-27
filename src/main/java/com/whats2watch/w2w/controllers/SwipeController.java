@@ -5,8 +5,13 @@ import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.Character;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
+import com.whats2watch.w2w.model.dao.entities.DAO;
+import com.whats2watch.w2w.model.dao.entities.media.DAODatabaseMedia;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SwipeController {
@@ -16,17 +21,37 @@ public class SwipeController {
     }
 
     public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
-        return PersistanceFactory.createDAO(PersistanceType.DEMO)
-                .createMovieDAO()
-                .findAll()
+        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(PersistanceType.DATABASE).createMovieDAO();
+        return ((DAODatabaseMedia<? extends Media>)mediaDAO)
+                .findAllByOffset(computeOffset(roomMember))
                 .stream()
-                .map(movie -> (Media) movie)
                 .filter(media -> !hasUserAlreadyInteractedWithMedia(roomMember, media))
                 .sorted((media1, media2) -> Double.compare(
                         calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
                         calculateScore(roomMember, media1, room.getMediaType())))
-                .limit(10)
                 .collect(Collectors.toList());
+    }
+
+    private static int computeOffset(RoomMember roomMember) {
+        Integer mostCommonDecade = roomMember.getLikedMedia().stream()
+                .map(media -> (media.getMediaId().getYear()/10)*10) // Calculate the decade
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Count decades
+                .entrySet().stream()    // Stream the entry set
+                .max(Map.Entry.comparingByValue())  // Find the max by count
+                .map(Map.Entry::getKey) // Get the decade
+                .orElse(null);
+        if(mostCommonDecade != null) {
+            // Calculate the current decade
+            int currentDecade = (LocalDate.now().getYear() / 10) * 10;
+            // Calculate the exact number of 9-year intervals (as a double)
+            double intervals = Math.abs(mostCommonDecade - currentDecade) / 9.0;
+            // Calculate the base number
+            int baseNumber = (int) (intervals * 1000);
+            // Generate a random number in the neighborhood (+-500)
+            return baseNumber + (int) (Math.random() * 1001) - 500; //to avoid starvation of the algorithm
+        }else{
+            return 1 + (int) (Math.random() * 4500);    // Random Offset Fallback
+        }
     }
 
     private static boolean hasUserAlreadyInteractedWithMedia(RoomMember roomMember, Media media) {
@@ -65,9 +90,6 @@ public class SwipeController {
             if (likedMovie.getDirector().equals(candidateMovie.getDirector()))
                 score += 2; // Director match adds a flat score
         }
-
-        if (Math.abs(likedMedia.getMediaId().getYear() - media.getMediaId().getYear()) <= 10)
-            score += 1; // Flat score for year similarity
 
         long commonProductionCompanies = likedMedia.getProductionCompanies().stream()
                 .filter(media.getProductionCompanies()::contains).count();

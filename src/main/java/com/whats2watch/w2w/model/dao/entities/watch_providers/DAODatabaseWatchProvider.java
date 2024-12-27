@@ -84,8 +84,7 @@ public class DAODatabaseWatchProvider implements DAO<WatchProvider, String> {
             stmt.setInt(2, mediaId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    providers.add(new WatchProvider(rs.getString("watch_provider"),
-                            rs.getString(LOGO_URL)));
+                    providers.add(new WatchProvider(rs.getString(PROVIDER_NAME), rs.getString(LOGO_URL)));
                 }
             }
         } catch (SQLException e) {

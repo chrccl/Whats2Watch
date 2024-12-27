@@ -6,11 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/Genre.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaTMDBFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/MediaTMDBFetcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/movies.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/movies.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/tvseries.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/tvseries.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/HomePageBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/HomePageBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/RoomBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/RoomBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/SwipeBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/SwipeBoundary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/character/DAODatabaseCharacter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/character/DAODatabaseCharacter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/genre/DAODatabaseGenre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/genre/DAODatabaseGenre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/DAODatabaseMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/DAODatabaseMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/movie/DAODatabaseMovie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/movie/DAODatabaseMovie.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/production_companies/DAODatabaseProductionCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/production_companies/DAODatabaseProductionCompany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/room/DAODatabaseRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/room/DAODatabaseRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/watch_providers/DAODatabaseWatchProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/watch_providers/DAODatabaseWatchProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dto/RoomValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dto/RoomValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +83,9 @@
   &quot;keyToString&quot;: {
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
     &quot;Application.WhatsToWatch.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MediaDAOTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MediaDAOTest.testFindAllQueryDuration.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MediaDAOTest.testSaveRoom.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
@@ -82,6 +97,9 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -97,6 +115,44 @@
       <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch\src\main\resources\com\whats2watch\w2w" />
       <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MediaDAOTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="W2W" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MediaDAOTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MediaDAOTest.testFindAllQueryDuration" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="W2W" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MediaDAOTest" />
+      <option name="METHOD_NAME" value="testFindAllQueryDuration" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MediaDAOTest.testSaveRoom" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="W2W" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MediaDAOTest" />
+      <option name="METHOD_NAME" value="testSaveRoom" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MediaDAOTest.testFindAllQueryDuration" />
+        <item itemvalue="JUnit.MediaDAOTest" />
+        <item itemvalue="JUnit.MediaDAOTest.testSaveRoom" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -180,6 +236,9 @@
       <workItem from="1734963531076" duration="41000" />
       <workItem from="1734963631132" duration="24078000" />
       <workItem from="1735041929620" duration="7991000" />
+      <workItem from="1735288044081" duration="8429000" />
+      <workItem from="1735302328465" duration="10933000" />
+      <workItem from="1735316980113" duration="835000" />
     </task>
     <servers />
   </component>
