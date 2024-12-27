@@ -22,7 +22,7 @@ public abstract class MediaTMDBFetcher<T extends Media> {
 
     protected List<T> fetchTopMedia(int year, String mediaType) throws URISyntaxException, IOException, InterruptedException {
         List<T> mediaList = new ArrayList<>();
-        for (int page = 1; page <= 10; page++) {  // 20 results per page.
+        for (int page = 1; page <= 25; page++) {  // 20 results per page.
             String url;
             if(mediaType.equals("tv")){
                 url = String.format("%s/discover/%s?sort_by=popularity.desc&first_air_date_year=%d&page=%d",

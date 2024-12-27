@@ -15,6 +15,7 @@ public enum Genre {
     HORROR("Horror"),
     KIDS("Kids"),
     MUSIC("Music"),
+    MUSICAL("Musical"),
     MYSTERY("Mystery"),
     NEWS("News"),
     REALITY("Reality"),

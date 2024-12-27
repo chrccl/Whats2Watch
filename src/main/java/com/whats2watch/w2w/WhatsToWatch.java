@@ -3,8 +3,6 @@ package com.whats2watch.w2w;
 import com.whats2watch.w2w.boundaries.*;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,9 +13,6 @@ import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-
-import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Objects;
 
 public class WhatsToWatch extends Application {
