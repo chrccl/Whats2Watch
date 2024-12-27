@@ -8,6 +8,7 @@ import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.media.DAODatabaseMedia;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class SwipeController {
     }
 
     private static int computeOffset(RoomMember roomMember) {
+        SecureRandom random = new SecureRandom();
         Integer mostCommonDecade = roomMember.getLikedMedia().stream()
                 .map(media -> (media.getMediaId().getYear()/10)*10) // Calculate the decade
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Count decades
@@ -48,9 +50,9 @@ public class SwipeController {
             // Calculate the base number
             int baseNumber = (int) (intervals * 1000);
             // Generate a random number in the neighborhood (+-500)
-            return baseNumber + (int) (Math.random() * 1001) - 500; //to avoid starvation of the algorithm
+            return baseNumber + random.nextInt(1000) - 500; //to avoid starvation of the algorithm
         }else{
-            return 1 + (int) (Math.random() * 4500);    // Random Offset Fallback
+            return 1 + random.nextInt(4500);    // Random Offset Fallback
         }
     }
 

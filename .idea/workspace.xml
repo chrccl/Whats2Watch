@@ -6,23 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/HomePageBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/HomePageBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/RoomBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/RoomBoundary.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/SwipeBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/boundaries/SwipeBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RoomController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/character/DAODatabaseCharacter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/character/DAODatabaseCharacter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/genre/DAODatabaseGenre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/genre/DAODatabaseGenre.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/DAODatabaseMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/DAODatabaseMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/movie/DAODatabaseMovie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/media/movie/DAODatabaseMovie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/production_companies/DAODatabaseProductionCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/production_companies/DAODatabaseProductionCompany.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/room/DAODatabaseRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/room/DAODatabaseRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/watch_providers/DAODatabaseWatchProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/watch_providers/DAODatabaseWatchProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dto/RoomValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dto/RoomValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,8 +107,8 @@
   <component name="RunManager">
     <configuration name="MediaDAOTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MediaDAOTest" />
+      <option name="PACKAGE_NAME" value="dao_tests" />
+      <option name="MAIN_CLASS_NAME" value="dao_tests.MediaDAOTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -128,8 +116,8 @@
     </configuration>
     <configuration name="MediaDAOTest.testFindAllQueryDuration" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MediaDAOTest" />
+      <option name="PACKAGE_NAME" value="dao_tests" />
+      <option name="MAIN_CLASS_NAME" value="dao_tests.MediaDAOTest" />
       <option name="METHOD_NAME" value="testFindAllQueryDuration" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -138,8 +126,8 @@
     </configuration>
     <configuration name="MediaDAOTest.testSaveRoom" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="MediaDAOTest" />
+      <option name="PACKAGE_NAME" value="dao_tests" />
+      <option name="MAIN_CLASS_NAME" value="dao_tests.MediaDAOTest" />
       <option name="METHOD_NAME" value="testSaveRoom" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -238,7 +226,7 @@
       <workItem from="1735041929620" duration="7991000" />
       <workItem from="1735288044081" duration="8429000" />
       <workItem from="1735302328465" duration="10933000" />
-      <workItem from="1735316980113" duration="835000" />
+      <workItem from="1735316980113" duration="1522000" />
     </task>
     <servers />
   </component>

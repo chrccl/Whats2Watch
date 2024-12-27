@@ -14,6 +14,8 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
 
     private final Connection conn;
 
+    private static final String CHARACTER_NAME = "character_name";
+
     public DAODatabaseCharacter(Connection conn) {
         this.conn = conn;
     }
@@ -65,7 +67,7 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
                     Actor actor = new Actor(rs.getString("full_name"),
                             rs.getDouble("popularity"),
                             Gender.valueOf(rs.getString("gender").toUpperCase()));
-                    character = new Character(rs.getString("character_name"), actor);
+                    character = new Character(rs.getString(CHARACTER_NAME), actor);
                     return character;
                 }else{
                     return null;
@@ -95,7 +97,7 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
                     Actor actor = new Actor(rs.getString("full_name"),
                             rs.getDouble("popularity"),
                             Gender.valueOf(rs.getString("gender").toUpperCase()));
-                    characters.add(new Character(rs.getString("character_name"), actor));
+                    characters.add(new Character(rs.getString(CHARACTER_NAME), actor));
                 }
                 return characters;
             }
@@ -139,7 +141,7 @@ public class DAODatabaseCharacter implements DAO<Character, String> {
         Set<Character> characters = new HashSet<>();
         try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                String characterName = rs.getString("character_name");
+                String characterName = rs.getString(CHARACTER_NAME);
                 String actorName = rs.getString("actor_name");
 
                 DAO<Actor, String> actorDAO = new DAODatabaseActor(conn);

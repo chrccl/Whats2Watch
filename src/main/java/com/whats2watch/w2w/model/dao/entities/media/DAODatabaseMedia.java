@@ -21,6 +21,8 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     private static final String INSERT_INTO = "INSERT IGNORE INTO ";
 
+    private static final String SELECT_ALL = "SELECT * FROM ";
+
     private static final String DELETE_FROM = "DELETE FROM ";
 
     protected DAODatabaseMedia(Connection conn) {
@@ -114,12 +116,12 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     @Override
     public Set<T> findAll() throws DAOException {
-        String sql = String.format("%s%s%s", "SELECT * FROM ", getTableName(), " ORDER BY year DESC LIMIT 30");
+        String sql = String.format(QUERY_FORMAT, SELECT_ALL, getTableName(), " ORDER BY year DESC LIMIT 30");
         return fetchAllMedia(sql);
     }
 
     public Set<T> findAllByOffset(int offset) throws DAOException {
-        String sql = String.format("%s%s%s OFFSET %d", "SELECT * FROM ", getTableName(), " ORDER BY year DESC LIMIT 30", offset);
+        String sql = String.format("%s%s%s OFFSET %d", SELECT_ALL, getTableName(), " ORDER BY year DESC LIMIT 30", offset);
         return fetchAllMedia(sql);
     }
 
@@ -138,7 +140,7 @@ public abstract class DAODatabaseMedia<T extends Media> implements DAO<T, MediaI
 
     @Override
     public T findById(MediaId entityKey) throws DAOException {
-        String sql = String.format(QUERY_FORMAT, "SELECT * FROM ", getTableName(), " WHERE title = ? AND year = ?");
+        String sql = String.format(QUERY_FORMAT, SELECT_ALL, getTableName(), " WHERE title = ? AND year = ?");
         T media = null;
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, entityKey.getTitle());

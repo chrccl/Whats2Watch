@@ -12,6 +12,8 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
 
     private final Connection conn;
 
+    private static final String GENRE_NAME = "genre_name";
+
     public DAODatabaseGenre(Connection conn) {
         this.conn = conn;
     }
@@ -48,7 +50,7 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return Genre.valueOf(rs.getString("genre_name").toUpperCase());
+                    return Genre.valueOf(rs.getString(GENRE_NAME).toUpperCase());
                 }
             }
         } catch (SQLException e) {
@@ -76,7 +78,7 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
             stmt.setInt(2, movieId.getYear());
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    genres.add(Genre.valueOf(rs.getString("genre_name").toUpperCase()));
+                    genres.add(Genre.valueOf(rs.getString(GENRE_NAME).toUpperCase()));
                 }
             }
         } catch (SQLException e) {
@@ -147,7 +149,7 @@ public class DAODatabaseGenre implements DAO<Genre, String> {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                genres.add(Genre.valueOf(rs.getString("genre_name").toUpperCase()));
+                genres.add(Genre.valueOf(rs.getString(GENRE_NAME).toUpperCase()));
             }
         } catch (SQLException e) {
             throw new DAOException("Error retrieving all genres", e);
