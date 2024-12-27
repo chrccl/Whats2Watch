@@ -3,13 +3,14 @@ package com.whats2watch.w2w.model.dao.entities.production_companies;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.ProductionCompany;
 import com.whats2watch.w2w.model.dao.entities.DAO;
+import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class DAODemoProductionCompany implements DAO<ProductionCompany, String> {
 
-    private static final Set<ProductionCompany> productionCompanies = new HashSet<>();
+    private static Set<ProductionCompany> productionCompanies;
     private static DAODemoProductionCompany instance;
 
     private DAODemoProductionCompany() {}
@@ -17,6 +18,7 @@ public class DAODemoProductionCompany implements DAO<ProductionCompany, String> 
     public static synchronized DAODemoProductionCompany getInstance() {
         if (instance == null) {
             instance = new DAODemoProductionCompany();
+            productionCompanies = new HashSet<>(DemoPresetData.PRODUCTION_COMPANIES);
         }
         return instance;
     }

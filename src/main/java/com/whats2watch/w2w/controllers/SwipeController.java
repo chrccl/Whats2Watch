@@ -1,10 +1,10 @@
 package com.whats2watch.w2w.controllers;
 
+import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.Character;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.media.DAODatabaseMedia;
 import com.whats2watch.w2w.model.dao.entities.media.DAOFileSystemMedia;
@@ -21,7 +21,7 @@ public class SwipeController {
     }
 
     public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
-        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(PersistanceType.FILESYSTEM).createMovieDAO();
+        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(WhatsToWatch.persistenceType).createMovieDAO();
         if(mediaDAO instanceof DAODatabaseMedia){
             return ((DAODatabaseMedia<? extends Media>)mediaDAO)
                     .findAllByOffset(computeOffset(roomMember))

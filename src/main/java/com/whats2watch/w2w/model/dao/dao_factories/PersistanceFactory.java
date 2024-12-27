@@ -6,8 +6,8 @@ public class PersistanceFactory {
         throw new UnsupportedOperationException("PersistanceFactory is a utility class and cannot be instantiated.");
     }
 
-    public static DAOFactory createDAO(PersistanceType persistanceType) {
-        switch (persistanceType){
+    public static DAOFactory createDAO(PersistenceType persistenceType) {
+        switch (persistenceType){
             case DATABASE:
                 return new DAODatabaseFactory();
             case FILESYSTEM:

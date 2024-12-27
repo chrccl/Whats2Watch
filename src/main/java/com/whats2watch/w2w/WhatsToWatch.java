@@ -1,10 +1,9 @@
 package com.whats2watch.w2w;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.whats2watch.w2w.boundaries.*;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistenceType;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,11 +14,14 @@ import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class WhatsToWatch extends Application {
+
     private static final String TITLE = "W2W - Whats2Watch";
+
+    public static PersistenceType persistenceType;
 
     private Stage stage;
 
@@ -127,7 +129,25 @@ public class WhatsToWatch extends Application {
         stage.show();
     }
 
+    private static PersistenceType choosePersistenceType() {
+        Scanner scanner = new Scanner(System.in);
+        String pt;
+        do{
+            System.out.println("Seleziona la modalità di Persistenza (DB - FS - DEMO):");
+            pt = scanner.nextLine();
+        }while(!pt.equals("DB") && !pt.equals("FS") && !pt.equals("DEMO"));
+        if(pt.equals("DB")){
+            return PersistenceType.DATABASE;
+        }else if(pt.equals("FS")){
+            return PersistenceType.FILESYSTEM;
+        }else {
+            return PersistenceType.DEMO;
+        }
+    }
+
     public static void main(String[] args) {
+        System.out.println("BENVENUTO IN WHATSTOWATCH!!!");
+        persistenceType = choosePersistenceType();
         launch();
     }
 }

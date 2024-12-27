@@ -4,13 +4,14 @@ import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.MediaId;
 import com.whats2watch.w2w.model.TVSeries;
 import com.whats2watch.w2w.model.dao.entities.DAO;
+import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
 
-    private static final Set<TVSeries> tvSeries = new HashSet<>();
+    private static Set<TVSeries> tvSeries;
     private static DAODemoTVSeries instance;
 
     private DAODemoTVSeries() {}
@@ -18,6 +19,7 @@ public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
     public static synchronized DAODemoTVSeries getInstance() {
         if (instance == null) {
             instance = new DAODemoTVSeries();
+            tvSeries = new HashSet<>(DemoPresetData.TV_SERIES);
         }
         return instance;
     }

@@ -4,12 +4,14 @@ import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.MediaId;
 import com.whats2watch.w2w.model.Movie;
 import com.whats2watch.w2w.model.dao.entities.DAO;
+import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DAODemoMovie implements DAO<Movie, MediaId> {
 
-    private static final Set<Movie> movies = new HashSet<>();
+    private static Set<Movie> movies;
     private static DAODemoMovie instance;
 
     private DAODemoMovie() {}
@@ -17,6 +19,7 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
     public static synchronized DAODemoMovie getInstance() {
         if (instance == null) {
             instance = new DAODemoMovie();
+            movies = new HashSet<>(DemoPresetData.MOVIES);
         }
         return instance;
     }
@@ -42,6 +45,10 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
 
     @Override
     public Set<Movie> findAll() throws DAOException  {
-        return movies;
+        return movies
+                .stream()
+                .sorted((entry1, entry2) ->
+                        Integer.compare(entry2.getMediaId().getYear(), entry1.getMediaId().getYear())) // Sort by year in descending order
+                .collect(Collectors.toCollection(LinkedHashSet::new)); // Collect the values into a list;
     }
 }
