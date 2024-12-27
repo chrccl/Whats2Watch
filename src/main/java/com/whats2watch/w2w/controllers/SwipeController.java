@@ -12,8 +12,6 @@ import com.whats2watch.w2w.model.dao.entities.media.DAOFileSystemMedia;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SwipeController {

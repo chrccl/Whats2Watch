@@ -7,7 +7,6 @@ import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.room.DAODatabaseRoom;
-import com.whats2watch.w2w.model.dao.entities.room.DAOFileSystemRoom;
 import com.whats2watch.w2w.model.dto.beans.RoomBean;
 
 import java.net.URI;
