@@ -3,11 +3,15 @@ package com.whats2watch.w2w.model.dao.entities.room;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.model.LocalDateAdapter;
+import com.whats2watch.w2w.model.Media;
+import com.whats2watch.w2w.model.MediaAdapter;
 import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 
 import java.io.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,7 +26,11 @@ public class DAOFileSystemRoom implements DAO<Room, String> {
     public DAOFileSystemRoom(String filePath) throws DAOException {
         this.filePath = filePath;
         this.roomStorage = new HashMap<>();
-        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(Media.class, new MediaAdapter())
+                .create();
         loadFromFile();
     }
 

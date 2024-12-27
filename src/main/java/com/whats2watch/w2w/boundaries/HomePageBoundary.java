@@ -93,7 +93,9 @@ public class HomePageBoundary {
                 Label members = new Label(room.getRoomMembers().size() + " Members");
                 members.getStyleClass().add("member-count");
 
-                Label genres = new Label(room.getAllowedGenres().stream().findFirst().map(Object::toString).orElse("No genres allowed"));
+                Label genres = room.getAllowedGenres() != null
+                        ? new Label(room.getAllowedGenres().stream().findFirst().map(Object::toString).toString())
+                        : new Label("No genres allowed");
                 genres.getStyleClass().add("genre-label");
 
                 roomInfo.getChildren().addAll(members, genres);

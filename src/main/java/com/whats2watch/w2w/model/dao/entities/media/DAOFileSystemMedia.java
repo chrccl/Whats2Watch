@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class DAOFileSystemMedia<T extends Media> implements DAO<T, MediaId> {
 
@@ -54,7 +55,12 @@ public abstract class DAOFileSystemMedia<T extends Media> implements DAO<T, Medi
 
     @Override
     public Set<T> findAll() throws DAOException {
-        return new HashSet<>(storage.values());
+        return storage.entrySet()
+                .stream()
+                .sorted((entry1, entry2) ->
+                        Integer.compare(entry2.getKey().getYear(), entry1.getKey().getYear())) // Sort by year in descending order
+                .map(Map.Entry::getValue) // Extract the values from the entries
+                .collect(Collectors.toSet()); // Collect the values into a list
     }
 
     protected void loadFromFile() throws DAOException {

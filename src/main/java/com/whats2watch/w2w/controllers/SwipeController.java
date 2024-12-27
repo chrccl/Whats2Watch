@@ -7,6 +7,7 @@ import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceType;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.media.DAODatabaseMedia;
+import com.whats2watch.w2w.model.dao.entities.media.DAOFileSystemMedia;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
@@ -22,43 +23,58 @@ public class SwipeController {
     }
 
     public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
-        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(PersistanceType.DATABASE).createMovieDAO();
-        return ((DAODatabaseMedia<? extends Media>)mediaDAO)
-                .findAllByOffset(computeOffset(roomMember))
-                .stream()
-                .filter(media -> !hasUserAlreadyInteractedWithMedia(roomMember, media))
-                .sorted((media1, media2) -> Double.compare(
-                        calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
-                        calculateScore(roomMember, media1, room.getMediaType())))
-                .collect(Collectors.toList());
+        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(PersistanceType.FILESYSTEM).createMovieDAO();
+        if(mediaDAO instanceof DAODatabaseMedia){
+            return ((DAODatabaseMedia<? extends Media>)mediaDAO)
+                    .findAllByOffset(computeOffset(roomMember))
+                    .stream()
+                    .filter(media -> avoidProposingSameMedia(roomMember, media))
+                    .sorted((media1, media2) -> Double.compare(
+                            calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
+                            calculateScore(roomMember, media1, room.getMediaType())))
+                    .collect(Collectors.toList());
+        }else {
+            return ((DAOFileSystemMedia<? extends Media>)mediaDAO)
+                    .findAll()
+                    .stream()
+                    .skip(computeOffset(roomMember))
+                    .limit(20)
+                    .filter(media -> avoidProposingSameMedia(roomMember, media))
+                    .sorted((media1, media2) -> Double.compare(
+                            calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
+                            calculateScore(roomMember, media1, room.getMediaType())))
+                    .collect(Collectors.toList());
+        }
+
     }
 
     private static int computeOffset(RoomMember roomMember) {
         SecureRandom random = new SecureRandom();
-        Integer mostCommonDecade = roomMember.getLikedMedia().stream()
-                .map(media -> (media.getMediaId().getYear()/10)*10) // Calculate the decade
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())) // Count decades
-                .entrySet().stream()    // Stream the entry set
-                .max(Map.Entry.comparingByValue())  // Find the max by count
-                .map(Map.Entry::getKey) // Get the decade
-                .orElse(null);
-        if(mostCommonDecade != null) {
+        int averageDecade = roomMember.getLikedMedia().stream()
+                .map(media -> media.getMediaId().getYear()) // Get the year
+                .mapToInt(Integer::intValue) // Convert to primitive int stream
+                .average() // Calculate the average year
+                .stream() // Convert OptionalDouble to a stream
+                .mapToInt(avgYear -> (int) Math.round(avgYear / 10.0) * 10) // Round to the nearest decade
+                .findFirst() // Get the first (and only) value from the stream
+                .orElse(0); // Handle case where no years exist
+        if(averageDecade != 0) {
             // Calculate the current decade
             int currentDecade = (LocalDate.now().getYear() / 10) * 10;
             // Calculate the exact number of 9-year intervals (as a double)
-            double intervals = Math.abs(mostCommonDecade - currentDecade) / 9.0;
+            double intervals = Math.abs(averageDecade - currentDecade) / 9.0;
             // Calculate the base number
             int baseNumber = (int) (intervals * 1000);
             // Generate a random number in the neighborhood (+-1000)
-            return Math.abs(baseNumber + random.nextInt(2000) - 1250); //to avoid starvation of the algorithm
+            return Math.abs(baseNumber + random.nextInt(2000) - 1000); //to avoid starvation of the algorithm
         }else{
-            return random.nextInt(4500);    // Random Offset Fallback
+            return random.nextInt(4000);    // Random Offset Fallback
         }
     }
 
-    private static boolean hasUserAlreadyInteractedWithMedia(RoomMember roomMember, Media media) {
-        return roomMember.getLikedMedia().contains(media) ||
-                roomMember.getPassedMedia().contains(media);
+    private static boolean avoidProposingSameMedia(RoomMember roomMember, Media media) {
+        return !roomMember.getLikedMedia().contains(media) &&
+                !roomMember.getPassedMedia().contains(media);
     }
 
     private static double calculateScore(RoomMember roomMember, Media media, MediaType mediaType) {

@@ -14,7 +14,7 @@ public class RegisterController {
 
     public static User login(UserBean userBean) throws DAOException {
         User user = (User) PersistanceFactory
-                .createDAO(PersistanceType.DATABASE)
+                .createDAO(PersistanceType.FILESYSTEM)
                 .createUserDAO()
                 .findById(userBean.getEmail());
         return user != null && user.getPassword().equals(userBean.getPassword()) ? user : null;
@@ -23,7 +23,7 @@ public class RegisterController {
     public static void register(UserBean userBean) throws DAOException {
         User user = new User(userBean.getName(), userBean.getSurname(), userBean.getGender(), userBean.getEmail(), userBean.getPassword());
         PersistanceFactory
-                .createDAO(PersistanceType.DATABASE)
+                .createDAO(PersistanceType.FILESYSTEM)
                 .createUserDAO()
                 .save(user);
     }

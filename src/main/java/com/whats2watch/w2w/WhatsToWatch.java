@@ -1,5 +1,7 @@
 package com.whats2watch.w2w;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.whats2watch.w2w.boundaries.*;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class WhatsToWatch extends Application {

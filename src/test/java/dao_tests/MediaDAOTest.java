@@ -15,7 +15,7 @@ class MediaDAOTest {
         // Measure the time taken by the findAll method
         long startTime = System.currentTimeMillis();
 
-        PersistanceFactory.createDAO(PersistanceType.DATABASE).createMovieDAO()
+        PersistanceFactory.createDAO(PersistanceType.FILESYSTEM).createMovieDAO()
                 .findAll().stream()
                 .map(movie -> (Media) movie);
 
