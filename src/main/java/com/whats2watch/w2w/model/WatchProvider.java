@@ -41,4 +41,11 @@ public class WatchProvider {
     public int hashCode() {
         return Objects.hashCode(getProviderName());
     }
+
+    @Override
+    public String toString() {
+        return "WatchProvider{" +
+                "providerName='" + providerName + '\'' +
+                '}';
+    }
 }

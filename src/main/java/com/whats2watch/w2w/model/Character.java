@@ -44,4 +44,12 @@ public class Character {
         result = 31 * result + Objects.hashCode(getActor());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Character{" +
+                "actor=" + actor.getFullName() +
+                ", characterName='" + characterName + '\'' +
+                '}';
+    }
 }

@@ -61,7 +61,7 @@ public class RoomController {
         DAO<Room, String> roomDAO = PersistanceFactory.createDAO(PersistanceType.DATABASE).createRoomDAO();
         if(roomDAO instanceof DAODatabaseRoom) {
             ((DAODatabaseRoom) roomDAO).updateLikedMedia(room.getCode(), roomMember.getUser(), roomMember.getLikedMedia());
-            ((DAODatabaseRoom) roomDAO).updatePassedMedia(room.getCode(), roomMember.getUser(), roomMember.getLikedMedia());
+            ((DAODatabaseRoom) roomDAO).updatePassedMedia(room.getCode(), roomMember.getUser(), roomMember.getPassedMedia());
         }
     }
 

@@ -19,7 +19,7 @@
         <Button fx:id="dislikeButton" text="Pass" styleClass="home-dislike-btn" onMouseClicked="#passMediaEvent"/>
 
         <!-- Media Card -->
-        <VBox fx:id="mediaCard" styleClass="home-media-card" alignment="CENTER">
+        <VBox fx:id="mediaCard" styleClass="home-media-card" alignment="CENTER" onMouseClicked="#infoMediaEvent">
             <ImageView fx:id="mediaImage" fitWidth="300" fitHeight="400" preserveRatio="true" />
             <Label fx:id="mediaTitle" text="Creed III" styleClass="home-text3" />
         </VBox>

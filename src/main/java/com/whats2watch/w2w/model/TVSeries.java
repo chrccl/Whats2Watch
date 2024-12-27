@@ -52,12 +52,10 @@ public class TVSeries extends Media{
                 ", genres=" + genres +
                 ", numberOfSeasons=" + numberOfSeasons +
                 ", numberOfEpisodes=" + numberOfEpisodes +
-                ", watchProviders=" + watchProviders +
-                ", characters=" + characters +
-                ", productionCompanies=" + productionCompanies +
-                ", popularity=" + popularity +
+                ", watchProviders=" + watchProviders.toString() +
+                ", characters=" + characters.toString() +
+                ", productionCompanies=" + productionCompanies.toString() +
                 ", voteAverage=" + voteAverage +
-                ", posterUrl='" + posterUrl + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +
                 '}';
     }

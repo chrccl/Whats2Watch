@@ -49,10 +49,10 @@ public class SwipeController {
             double intervals = Math.abs(mostCommonDecade - currentDecade) / 9.0;
             // Calculate the base number
             int baseNumber = (int) (intervals * 1000);
-            // Generate a random number in the neighborhood (+-500)
-            return baseNumber + random.nextInt(1000) - 500; //to avoid starvation of the algorithm
+            // Generate a random number in the neighborhood (+-1000)
+            return Math.abs(baseNumber + random.nextInt(2000) - 1250); //to avoid starvation of the algorithm
         }else{
-            return 1 + random.nextInt(4500);    // Random Offset Fallback
+            return random.nextInt(4500);    // Random Offset Fallback
         }
     }
 

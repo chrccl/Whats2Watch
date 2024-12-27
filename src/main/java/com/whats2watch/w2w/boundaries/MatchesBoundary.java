@@ -77,17 +77,17 @@ public class MatchesBoundary {
         }
     }
 
-    private VBox createMovieCard(Media movie) {
+    private VBox createMovieCard(Media media) {
         VBox movieCard = new VBox();
         movieCard.setAlignment(javafx.geometry.Pos.CENTER);
         movieCard.getStyleClass().add("movie-card");
 
-        ImageView moviePoster = new ImageView(new Image(movie.getPosterUrl()));
+        ImageView moviePoster = new ImageView(new Image(String.format("https://image.tmdb.org/t/p/w500%s", media.getPosterUrl())));
         moviePoster.setFitWidth(100);
         moviePoster.setFitHeight(120);
         moviePoster.getStyleClass().add("movie-poster");
 
-        Label movieTitle = new Label(movie.getMediaId().getTitle());
+        Label movieTitle = new Label(media.getMediaId().getTitle());
         movieTitle.getStyleClass().add("movie-title");
 
         movieCard.getChildren().addAll(moviePoster, movieTitle);

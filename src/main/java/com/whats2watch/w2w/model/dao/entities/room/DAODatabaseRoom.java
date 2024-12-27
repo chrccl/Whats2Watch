@@ -206,7 +206,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
     }
 
     private void addMediaToMember(String roomCode, String userEmail, Set<Media> mediaSet, String tableName) throws DAOException {
-        String query = String.format("INSERT INTO %s (room_code, user_email, title, year) VALUES (?, ?, ?, ?)", tableName);
+        String query = String.format("INSERT IGNORE INTO %s (room_code, user_email, title, year) VALUES (?, ?, ?, ?)", tableName);
 
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, roomCode);
@@ -218,7 +218,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
             }
             ps.executeBatch();
         }catch(SQLException e){
-            throw new DAOException("Error saving media to room member", e);
+            throw new DAOException("Error saving media to room member: " + e.getMessage());
         }
     }
 

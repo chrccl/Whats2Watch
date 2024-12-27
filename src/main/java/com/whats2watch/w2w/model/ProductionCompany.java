@@ -41,4 +41,11 @@ public class ProductionCompany {
     public int hashCode() {
         return Objects.hashCode(getCompanyName());
     }
+
+    @Override
+    public String toString() {
+        return "ProductionCompany{" +
+                "companyName='" + companyName + '\'' +
+                '}';
+    }
 }

@@ -10,6 +10,7 @@ import com.whats2watch.w2w.model.RoomMember;
 import com.whats2watch.w2w.model.User;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -70,14 +71,23 @@ public class SwipeBoundary {
     private void passMediaEvent() throws DAOException {
         roomMember.getPassedMedia().add(mediaList.get(currentIndex-1));
         updateMediaCard();
-        if(currentIndex > 15) updateRecommendations();
+        if(currentIndex > 5) updateRecommendations();
     }
 
     @FXML
     private void likeMediaEvent() throws DAOException {
         roomMember.getLikedMedia().add(mediaList.get(currentIndex-1));
         updateMediaCard();
-        if(currentIndex > 15) updateRecommendations();
+        if(currentIndex > 5) updateRecommendations();
+    }
+
+    @FXML
+    private void infoMediaEvent() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Media media = mediaList.get(currentIndex-1);
+        alert.setTitle(media.getMediaId().getTitle());
+        alert.setContentText(media.toString());
+        alert.showAndWait();
     }
 
     private void updateRecommendations() throws DAOException {
@@ -87,7 +97,8 @@ public class SwipeBoundary {
     }
 
     @FXML
-    private void goToMatchesPageEvent() throws IOException {
+    private void goToMatchesPageEvent() throws DAOException, IOException {
+        RoomController.updateRoomPreferences(room, roomMember);
         this.app.showMatchesPage(activeUser, room);
     }
 }

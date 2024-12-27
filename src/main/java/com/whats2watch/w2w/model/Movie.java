@@ -39,14 +39,12 @@ public class Movie extends Media{
                 ", plot='" + plot + '\'' +
                 ", year=" + mediaId.getYear() +
                 ", genres=" + genres +
-                ", characters=" + characters +
+                ", characters=" + characters.toString() +
                 ", director='" + director + '\'' +
-                ", productionCompanies=" + productionCompanies +
-                ", watchProviders=" + watchProviders +
-                ", popularity=" + popularity +
+                ", productionCompanies=" + productionCompanies.toString() +
+                ", watchProviders=" + watchProviders.toString() +
                 ", voteAverage=" + voteAverage +
-                ", posterUrl='" + posterUrl + '\'' +
-                ", videoUrl='" + videoUrl + '\'' +
+                ", Trailer='" + videoUrl + '\'' +
                 '}';
     }
 
