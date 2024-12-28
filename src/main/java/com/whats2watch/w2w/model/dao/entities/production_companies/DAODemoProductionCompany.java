@@ -5,7 +5,6 @@ import com.whats2watch.w2w.model.ProductionCompany;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class DAODemoProductionCompany implements DAO<ProductionCompany, String> {
@@ -18,7 +17,7 @@ public class DAODemoProductionCompany implements DAO<ProductionCompany, String> 
     public static synchronized DAODemoProductionCompany getInstance() {
         if (instance == null) {
             instance = new DAODemoProductionCompany();
-            productionCompanies = new HashSet<>(DemoPresetData.PRODUCTION_COMPANIES);
+            productionCompanies = DemoPresetData.PRODUCTION_COMPANIES;
         }
         return instance;
     }

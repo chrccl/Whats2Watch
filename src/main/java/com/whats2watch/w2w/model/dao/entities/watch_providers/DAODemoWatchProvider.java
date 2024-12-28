@@ -5,7 +5,6 @@ import com.whats2watch.w2w.model.WatchProvider;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class DAODemoWatchProvider implements DAO<WatchProvider, String> {
@@ -18,7 +17,7 @@ public class DAODemoWatchProvider implements DAO<WatchProvider, String> {
     public static synchronized DAODemoWatchProvider getInstance() {
         if (instance == null) {
             instance = new DAODemoWatchProvider();
-            watchProviders = new HashSet<>(DemoPresetData.WATCH_PROVIDERS);
+            watchProviders = DemoPresetData.WATCH_PROVIDERS;
         }
         return instance;
     }

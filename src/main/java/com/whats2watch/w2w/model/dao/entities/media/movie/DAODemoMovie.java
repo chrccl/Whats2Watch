@@ -6,7 +6,7 @@ import com.whats2watch.w2w.model.Movie;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
-import java.util.*;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DAODemoMovie implements DAO<Movie, MediaId> {
@@ -19,7 +19,7 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
     public static synchronized DAODemoMovie getInstance() {
         if (instance == null) {
             instance = new DAODemoMovie();
-            movies = new HashSet<>(DemoPresetData.MOVIES);
+            movies = DemoPresetData.MOVIES;
         }
         return instance;
     }

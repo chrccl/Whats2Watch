@@ -6,7 +6,6 @@ import com.whats2watch.w2w.model.TVSeries;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
@@ -19,7 +18,7 @@ public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
     public static synchronized DAODemoTVSeries getInstance() {
         if (instance == null) {
             instance = new DAODemoTVSeries();
-            tvSeries = new HashSet<>(DemoPresetData.TV_SERIES);
+            tvSeries = DemoPresetData.TV_SERIES;
         }
         return instance;
     }
