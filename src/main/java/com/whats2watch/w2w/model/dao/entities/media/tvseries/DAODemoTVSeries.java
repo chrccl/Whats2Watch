@@ -18,7 +18,7 @@ public class DAODemoTVSeries implements DAO<TVSeries, MediaId> {
     public static synchronized DAODemoTVSeries getInstance() {
         if (instance == null) {
             instance = new DAODemoTVSeries();
-            tvSeries = DemoPresetData.TV_SERIES;
+            tvSeries = DemoPresetData.TVSERIES;
         }
         return instance;
     }
