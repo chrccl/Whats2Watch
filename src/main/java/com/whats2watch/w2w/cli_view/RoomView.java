@@ -20,9 +20,18 @@ public class RoomView {
     private static User activeUser;
 
     private static Set<Genre> genresCache;
+
     private static Set<WatchProvider> watchProvidersCache;
+
     private static Set<ProductionCompany> productionCompaniesCache;
+
     private static List<String> decadesCache;
+
+    private static final String LIST_FORMAT = "%d. %s%n";
+
+    private RoomView() {
+        throw new UnsupportedOperationException("RoomView is a utility class and cannot be instantiated.");
+    }
 
     public static void showMenu(Dispatcher d, User user, Genre initialGenre) {
         if (app == null) app = d;
@@ -106,7 +115,7 @@ public class RoomView {
         System.out.println("Available Genres:");
         List<Genre> genresList = new ArrayList<>(genresCache);
         for (int i = 0; i < genresList.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, genresList.get(i).name());
+            System.out.printf(LIST_FORMAT, i + 1, genresList.get(i).name());
         }
         System.out.print("Select a genre (or press Enter to skip): ");
         String input = scanner.nextLine();
@@ -123,7 +132,7 @@ public class RoomView {
     private static Integer selectDecade(Scanner scanner) {
         System.out.println("Available Decades:");
         for (int i = 0; i < decadesCache.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, decadesCache.get(i));
+            System.out.printf(LIST_FORMAT, i + 1, decadesCache.get(i));
         }
         System.out.print("Select a decade (or press Enter to skip): ");
         String input = scanner.nextLine();
@@ -141,7 +150,7 @@ public class RoomView {
         System.out.println("Available Watch Providers:");
         List<WatchProvider> watchProvidersList = new ArrayList<>(watchProvidersCache);
         for (int i = 0; i < watchProvidersList.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, watchProvidersList.get(i).getProviderName());
+            System.out.printf(LIST_FORMAT, i + 1, watchProvidersList.get(i).getProviderName());
         }
         System.out.print("Select a watch provider (or press Enter to skip): ");
         String input = scanner.nextLine();
@@ -159,7 +168,7 @@ public class RoomView {
         System.out.println("Available Production Companies:");
         List<ProductionCompany> productionCompaniesList = new ArrayList<>(productionCompaniesCache);
         for (int i = 0; i < productionCompaniesList.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, productionCompaniesList.get(i).getCompanyName());
+            System.out.printf(LIST_FORMAT, i + 1, productionCompaniesList.get(i).getCompanyName());
         }
         System.out.print("Select a production company (or press Enter to skip): ");
         String input = scanner.nextLine();

@@ -12,13 +12,20 @@ import java.util.Set;
 public class HomePageView {
 
     private static Dispatcher app;
+
     private static User activeUser;
 
     private static Set<Room> recentRooms;
+
     private static Set<Media> trendingMedias;
+
     private static Set<Genre> genres;
 
     private static final String ERROR = "Error";
+
+    private HomePageView() {
+        throw new UnsupportedOperationException("HomePageView is a utility class and cannot be instantiated.");
+    }
 
     public static void setMainApp(Dispatcher d, User user) {
         if(app != null) app = d;
@@ -31,6 +38,7 @@ public class HomePageView {
             if (recentRooms != null) recentRooms = RoomController.fetchRecentRooms(activeUser);
         } catch (DAOException | InterruptedException | IOException e) {
             System.err.println(ERROR + ": " + e.getMessage());
+            Thread.currentThread().interrupt();
             recentRooms = Collections.emptySet();
             trendingMedias = Collections.emptySet();
         }
@@ -65,6 +73,9 @@ public class HomePageView {
                 case "EXIT":
                     System.out.println("Exiting Home Page...");
                     return;
+                default:
+                    System.out.println("Invalid action");
+                    break;
             }
         } catch (Exception e) {
             System.err.println(ERROR + ": " + e.getMessage());

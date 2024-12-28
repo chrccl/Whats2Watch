@@ -18,6 +18,10 @@ public class RegisterView {
 
     private static final String ERROR = "Error";
 
+    private RegisterView() {
+        throw new UnsupportedOperationException("RegisterView is a utility class and cannot be instantiated.");
+    }
+
     public static void showMenu(Dispatcher d) {
         if(app == null) app = d;
         Scanner scanner = new Scanner(System.in);

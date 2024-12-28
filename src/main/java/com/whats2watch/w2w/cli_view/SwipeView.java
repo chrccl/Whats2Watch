@@ -13,13 +13,24 @@ import java.util.stream.Collectors;
 public class SwipeView {
 
     private static Dispatcher app;
+
     private static User activeUser;
+
     private static Room room;
+
     private static RoomMember roomMember;
+
     private static List<Media> mediaList;
-    private static Integer currentIndex = 0; // Tracks the current media index
+
+    private static Integer currentIndex = 0;
 
     private static final String DEFAULT_IMAGE_URL = "https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true";
+
+    private static final String DELIMITER = "====================================";
+
+    private SwipeView() {
+        throw new UnsupportedOperationException("SwipeView is a utility class and cannot be instantiated.");
+    }
 
     public static void initPage(Dispatcher d, User user, Room r) {
         app = d;
@@ -51,11 +62,11 @@ public class SwipeView {
                     ? String.format("https://image.tmdb.org/t/p/w500%s", posterUrl)
                     : DEFAULT_IMAGE_URL;
 
-            System.out.println("====================================");
+            System.out.println(DELIMITER);
             System.out.println("Now Showing: " + currentMedia.getMediaId().getTitle());
             System.out.println("Poster URL: " + imageUrl);
             System.out.println("Description: " + currentMedia.getPlot());
-            System.out.println("====================================");
+            System.out.println(DELIMITER);
         } else {
             System.out.println("No more media to display.");
         }
@@ -84,10 +95,10 @@ public class SwipeView {
     private static void infoMediaEvent() {
         if (currentIndex < mediaList.size()) {
             Media currentMedia = mediaList.get(currentIndex);
-            System.out.println("====================================");
+            System.out.println(DELIMITER);
             System.out.println("Information about: " + currentMedia.getMediaId().getTitle());
-            System.out.println(currentMedia.toString());
-            System.out.println("====================================");
+            System.out.println(currentMedia);
+            System.out.println(DELIMITER);
         } else {
             System.out.println("No media information available.");
         }
