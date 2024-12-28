@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 !**/src/main/resources/conf.properties
 !**/src/main/resources/com/whats2watch/w2w/fs_persistence_layer
+!**/src/main/java/com/whats2watch/w2w/model/dao/entities/DemoPresetData.java
 
 ### IntelliJ IDEA ###
 .idea/*
