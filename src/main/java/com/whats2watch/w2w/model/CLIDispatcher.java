@@ -1,9 +1,9 @@
 package com.whats2watch.w2w.model;
 
-import com.whats2watch.w2w.cli_view.HomePageView;
-import com.whats2watch.w2w.cli_view.RegisterView;
-import com.whats2watch.w2w.cli_view.RoomView;
-import com.whats2watch.w2w.cli_view.SwipeView;
+import com.whats2watch.w2w.view.cli_view.HomePageView;
+import com.whats2watch.w2w.view.cli_view.RegisterView;
+import com.whats2watch.w2w.view.cli_view.RoomView;
+import com.whats2watch.w2w.view.cli_view.SwipeView;
 
 public class CLIDispatcher implements Dispatcher{
 

@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.cli_view;
+package com.whats2watch.w2w.view.cli_view;
 
 import com.whats2watch.w2w.controllers.RegisterController;
 import com.whats2watch.w2w.exceptions.DAOException;

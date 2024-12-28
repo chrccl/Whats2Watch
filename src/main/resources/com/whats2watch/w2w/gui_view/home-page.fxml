@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 
 <?import javafx.scene.shape.SVGPath?>
-<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.whats2watch.w2w.gui_graphic_controllers.HomePageBoundary">
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.whats2watch.w2w.view.gui_graphic_controllers.HomePageBoundary">
     <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">
         <VBox fx:id="homeContainer" styleClass="home-container" alignment="CENTER">
         <!-- Header with Title and Logout -->

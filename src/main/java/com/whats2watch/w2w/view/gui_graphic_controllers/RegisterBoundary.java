@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers;
 
 import com.whats2watch.w2w.controllers.RegisterController;
 import com.whats2watch.w2w.exceptions.DAOException;

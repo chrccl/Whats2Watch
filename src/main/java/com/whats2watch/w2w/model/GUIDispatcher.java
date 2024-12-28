@@ -1,9 +1,9 @@
 package com.whats2watch.w2w.model;
 
 import com.whats2watch.w2w.WhatsToWatch;
-import com.whats2watch.w2w.gui_graphic_controllers.*;
 import com.whats2watch.w2w.exceptions.DAOException;
 
+import com.whats2watch.w2w.view.gui_graphic_controllers.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;

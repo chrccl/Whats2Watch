@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" styleClass="home-container" fx:controller="com.whats2watch.w2w.gui_graphic_controllers.SwipeBoundary">
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="home-container" fx:controller="com.whats2watch.w2w.view.gui_graphic_controllers.SwipeBoundary">
 
     <!-- Header Section -->
     <HBox fx:id="homeHeader" styleClass="home-header">
