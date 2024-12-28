@@ -33,8 +33,8 @@ public class DemoPresetData {
             new WatchProvider("HBO Max", "https://logo.hbomax.com")
     );
 
-    public static final Set<Movie> MOVIES = loadMedia(Movie.class);
-    public static final Set<TVSeries> TVSERIES = loadMedia(TVSeries.class);
+    public static final Set<Movie> MOVIES = Collections.unmodifiableSet(loadMedia(Movie.class));
+    public static final Set<TVSeries> TVSERIES = Collections.unmodifiableSet(loadMedia(TVSeries.class));
 
     private static <T> Set<T> loadMedia(Class<T> mediaClass) {
         Set<T> set = Set.of();
@@ -57,7 +57,7 @@ public class DemoPresetData {
         } catch (DAOException e) {
             logger.severe("Failed to load media: " + e.getMessage());
         }
-        return Collections.unmodifiableSet(set);
+        return set;
     }
 
 }
