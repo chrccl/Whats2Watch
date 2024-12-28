@@ -148,7 +148,7 @@ public class WhatsToWatch extends Application {
         }
     }
 
-    public static PersistenceType getPersistanceType(){
+    public static PersistenceType getPersistenceType(){
         return persistenceType;
     }
 

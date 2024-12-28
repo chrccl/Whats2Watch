@@ -2,7 +2,7 @@ package com.whats2watch.w2w.model.dao.entities;
 
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistenceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistenceType;
 
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class DemoPresetData {
     private static <T> Set<T> loadMedia(Class<T> mediaClass) {
         Set<T> set = Set.of();
         try {
-            var dao = PersistanceFactory.createDAO(PersistenceType.FILESYSTEM);
+            var dao = PersistenceFactory.createDAO(PersistenceType.FILESYSTEM);
 
             if (mediaClass == Movie.class) {
                 set = dao.createMovieDAO()

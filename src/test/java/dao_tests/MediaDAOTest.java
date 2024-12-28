@@ -2,7 +2,7 @@ package dao_tests;
 
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
-import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
+import com.whats2watch.w2w.model.dao.dao_factories.PersistenceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistenceType;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ class MediaDAOTest {
         // Measure the time taken by the findAll method
         long startTime = System.currentTimeMillis();
 
-        PersistanceFactory.createDAO(PersistenceType.FILESYSTEM).createMovieDAO()
+        PersistenceFactory.createDAO(PersistenceType.FILESYSTEM).createMovieDAO()
                 .findAll().stream()
                 .map(movie -> (Media) movie);
 
