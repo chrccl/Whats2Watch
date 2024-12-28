@@ -5,7 +5,6 @@ import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -111,16 +110,7 @@ public class HomePageBoundary {
             plusButton.getStyleClass().add("plus-button");
             plusButton.setFitWidth(24);  // Set button size
             plusButton.setFitHeight(24);
-            plusButton.setOnMouseClicked(event -> {
-                try {
-                    newGenreRoomEvent(genre);
-                } catch (IOException | DAOException e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("ERROR");
-                    alert.setContentText(e.getMessage());
-                    alert.showAndWait();
-                }
-            });
+            plusButton.setOnMouseClicked(event -> newGenreRoomEvent(genre));
 
             HBox genreContent = new HBox(10);
             genreContent.setAlignment(Pos.CENTER_LEFT);
@@ -161,17 +151,17 @@ public class HomePageBoundary {
         }
     }
 
-    private void newGenreRoomEvent(Genre genre) throws IOException, DAOException {
+    private void newGenreRoomEvent(Genre genre) {
         this.app.showRoomPage(activeUser, genre);
     }
 
     @FXML
-    private void goToRoomPageEvent() throws IOException, DAOException {
+    private void goToRoomPageEvent() {
         this.app.showRoomPage(activeUser,null);
     }
 
     @FXML
-    private void goToUserPageEvent() throws IOException {
+    private void goToUserPageEvent() {
         this.app.showProfilePage(this.activeUser);
     }
 

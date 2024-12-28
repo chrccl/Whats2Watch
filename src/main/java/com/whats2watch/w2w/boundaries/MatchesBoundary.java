@@ -1,6 +1,5 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.Media;
 import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.RoomMember;
@@ -13,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -95,7 +93,7 @@ public class MatchesBoundary {
     }
 
     @FXML
-    private void goToSwipePageEvent() throws DAOException, IOException {
+    private void goToSwipePageEvent() {
         this.app.showSwipePage(roomMember.getUser(), room);
     }
 

@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
 import java.time.Year;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,7 +49,7 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void joinRoomEvent() throws DAOException, IOException {
+    private void joinRoomEvent() throws DAOException {
         String roomCode = roomCodeField.getText();
         Room room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
         if (!roomCode.isEmpty() && room != null) {
@@ -64,7 +63,7 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void createRoomEvent() throws DAOException, IOException {
+    private void createRoomEvent() throws DAOException {
         WatchProvider watchProvider = RoomController.getWatchProviderByName(
                 watchProvidersField.getSelectionModel().getSelectedItem());
         ProductionCompany productionCompany = RoomController.getProductionCompanyByName(
@@ -127,12 +126,12 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void goToHomePageEvent() throws IOException {
+    private void goToHomePageEvent() {
         this.app.showHomePage(activeUser);
     }
 
     @FXML
-    private void goToUserPageEvent() throws IOException {
+    private void goToUserPageEvent() {
         this.app.showProfilePage(activeUser);
     }
 

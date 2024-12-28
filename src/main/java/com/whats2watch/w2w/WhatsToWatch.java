@@ -14,12 +14,13 @@ public class WhatsToWatch extends Application {
 
     private static PersistenceType persistenceType; //To dynamically choose the persistence type
 
-    private static Dispatcher dispatcher;   //To dynamically choose the UI
-
     @Override
     public void start(Stage stage) {
-        dispatcher = new GUIDispatcher(stage);
-        dispatcher.showLoginPage();
+        new GUIDispatcher(stage).showLoginPage();
+    }
+
+    private static void launchCLI(){
+        new CLIDispatcher().showLoginPage();
     }
 
     private static PersistenceType choosePersistenceType() {
@@ -47,11 +48,6 @@ public class WhatsToWatch extends Application {
         }while(!ui.equals("CLI") && !ui.equals("GUI"));
 
         return ui.equals("GUI");
-    }
-
-    private static void launchCLI(){
-        dispatcher = new CLIDispatcher();
-        dispatcher.showLoginPage();
     }
 
     public static PersistenceType getPersistenceType(){

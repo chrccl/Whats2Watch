@@ -13,8 +13,6 @@ import com.whats2watch.w2w.model.dto.beans.UserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.io.IOException;
-
 public class RegisterBoundary {
 
     private Dispatcher app;
@@ -50,7 +48,7 @@ public class RegisterBoundary {
     }
 
     @FXML
-    private void handleLogin() throws DAOException, IOException {
+    private void handleLogin() throws DAOException {
         UserBean userBean = new UserBean(emailField.getText(), passwordField.getText());
         ValidationResult validatorResult = LoginValidator.validate(userBean);
         if(validatorResult.isValid()){
@@ -66,7 +64,7 @@ public class RegisterBoundary {
     }
 
     @FXML
-    private void handleRegister() throws DAOException, IOException {
+    private void handleRegister() throws DAOException {
         String name = nameField.getText().trim();
         String surname = surnameField.getText().trim();
         Gender gender = Gender.valueOf(genderChoice.getValue().toUpperCase());
@@ -90,12 +88,12 @@ public class RegisterBoundary {
     }
 
     @FXML
-    private void handleGoToRegisterPageEvent() throws IOException {
+    private void handleGoToRegisterPageEvent() {
         this.app.showRegisterPage();
     }
 
     @FXML
-    private void handleGoToLoginPageEvent() throws IOException {
+    private void handleGoToLoginPageEvent() {
         this.app.showLoginPage();
     }
 

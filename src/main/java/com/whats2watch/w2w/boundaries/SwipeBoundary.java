@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.IOException;
 import java.util.List;
 
 public class SwipeBoundary {
@@ -93,7 +92,7 @@ public class SwipeBoundary {
     }
 
     @FXML
-    private void goToMatchesPageEvent() throws DAOException, IOException {
+    private void goToMatchesPageEvent() throws DAOException {
         RoomController.updateRoomPreferences(room, roomMember);
         this.app.showMatchesPage(activeUser, room);
     }
