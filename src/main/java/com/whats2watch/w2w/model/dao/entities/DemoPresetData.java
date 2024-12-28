@@ -1,11 +1,11 @@
 package com.whats2watch.w2w.model.dao.entities;
 
-import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistenceType;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -57,7 +57,7 @@ public class DemoPresetData {
         } catch (DAOException e) {
             logger.severe("Failed to load media: " + e.getMessage());
         }
-        return set;
+        return Collections.unmodifiableSet(set);
     }
 
 }
