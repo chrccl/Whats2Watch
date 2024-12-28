@@ -48,7 +48,7 @@ public class DAODemoMovie implements DAO<Movie, MediaId> {
         return movies
                 .stream()
                 .sorted((entry1, entry2) ->
-                        Integer.compare(entry2.getMediaId().getYear(), entry1.getMediaId().getYear())) // Sort by year in descending order
-                .collect(Collectors.toCollection(LinkedHashSet::new)); // Collect the values into a list;
+                        Integer.compare(entry2.getMediaId().getYear(), entry1.getMediaId().getYear()))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }
