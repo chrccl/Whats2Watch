@@ -7,6 +7,7 @@ import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.DemoPresetData;
 
 import java.util.Set;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
 public class DAODemoMovie implements DAO<Movie, MediaId> {

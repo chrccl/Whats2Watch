@@ -22,9 +22,9 @@ public class WhatsToWatch extends Application {
 
     private static final String TITLE = "W2W - Whats2Watch";
 
-    private static PersistenceType persistenceType;
+    private static final Logger logger = Logger.getLogger(WhatsToWatch.class.getName());
 
-    private static Logger logger = Logger.getLogger(WhatsToWatch.class.getName());
+    private static PersistenceType persistenceType;
 
     private Stage stage;
 

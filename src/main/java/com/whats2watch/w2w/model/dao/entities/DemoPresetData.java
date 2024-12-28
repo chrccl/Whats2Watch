@@ -1,17 +1,23 @@
 package com.whats2watch.w2w.model.dao.entities;
 
+import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
-import com.whats2watch.w2w.model.Character;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistanceFactory;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistenceType;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class DemoPresetData {
+
+    private static final Logger logger = Logger.getLogger(DemoPresetData.class.getName());
+
+
+    private DemoPresetData() {
+        throw new UnsupportedOperationException("DemoPresetData is a utility class and cannot be instantiated.");
+    }
 
     // Production Companies Collection
     public static final Set<ProductionCompany> PRODUCTION_COMPANIES = Set.of(
@@ -27,30 +33,31 @@ public class DemoPresetData {
             new WatchProvider("HBO Max", "https://logo.hbomax.com")
     );
 
-    public static final Set<Movie> MOVIES;
+    public static final Set<Movie> MOVIES = loadMedia(Movie.class);
+    public static final Set<TVSeries> TVSERIES = loadMedia(TVSeries.class);
 
-    static {
+    private static <T> Set<T> loadMedia(Class<T> mediaClass) {
+        Set<T> set = Set.of();
         try {
-            MOVIES = PersistanceFactory.createDAO(PersistenceType.FILESYSTEM).createMovieDAO()
-                    .findAll().stream()
-                    .map(media-> (Movie)media)
-                    .collect(Collectors.toSet());
-        } catch (DAOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+            var dao = PersistanceFactory.createDAO(PersistenceType.FILESYSTEM);
 
-    public static final Set<TVSeries> TVSERIES;
-
-    static {
-        try {
-            TVSERIES = PersistanceFactory.createDAO(PersistenceType.FILESYSTEM).createTVSeriesDAO()
-                    .findAll().stream()
-                    .map(media-> (TVSeries)media)
-                    .collect(Collectors.toSet());
+            if (mediaClass == Movie.class) {
+                set = dao.createMovieDAO()
+                        .findAll().stream()
+                        .map(mediaClass::cast)
+                        .collect(Collectors.toSet());
+            } else if (mediaClass == TVSeries.class) {
+                set = dao.createTVSeriesDAO()
+                        .findAll().stream()
+                        .map(mediaClass::cast)
+                        .collect(Collectors.toSet());
+            } else {
+                throw new IllegalArgumentException("Unsupported media class: " + mediaClass);
+            }
         } catch (DAOException e) {
-            throw new RuntimeException(e);
+            logger.severe("Failed to load media: " + e.getMessage());
         }
+        return set;
     }
 
 }
