@@ -9,15 +9,6 @@ import java.util.Set;
 
 public class DemoPresetData {
 
-    // Actors Collection
-    public static final List<Actor> ACTORS = List.of(
-            new Actor("Robert Downey Jr.", 95.0, Gender.MALE),
-            new Actor("Scarlett Johansson", 90.0, Gender.FEMALE),
-            new Actor("Chris Evans", 85.0, Gender.MALE),
-            new Actor("Tom Holland", 80.0, Gender.MALE),
-            new Actor("Emma Watson", 88.0, Gender.FEMALE)
-    );
-
     // Production Companies Collection
     public static final List<ProductionCompany> PRODUCTION_COMPANIES = List.of(
             new ProductionCompany("Marvel Studios", "https://logo.marvel.com"),
