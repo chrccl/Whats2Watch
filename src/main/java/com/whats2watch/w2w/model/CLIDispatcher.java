@@ -2,6 +2,10 @@ package com.whats2watch.w2w.model;
 
 public class CLIDispatcher implements Dispatcher{
 
+    public CLIDispatcher(){
+
+    }
+
     @Override
     public void showLoginPage() {
 

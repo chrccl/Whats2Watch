@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 
 <?import javafx.scene.shape.SVGPath?>
-<VBox xmlns:fx="http://javafx.com/fxml" styleClass="app-container" alignment="CENTER" fx:controller="com.whats2watch.w2w.boundaries.RoomBoundary">
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="app-container" alignment="CENTER" fx:controller="com.whats2watch.w2w.gui_graphic_controllers.RoomBoundary">
     <!-- Header -->
     <HBox fx:id="headerWrapper" styleClass="header-wrapper">
         <Label text="Whats2Watch" styleClass="app-title" />

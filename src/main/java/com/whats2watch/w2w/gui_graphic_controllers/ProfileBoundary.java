@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.boundaries;
+package com.whats2watch.w2w.gui_graphic_controllers;
 
 import com.whats2watch.w2w.model.Dispatcher;
 import com.whats2watch.w2w.model.User;
