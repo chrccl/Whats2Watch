@@ -16,12 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class WhatsToWatch extends Application {
 
     private static final String TITLE = "W2W - Whats2Watch";
 
-    public static PersistenceType persistenceType;
+    private static PersistenceType persistenceType;
+
+    private static Logger logger = Logger.getLogger(WhatsToWatch.class.getName());
 
     private Stage stage;
 
@@ -133,7 +136,7 @@ public class WhatsToWatch extends Application {
         Scanner scanner = new Scanner(System.in);
         String pt;
         do{
-            System.out.println("Seleziona la modalità di Persistenza (DB - FS - DEMO):");
+            logger.info("Seleziona la modalità di Persistenza (DB - FS - DEMO):");
             pt = scanner.nextLine();
         }while(!pt.equals("DB") && !pt.equals("FS") && !pt.equals("DEMO"));
         if(pt.equals("DB")){
@@ -145,8 +148,12 @@ public class WhatsToWatch extends Application {
         }
     }
 
+    public static PersistenceType getPersistanceType(){
+        return persistenceType;
+    }
+
     public static void main(String[] args) {
-        System.out.println("BENVENUTO IN WHATSTOWATCH!!!");
+        logger.info("BENVENUTO IN WHATS2WATCH!!!");
         persistenceType = choosePersistenceType();
         launch();
     }

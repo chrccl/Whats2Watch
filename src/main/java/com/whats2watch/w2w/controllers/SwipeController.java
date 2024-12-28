@@ -21,7 +21,7 @@ public class SwipeController {
     }
 
     public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
-        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(WhatsToWatch.persistenceType).createMovieDAO();
+        DAO<Media, MediaId> mediaDAO = PersistanceFactory.createDAO(WhatsToWatch.getPersistanceType()).createMovieDAO();
         if(mediaDAO instanceof DAODatabaseMedia){
             return ((DAODatabaseMedia<? extends Media>)mediaDAO)
                     .findAllByOffset(computeOffset(roomMember))
