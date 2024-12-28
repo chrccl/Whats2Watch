@@ -1,13 +1,9 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.controllers.SwipeController;
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.Media;
-import com.whats2watch.w2w.model.Room;
-import com.whats2watch.w2w.model.RoomMember;
-import com.whats2watch.w2w.model.User;
+import com.whats2watch.w2w.model.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -20,7 +16,7 @@ import java.util.List;
 
 public class SwipeBoundary {
 
-    private WhatsToWatch app;
+    private Dispatcher app;
 
     private User activeUser;
 
@@ -40,7 +36,7 @@ public class SwipeBoundary {
 
     private static final String DEFAULT_IMAGE_URL = "https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true";
 
-    public void setMainApp(WhatsToWatch app, User user, Room room) throws DAOException {
+    public void setMainApp(Dispatcher app, User user, Room room) throws DAOException {
         this.app = app;
         this.activeUser = user;
         this.room = room;

@@ -1,15 +1,15 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.WhatsToWatch;
+import com.whats2watch.w2w.model.Dispatcher;
 import com.whats2watch.w2w.model.User;
 
 public class ProfileBoundary {
 
-    private WhatsToWatch app;
+    private Dispatcher app;
 
     private User activeUser;
 
-    public void setMainApp(WhatsToWatch app, User user) {
+    public void setMainApp(Dispatcher app, User user) {
         this.app = app;
         this.activeUser = user;
     }

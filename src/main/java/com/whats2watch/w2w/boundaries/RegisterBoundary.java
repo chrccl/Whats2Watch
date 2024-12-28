@@ -1,8 +1,8 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.controllers.RegisterController;
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.model.Dispatcher;
 import com.whats2watch.w2w.model.Gender;
 import com.whats2watch.w2w.model.User;
 import com.whats2watch.w2w.model.dto.LoginValidator;
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class RegisterBoundary {
 
-    private WhatsToWatch app;
+    private Dispatcher app;
 
     private static final String ERROR = "Error";
 
@@ -45,7 +45,7 @@ public class RegisterBoundary {
     @FXML
     private PasswordField passwordField;
 
-    public void setMainApp(WhatsToWatch app) {
+    public void setMainApp(Dispatcher app) {
         this.app = app;
     }
 

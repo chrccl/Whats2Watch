@@ -1,6 +1,5 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
@@ -16,15 +15,13 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.time.Year;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RoomBoundary {
 
-    private WhatsToWatch app;
+    private Dispatcher app;
 
     private User activeUser;
 
@@ -46,7 +43,7 @@ public class RoomBoundary {
     @FXML
     private ComboBox<String> productionCompaniesField;
 
-    public void setMainApp(WhatsToWatch app, User user, Genre genre) throws DAOException {
+    public void setMainApp(Dispatcher app, User user, Genre genre) throws DAOException {
         this.app = app;
         this.activeUser = user;
         initializePage(genre);

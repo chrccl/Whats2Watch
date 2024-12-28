@@ -1,12 +1,8 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.exceptions.DAOException;
-import com.whats2watch.w2w.model.Genre;
-import com.whats2watch.w2w.model.Media;
-import com.whats2watch.w2w.model.Room;
-import com.whats2watch.w2w.model.User;
+import com.whats2watch.w2w.model.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -23,7 +19,7 @@ import java.util.Set;
 
 public class HomePageBoundary {
 
-    private WhatsToWatch app;
+    private Dispatcher app;
 
     private User activeUser;
 
@@ -38,7 +34,7 @@ public class HomePageBoundary {
     @FXML
     private HBox trendingGrid;
 
-    public void setMainApp(WhatsToWatch app, User user) {
+    public void setMainApp(Dispatcher app, User user) {
         this.app = app;
         this.activeUser = user;
         populateGenreSection(RoomController.fetchGenres());

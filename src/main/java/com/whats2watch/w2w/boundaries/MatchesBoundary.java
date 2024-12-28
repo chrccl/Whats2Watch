@@ -1,11 +1,11 @@
 package com.whats2watch.w2w.boundaries;
 
-import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.Media;
 import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.RoomMember;
 import com.whats2watch.w2w.model.User;
+import com.whats2watch.w2w.model.Dispatcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 public class MatchesBoundary {
 
-    private WhatsToWatch app;
+    private Dispatcher app;
 
     private Room room;
 
@@ -34,7 +34,7 @@ public class MatchesBoundary {
     @FXML
     private HBox movieGridLikes;
 
-    public void setMainApp(WhatsToWatch app, User user, Room room) {
+    public void setMainApp(Dispatcher app, User user, Room room) {
         this.app = app;
         this.room = room;
         this.roomMember = room.getRoomMembers().stream()
