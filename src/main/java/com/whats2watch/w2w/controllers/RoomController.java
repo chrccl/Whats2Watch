@@ -67,6 +67,19 @@ public class RoomController {
         }
     }
 
+    public static List<Media> getRoomMatches(Room room) {
+        return room.getRoomMembers().stream()
+                .map(RoomMember::getLikedMedia)
+                .reduce((set1, set2) -> {
+                    set1.retainAll(set2);
+                    return set1;
+                })
+                .map(set -> set.stream()
+                        .sorted(Comparator.comparing(Media::getPopularity).reversed())
+                        .collect(Collectors.toList()))
+                .orElse(new ArrayList<>());
+    }
+
     public static Room addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
         Room room = (Room) PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO().findById(roomCode);
         if(room != null) {

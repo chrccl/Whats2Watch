@@ -1,5 +1,6 @@
 package com.whats2watch.w2w.gui_graphic_controllers;
 
+import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.model.Media;
 import com.whats2watch.w2w.model.Room;
 import com.whats2watch.w2w.model.RoomMember;
@@ -44,17 +45,7 @@ public class MatchesBoundary {
     }
 
     private void computeRoomMatches() {
-        List<Media> matches = room.getRoomMembers().stream()
-                .map(RoomMember::getLikedMedia)
-                .reduce((set1, set2) -> {
-                    set1.retainAll(set2);
-                    return set1;
-                })
-                .map(set -> set.stream()
-                        .sorted(Comparator.comparing(Media::getPopularity).reversed())
-                        .collect(Collectors.toList()))
-                .orElse(new ArrayList<>());
-        updateMatchesGrid(matches);
+        updateMatchesGrid(RoomController.getRoomMatches(room));
     }
 
     private void updateMatchesGrid(List<Media> medias) {
