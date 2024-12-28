@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.view.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers.matches;
 
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.model.Media;
@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 import java.util.Set;
 
-public class MatchesBoundary {
+public class MatchesBoundary implements MatchesBoundaryInOp, MatchesBoundaryOutOp {
 
     private Dispatcher app;
 
@@ -41,11 +41,13 @@ public class MatchesBoundary {
         showLikesGrid(roomMember.getLikedMedia());
     }
 
-    private void computeRoomMatches() {
+    @Override
+    public void computeRoomMatches() {
         updateMatchesGrid(RoomController.getRoomMatches(room));
     }
 
-    private void updateMatchesGrid(List<Media> medias) {
+    @Override
+    public void updateMatchesGrid(List<Media> medias) {
         movieGridMatches.getChildren().clear(); // Clear existing movie cards
 
         for (Media movie : medias) {
@@ -54,7 +56,8 @@ public class MatchesBoundary {
         }
     }
 
-    private void showLikesGrid(Set<Media> medias) {
+    @Override
+    public void showLikesGrid(Set<Media> medias) {
         movieGridLikes.getChildren().clear();
 
         for (Media movie : medias) {
@@ -63,7 +66,8 @@ public class MatchesBoundary {
         }
     }
 
-    private VBox createMovieCard(Media media) {
+    @Override
+    public VBox createMovieCard(Media media) {
         VBox movieCard = new VBox();
         movieCard.setAlignment(javafx.geometry.Pos.CENTER);
         movieCard.getStyleClass().add("movie-card");
@@ -81,7 +85,8 @@ public class MatchesBoundary {
     }
 
     @FXML
-    private void goToSwipePageEvent() {
+    @Override
+    public void goToSwipePageEvent() {
         this.app.showSwipePage(roomMember.getUser(), room);
     }
 

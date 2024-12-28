@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.view.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers.swipe;
 
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.controllers.SwipeController;
@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.List;
 
-public class SwipeBoundary {
+public class SwipeBoundary implements SwipeBoundaryInOp, SwipeBoundaryOutOp {
 
     private Dispatcher app;
 
@@ -46,12 +46,14 @@ public class SwipeBoundary {
         recommendMedias();
     }
 
-    private void recommendMedias() throws DAOException {
+    @Override
+    public void recommendMedias() throws DAOException {
         mediaList = SwipeController.recommendMedias(room, roomMember);
         updateMediaCard();
     }
 
-    private void updateMediaCard() {
+    @Override
+    public void updateMediaCard() {
         String posterUrl = mediaList.get(currentIndex).getPosterUrl();
         mediaImage.setImage(new Image(posterUrl != null && !posterUrl.isEmpty()
                 ? String.format("https://image.tmdb.org/t/p/w500%s", mediaList.get(currentIndex).getPosterUrl())
@@ -63,21 +65,24 @@ public class SwipeBoundary {
     }
 
     @FXML
-    private void passMediaEvent() throws DAOException {
+    @Override
+    public void passMediaEvent() throws DAOException {
         roomMember.getPassedMedia().add(mediaList.get(currentIndex-1));
         updateMediaCard();
         if(currentIndex > 5) updateRecommendations();
     }
 
     @FXML
-    private void likeMediaEvent() throws DAOException {
+    @Override
+    public void likeMediaEvent() throws DAOException {
         roomMember.getLikedMedia().add(mediaList.get(currentIndex-1));
         updateMediaCard();
         if(currentIndex > 5) updateRecommendations();
     }
 
     @FXML
-    private void infoMediaEvent() {
+    @Override
+    public void infoMediaEvent() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         Media media = mediaList.get(currentIndex-1);
         alert.setTitle(media.getMediaId().getTitle());
@@ -85,14 +90,16 @@ public class SwipeBoundary {
         alert.showAndWait();
     }
 
-    private void updateRecommendations() throws DAOException {
+    @Override
+    public void updateRecommendations() throws DAOException {
         RoomController.updateRoomPreferences(room, roomMember);
         currentIndex = 0;
         recommendMedias();
     }
 
     @FXML
-    private void goToMatchesPageEvent() throws DAOException {
+    @Override
+    public void goToMatchesPageEvent() throws DAOException {
         RoomController.updateRoomPreferences(room, roomMember);
         this.app.showMatchesPage(activeUser, room);
     }

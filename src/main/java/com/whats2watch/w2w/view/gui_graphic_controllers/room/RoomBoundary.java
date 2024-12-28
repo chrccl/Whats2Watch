@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.view.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers.room;
 
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.exceptions.DAOException;
@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class RoomBoundary {
+public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
 
     private Dispatcher app;
 
@@ -49,7 +49,8 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void joinRoomEvent() throws DAOException {
+    @Override
+    public void joinRoomEvent() throws DAOException {
         String roomCode = roomCodeField.getText();
         Room room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
         if (!roomCode.isEmpty() && room != null) {
@@ -63,7 +64,8 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void createRoomEvent() throws DAOException {
+    @Override
+    public void createRoomEvent() throws DAOException {
         WatchProvider watchProvider = RoomController.getWatchProviderByName(
                 watchProvidersField.getSelectionModel().getSelectedItem());
         ProductionCompany productionCompany = RoomController.getProductionCompanyByName(
@@ -94,7 +96,8 @@ public class RoomBoundary {
         }
     }
 
-    private void initializePage(Genre genre) throws DAOException {
+    @Override
+    public void initializePage(Genre genre) throws DAOException {
         ObservableList<String> genres = FXCollections.observableArrayList(
                 RoomController.fetchGenres().stream().map(Enum::name).collect(Collectors.toList())
         );
@@ -126,12 +129,14 @@ public class RoomBoundary {
     }
 
     @FXML
-    private void goToHomePageEvent() {
+    @Override
+    public void goToHomePageEvent() {
         this.app.showHomePage(activeUser);
     }
 
     @FXML
-    private void goToUserPageEvent() {
+    @Override
+    public void goToUserPageEvent() {
         this.app.showProfilePage(activeUser);
     }
 

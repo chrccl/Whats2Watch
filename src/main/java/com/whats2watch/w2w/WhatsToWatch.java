@@ -6,11 +6,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class WhatsToWatch extends Application {
-
-    private static final Logger logger = Logger.getLogger(WhatsToWatch.class.getName());
 
     private static PersistenceType persistenceType; //To dynamically choose the persistence type
 
@@ -27,7 +24,7 @@ public class WhatsToWatch extends Application {
         Scanner scanner = new Scanner(System.in);
         String pt;
         do{
-            logger.info("Select the persistence type (DB - FS - DEMO):");
+            System.out.println("Select the persistence type (DB - FS - DEMO):");
             pt = scanner.nextLine().toUpperCase();
         }while(!pt.equals("DB") && !pt.equals("FS") && !pt.equals("DEMO"));
         if(pt.equals("DB")){
@@ -43,7 +40,7 @@ public class WhatsToWatch extends Application {
         Scanner scanner = new Scanner(System.in);
         String ui;
         do{
-            logger.info("Select UI (CLI - GUI):");
+            System.out.println("Select UI (CLI - GUI):");
             ui = scanner.nextLine().toUpperCase();
         }while(!ui.equals("CLI") && !ui.equals("GUI"));
 
@@ -55,7 +52,7 @@ public class WhatsToWatch extends Application {
     }
 
     public static void main(String[] args) {
-        logger.info("WELCOME IN WHATS2WATCH!!!");
+        System.out.println("WELCOME IN WHATS2WATCH!!!");
         persistenceType = choosePersistenceType();
         if (chooseUI())
             launch();

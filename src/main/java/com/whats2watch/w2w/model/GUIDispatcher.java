@@ -3,7 +3,12 @@ package com.whats2watch.w2w.model;
 import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.exceptions.DAOException;
 
-import com.whats2watch.w2w.view.gui_graphic_controllers.*;
+import com.whats2watch.w2w.view.gui_graphic_controllers.homepage.HomePageBoundary;
+import com.whats2watch.w2w.view.gui_graphic_controllers.matches.MatchesBoundary;
+import com.whats2watch.w2w.view.gui_graphic_controllers.profile.ProfileBoundary;
+import com.whats2watch.w2w.view.gui_graphic_controllers.register.RegisterBoundary;
+import com.whats2watch.w2w.view.gui_graphic_controllers.room.RoomBoundary;
+import com.whats2watch.w2w.view.gui_graphic_controllers.swipe.SwipeBoundary;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;

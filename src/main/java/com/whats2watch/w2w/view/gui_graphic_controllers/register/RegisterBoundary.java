@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.view.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers.register;
 
 import com.whats2watch.w2w.controllers.RegisterController;
 import com.whats2watch.w2w.exceptions.DAOException;
@@ -13,7 +13,7 @@ import com.whats2watch.w2w.model.dto.beans.UserBean;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class RegisterBoundary {
+public class RegisterBoundary implements RegisterBoundaryInOp, RegisterBoundaryOutOp {
 
     private Dispatcher app;
 
@@ -48,7 +48,8 @@ public class RegisterBoundary {
     }
 
     @FXML
-    private void handleLogin() throws DAOException {
+    @Override
+    public void handleLogin() throws DAOException {
         UserBean userBean = new UserBean(emailField.getText(), passwordField.getText());
         ValidationResult validatorResult = LoginValidator.validate(userBean);
         if(validatorResult.isValid()){
@@ -64,7 +65,8 @@ public class RegisterBoundary {
     }
 
     @FXML
-    private void handleRegister() throws DAOException {
+    @Override
+    public void handleRegister() throws DAOException {
         String name = nameField.getText().trim();
         String surname = surnameField.getText().trim();
         Gender gender = Gender.valueOf(genderChoice.getValue().toUpperCase());
@@ -88,23 +90,27 @@ public class RegisterBoundary {
     }
 
     @FXML
-    private void handleGoToRegisterPageEvent() {
+    @Override
+    public void handleGoToRegisterPageEvent() {
         this.app.showRegisterPage();
     }
 
     @FXML
-    private void handleGoToLoginPageEvent() {
+    @Override
+    public void handleGoToLoginPageEvent() {
         this.app.showLoginPage();
     }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
+    @Override
+    public void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    private void clearForm() {
+    @Override
+    public void clearForm() {
         nameField.clear();
         surnameField.clear();
         genderChoice.setValue("Select gender");

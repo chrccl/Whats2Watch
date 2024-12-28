@@ -2,7 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" styleClass="movie-container" fx:controller="com.whats2watch.w2w.view.gui_graphic_controllers.MatchesBoundary">
+<BorderPane xmlns:fx="http://javafx.com/fxml" styleClass="movie-container" fx:controller="com.whats2watch.w2w.view.gui_graphic_controllers.matches.MatchesBoundary">
     <top>
         <VBox alignment="CENTER" spacing="10" styleClass="movie-container">
             <HBox spacing="10" alignment="CENTER" styleClass="header-wrapper">

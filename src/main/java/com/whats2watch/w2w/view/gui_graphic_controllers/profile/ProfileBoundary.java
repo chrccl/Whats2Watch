@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.view.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers.profile;
 
 import com.whats2watch.w2w.model.Dispatcher;
 import com.whats2watch.w2w.model.User;

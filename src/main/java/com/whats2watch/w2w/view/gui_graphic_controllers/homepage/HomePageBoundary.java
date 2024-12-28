@@ -1,4 +1,4 @@
-package com.whats2watch.w2w.view.gui_graphic_controllers;
+package com.whats2watch.w2w.view.gui_graphic_controllers.homepage;
 
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.exceptions.DAOException;
@@ -16,7 +16,7 @@ import javafx.scene.text.TextAlignment;
 import java.io.IOException;
 import java.util.Set;
 
-public class HomePageBoundary {
+public class HomePageBoundary implements HomePageBoundaryInOp, HomePageBoundaryOutOp {
 
     private Dispatcher app;
 
@@ -53,7 +53,8 @@ public class HomePageBoundary {
         }
     }
 
-    private void populateRecentRooms(Set<Room> rooms) {
+    @Override
+    public void populateRecentRooms(Set<Room> rooms) {
         roomGrid.getChildren().clear();
         if(rooms.isEmpty()) {
             Label noRoom = new Label("No Recent Rooms found");
@@ -100,7 +101,8 @@ public class HomePageBoundary {
         }
     }
 
-    private void populateGenreSection(Set<Genre> genres) {
+    @Override
+    public void populateGenreSection(Set<Genre> genres) {
         genreGrid.getChildren().clear();
         for (Genre genre : genres) {
             Label genreLabel = new Label(String.format("%s Room", genre.name()));
@@ -126,7 +128,8 @@ public class HomePageBoundary {
         }
     }
 
-    private void populateTrending(Set<Media> movies) {
+    @Override
+    public void populateTrending(Set<Media> movies) {
         trendingGrid.getChildren().clear();
         for (Media movie : movies) {
             VBox trendingMovie = new VBox();
@@ -151,17 +154,20 @@ public class HomePageBoundary {
         }
     }
 
-    private void newGenreRoomEvent(Genre genre) {
+    @Override
+    public void newGenreRoomEvent(Genre genre) {
         this.app.showRoomPage(activeUser, genre);
     }
 
     @FXML
-    private void goToRoomPageEvent() {
+    @Override
+    public void goToRoomPageEvent() {
         this.app.showRoomPage(activeUser,null);
     }
 
     @FXML
-    private void goToUserPageEvent() {
+    @Override
+    public void goToUserPageEvent() {
         this.app.showProfilePage(this.activeUser);
     }
 
