@@ -25,7 +25,7 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
 
     private User activeUser;
 
-    private final String ERROR = "ERROR";
+    private static final String ERROR = "ERROR";
 
     @FXML
     private TextField roomCodeField;

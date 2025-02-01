@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/exceptions/EntityNotFoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/WhatsToWatch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/controllers/SwipeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/exceptions/DAOException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/exceptions/DAOException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/GUIDispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/GUIDispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAODemoFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/dao_factories/DAODemoFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/model/dao/entities/ConnectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/HomePageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/HomePageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/RegisterView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/RegisterView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/RoomView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/RoomView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/SwipeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/SwipeView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/homepage/HomePageBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/homepage/HomePageBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/register/RegisterBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/register/RegisterBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/register/RegisterBoundaryInOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/register/RegisterBoundaryInOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/room/RoomBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/room/RoomBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/room/RoomBoundaryInOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/room/RoomBoundaryInOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/room/RoomBoundaryOutOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/room/RoomBoundaryOutOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/swipe/SwipeBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/swipe/SwipeBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/swipe/SwipeBoundaryInOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/swipe/SwipeBoundaryInOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/swipe/SwipeBoundaryOutOp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/gui_graphic_controllers/swipe/SwipeBoundaryOutOp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dao_tests/MediaDAOTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dao_tests/MediaDAOTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -278,7 +251,7 @@
       <workItem from="1735472540581" duration="340000" />
       <workItem from="1735552437074" duration="19000" />
       <workItem from="1738325661462" duration="10164000" />
-      <workItem from="1738426752786" duration="4880000" />
+      <workItem from="1738426752786" duration="5184000" />
     </task>
     <servers />
   </component>
