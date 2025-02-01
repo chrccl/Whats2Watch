@@ -260,7 +260,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         return members;
     }
 
-    private void fetchLikedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException, DAOException {
+    private void fetchLikedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException {
         String likedMediaQuery;
         if(mediaDAO.getClass().equals(DAODatabaseMovie.class)){
             likedMediaQuery = "SELECT title, year FROM room_member_liked_movies WHERE room_code = ? AND user_email = ?";
@@ -280,7 +280,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         }
     }
 
-    private void fetchPassedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException, DAOException {
+    private void fetchPassedMedia(String roomCode, String userEmail, RoomMember roomMember, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException {
         String passedMediaQuery;
         if(mediaDAO.getClass().equals(DAODatabaseMovie.class)){
             passedMediaQuery = "SELECT title, year FROM room_member_passed_movies WHERE room_code = ? AND user_email = ?";
@@ -299,7 +299,7 @@ public class DAODatabaseRoom implements DAO<Room, String> {
         }
     }
 
-    private Media fetchMediaFromResultSet(ResultSet rs, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException, DAOException {
+    private Media fetchMediaFromResultSet(ResultSet rs, DAODatabaseMedia<? extends Media> mediaDAO) throws SQLException {
         String title = rs.getString("title");
         Integer year = rs.getInt("year");
         return mediaDAO.findById(new MediaId(title, year));

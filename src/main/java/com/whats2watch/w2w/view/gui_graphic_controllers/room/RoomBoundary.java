@@ -25,6 +25,8 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
 
     private User activeUser;
 
+    private final String ERROR = "ERROR";
+
     @FXML
     private TextField roomCodeField;
 
@@ -59,7 +61,7 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
              this.app.showSwipePage(activeUser, room);
         } catch (EntityNotFoundException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
+            alert.setTitle(ERROR);
             alert.setContentText("No room related to this code.");
             alert.showAndWait();
         }
@@ -88,13 +90,13 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
                 this.app.showSwipePage(activeUser, room);
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
+                alert.setTitle(ERROR);
                 alert.setContentText(validationResult.toString());
                 alert.showAndWait();
             }
         }catch (EntityNotFoundException | EntityCannotBePersistedException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
+            alert.setTitle(ERROR);
             alert.setContentText("Internal error, please try again.");
             alert.showAndWait();
         }
@@ -132,7 +134,7 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
             productionCompaniesField.setEditable(false);
         }catch (EntityNotFoundException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
+            alert.setTitle(ERROR);
             alert.setContentText("Internal error, please try again.");
             alert.showAndWait();
         }
