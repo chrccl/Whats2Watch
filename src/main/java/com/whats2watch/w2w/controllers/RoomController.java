@@ -3,6 +3,8 @@ package com.whats2watch.w2w.controllers;
 import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.config.Config;
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistenceFactory;
 import com.whats2watch.w2w.model.dao.entities.DAO;
@@ -38,7 +40,7 @@ public class RoomController {
         throw new UnsupportedOperationException("RoomController is a utility class and cannot be instantiated.");
     }
     
-    public static Room saveRoom(User organizer, RoomBean roomBean) throws DAOException {
+    public static Room saveRoom(User organizer, RoomBean roomBean) throws EntityCannotBePersistedException {
         Room room = RoomFactory.createRoomInstance()
                 .code(IntStream.range(0, 6)
                         .mapToObj(i -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(random.nextInt(36)))
@@ -53,17 +55,25 @@ public class RoomController {
                 .allowedProductionCompanies(roomBean.getAllowedProductionCompanies())
                 .roomMembers(Set.of(new RoomMember(organizer)))
                 .build();
-        PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO().save(room);
-        return room;
+        try{
+            PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO().save(room);
+            return room;
+        }catch(DAOException e){
+            throw new EntityCannotBePersistedException(e.getMessage());
+        }
     }
 
-    public static void updateRoomPreferences(Room room, RoomMember roomMember) throws DAOException {
-        DAO<Room, String> roomDAO = PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO();
-        if(roomDAO instanceof DAODatabaseRoom) {
-            ((DAODatabaseRoom) roomDAO).updateLikedMedia(room.getCode(), roomMember.getUser(), roomMember.getLikedMedia());
-            ((DAODatabaseRoom) roomDAO).updatePassedMedia(room.getCode(), roomMember.getUser(), roomMember.getPassedMedia());
-        }else{
-            roomDAO.save(room);
+    public static void updateRoomPreferences(Room room, RoomMember roomMember) throws EntityCannotBePersistedException {
+        try {
+            DAO<Room, String> roomDAO = PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO();
+            if (roomDAO instanceof DAODatabaseRoom) {
+                ((DAODatabaseRoom) roomDAO).updateLikedMedia(room.getCode(), roomMember.getUser(), roomMember.getLikedMedia());
+                ((DAODatabaseRoom) roomDAO).updatePassedMedia(room.getCode(), roomMember.getUser(), roomMember.getPassedMedia());
+            } else {
+                roomDAO.save(room);
+            }
+        }catch(DAOException e){
+            throw new EntityCannotBePersistedException(e.getMessage());
         }
     }
 
@@ -80,69 +90,92 @@ public class RoomController {
                 .orElse(new ArrayList<>());
     }
 
-    public static Room addMemberToAnExistingRoom(User user, String roomCode) throws DAOException {
-        Room room = (Room) PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO().findById(roomCode);
-        if(room != null) {
+    public static Room addMemberToAnExistingRoom(User user, String roomCode) throws EntityNotFoundException {
+        Room room;
+        try {
+            room = (Room) PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO().findById(roomCode);
             room.getRoomMembers().add(new RoomMember(user));
             PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createRoomDAO().save(room);
+            return room;
+        } catch (DAOException e) {
+            throw new EntityNotFoundException(e.getMessage());
         }
-        return room;
     }
 
-    public static Set<Room> fetchRecentRooms(User user) throws DAOException {
-        return PersistenceFactory
-                .createDAO(WhatsToWatch.getPersistenceType())
-                .createRoomDAO()
-                .findAll()
-                .stream()
-                .map(room -> (Room) room)
-                .filter(room -> room.getRoomMembers()
-                        .stream()
-                        .anyMatch(member -> member.getUser().equals(user)))
-                .sorted(Comparator.comparing(Room::getCreationDate).reversed()) //from the newest to the oldest
-                .collect(Collectors.toCollection(LinkedHashSet::new)); //to preserve order
+    public static Set<Room> fetchRecentRooms(User user) throws EntityNotFoundException {
+        try {
+            return PersistenceFactory
+                    .createDAO(WhatsToWatch.getPersistenceType())
+                    .createRoomDAO()
+                    .findAll()
+                    .stream()
+                    .map(room -> (Room) room)
+                    .filter(room -> room.getRoomMembers()
+                            .stream()
+                            .anyMatch(member -> member.getUser().equals(user)))
+                    .sorted(Comparator.comparing(Room::getCreationDate).reversed()) //from the newest to the oldest
+                    .collect(Collectors.toCollection(LinkedHashSet::new)); //to preserve order
+        }catch (DAOException e){
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
     public static Set<Genre> fetchGenres(){
         return new HashSet<>(List.of(Genre.values()));
     }
 
-    public static Set<WatchProvider> fetchWatchProviders() throws DAOException {
-        return PersistenceFactory
-                .createDAO(WhatsToWatch.getPersistenceType())
-                .createWatchProviderDAO()
-                .findAll().stream()
-                .map(watchProvider -> (WatchProvider)watchProvider)
-                .collect(Collectors.toSet());
+    public static Set<WatchProvider> fetchWatchProviders() throws EntityNotFoundException {
+        try {
+            return PersistenceFactory
+                    .createDAO(WhatsToWatch.getPersistenceType())
+                    .createWatchProviderDAO()
+                    .findAll().stream()
+                    .map(watchProvider -> (WatchProvider) watchProvider)
+                    .collect(Collectors.toSet());
+        }catch (DAOException e){
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
-    public static Set<ProductionCompany> fetchProductionCompanies() throws DAOException {
-        return PersistenceFactory
-                .createDAO(WhatsToWatch.getPersistenceType())
-                .createProductionCompaniesDAO()
-                .findAll().stream()
-                .map(productionCompany -> (ProductionCompany)productionCompany)
-                .collect(Collectors.toSet());
+    public static Set<ProductionCompany> fetchProductionCompanies() throws EntityNotFoundException {
+        try {
+            return PersistenceFactory
+                    .createDAO(WhatsToWatch.getPersistenceType())
+                    .createProductionCompaniesDAO()
+                    .findAll().stream()
+                    .map(productionCompany -> (ProductionCompany)productionCompany)
+                    .collect(Collectors.toSet());
+        } catch (DAOException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
-    public static WatchProvider getWatchProviderByName(String providerName) throws DAOException {
-        return PersistenceFactory
-                .createDAO(WhatsToWatch.getPersistenceType())
-                .createWatchProviderDAO()
-                .findAll().stream()
-                .map(watchProvider -> (WatchProvider)watchProvider)
-                .filter(watchProvider -> watchProvider.getProviderName().equals(providerName))
-                .findFirst().orElse(null);
+    public static WatchProvider getWatchProviderByName(String providerName) throws EntityNotFoundException {
+        try {
+            return PersistenceFactory
+                    .createDAO(WhatsToWatch.getPersistenceType())
+                    .createWatchProviderDAO()
+                    .findAll().stream()
+                    .map(watchProvider -> (WatchProvider) watchProvider)
+                    .filter(watchProvider -> watchProvider.getProviderName().equals(providerName))
+                    .findFirst().orElse(null);
+        }catch (DAOException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
-    public static ProductionCompany getProductionCompanyByName(String companyName) throws DAOException {
-        return PersistenceFactory
-                .createDAO(WhatsToWatch.getPersistenceType())
-                .createProductionCompaniesDAO()
-                .findAll().stream()
-                .map(productionCompany -> (ProductionCompany)productionCompany)
-                .filter(productionCompany -> productionCompany.getCompanyName().equals(companyName))
-                .findFirst().orElse(null);
+    public static ProductionCompany getProductionCompanyByName(String companyName) throws EntityNotFoundException {
+        try {
+            return PersistenceFactory
+                    .createDAO(WhatsToWatch.getPersistenceType())
+                    .createProductionCompaniesDAO()
+                    .findAll().stream()
+                    .map(productionCompany -> (ProductionCompany) productionCompany)
+                    .filter(productionCompany -> productionCompany.getCompanyName().equals(companyName))
+                    .findFirst().orElse(null);
+        }catch (DAOException e) {
+            throw new EntityNotFoundException(e.getMessage());
+        }
     }
 
     public static Set<Media> fetchTrendingMedias() throws IOException, InterruptedException {

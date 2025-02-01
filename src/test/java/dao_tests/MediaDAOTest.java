@@ -22,8 +22,8 @@ class MediaDAOTest {
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
 
-        // Assert that the query duration is less than 5 seconds
-        assertTrue(duration < 5000, "The query took longer than 5 seconds");
+        // Assert that the query duration is less than 3 seconds
+        assertTrue(duration < 3000, "The query took longer than 3 seconds");
     }
 
 }

@@ -1,7 +1,7 @@
 package com.whats2watch.w2w.view.gui_graphic_controllers.homepage;
 
 import com.whats2watch.w2w.controllers.RoomController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -40,7 +40,7 @@ public class HomePageBoundary implements HomePageBoundaryInOp, HomePageBoundaryO
         try {
             populateTrending(RoomController.fetchTrendingMedias());
             populateRecentRooms(RoomController.fetchRecentRooms(activeUser));
-        }catch(DAOException e) {
+        }catch(EntityNotFoundException e) {
             Label noRoom = new Label("Something went wrong.");
             noRoom.setMaxWidth(150);
             noRoom.setMinWidth(150);

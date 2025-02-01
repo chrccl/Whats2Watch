@@ -16,6 +16,7 @@ module com.whats2watch.w2w {
     exports com.whats2watch.w2w.exceptions;
     exports com.whats2watch.w2w.model.dao.dao_factories;
     exports com.whats2watch.w2w.model.dao.entities;
+    exports com.whats2watch.w2w.model.dto.beans;
     exports com.whats2watch.w2w.model;
     exports com.whats2watch.w2w.controllers;
 

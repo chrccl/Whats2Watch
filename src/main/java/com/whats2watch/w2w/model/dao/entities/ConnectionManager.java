@@ -24,7 +24,7 @@ public class ConnectionManager {
 
                         instance = DriverManager.getConnection(url, user, password);
                     } catch (SQLException e) {
-                        throw new DAOException("Error connecting to the database", e);
+                        throw new DAOException(e.getMessage());
                     }
                 }
             }
@@ -32,9 +32,4 @@ public class ConnectionManager {
         return instance;
     }
 
-    public static void closeConnection() throws SQLException {
-        if (instance != null && !instance.isClosed()) {
-            instance.close();
-        }
-    }
 }

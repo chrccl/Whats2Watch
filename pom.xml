@@ -156,6 +156,28 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.iluwatar.urm</groupId>
+                <artifactId>urm-maven-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}/target</outputDirectory>
+                    <packages>
+                        <param>com.whats2watch.w2w</param>
+                    </packages>
+                    <includeMainDirectory>true</includeMainDirectory>
+                    <includeTestDirectory>false</includeTestDirectory>
+                    <presenter>plantuml</presenter>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>map</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <resources>
             <resource>

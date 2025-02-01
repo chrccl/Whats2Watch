@@ -2,6 +2,7 @@ package com.whats2watch.w2w.controllers;
 
 import com.whats2watch.w2w.WhatsToWatch;
 import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.Character;
 import com.whats2watch.w2w.model.dao.dao_factories.PersistenceFactory;
@@ -20,30 +21,33 @@ public class SwipeController {
         throw new UnsupportedOperationException("SwipeController is a utility class and cannot be instantiated.");
     }
 
-    public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws DAOException {
-        DAO<Media, MediaId> mediaDAO = PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createMovieDAO();
-        if(mediaDAO instanceof DAODatabaseMedia){
-            return ((DAODatabaseMedia<? extends Media>)mediaDAO)
-                    .findAllByOffset(computeOffset(roomMember))
-                    .stream()
-                    .filter(media -> avoidProposingSameMedia(roomMember, media))
-                    .sorted((media1, media2) -> Double.compare(
-                            calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
-                            calculateScore(roomMember, media1, room.getMediaType())))
-                    .collect(Collectors.toList());
-        }else {
-            return ((DAOFileSystemMedia<? extends Media>)mediaDAO)
-                    .findAll()
-                    .stream()
-                    .skip(computeOffset(roomMember))
-                    .limit(20)
-                    .filter(media -> avoidProposingSameMedia(roomMember, media))
-                    .sorted((media1, media2) -> Double.compare(
-                            calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
-                            calculateScore(roomMember, media1, room.getMediaType())))
-                    .collect(Collectors.toList());
+    public static List<Media> recommendMedias(Room room, RoomMember roomMember) throws EntityNotFoundException {
+        try{
+            DAO<Media, MediaId> mediaDAO = PersistenceFactory.createDAO(WhatsToWatch.getPersistenceType()).createMovieDAO();
+            if(mediaDAO instanceof DAODatabaseMedia){
+                return ((DAODatabaseMedia<? extends Media>)mediaDAO)
+                        .findAllByOffset(computeOffset(roomMember))
+                        .stream()
+                        .filter(media -> avoidProposingSameMedia(roomMember, media))
+                        .sorted((media1, media2) -> Double.compare(
+                                calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
+                                calculateScore(roomMember, media1, room.getMediaType())))
+                        .collect(Collectors.toList());
+            }else {
+                return ((DAOFileSystemMedia<? extends Media>)mediaDAO)
+                        .findAll()
+                        .stream()
+                        .skip(computeOffset(roomMember))
+                        .limit(20)
+                        .filter(media -> avoidProposingSameMedia(roomMember, media))
+                        .sorted((media1, media2) -> Double.compare(
+                                calculateScore(roomMember, media2, room.getMediaType()), // Sort descending by score
+                                calculateScore(roomMember, media1, room.getMediaType())))
+                        .collect(Collectors.toList());
+            }
+        }catch (DAOException e){
+            throw new EntityNotFoundException(e.getMessage());
         }
-
     }
 
     private static int computeOffset(RoomMember roomMember) {

@@ -52,7 +52,7 @@ public class WhatsToWatch extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("WELCOME IN WHATS2WATCH!!!");
+        System.out.println("WELCOME IN WHATS2WATCH!");
         persistenceType = choosePersistenceType();
         if (chooseUI())
             launch();

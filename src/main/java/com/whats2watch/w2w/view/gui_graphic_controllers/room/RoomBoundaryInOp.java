@@ -1,12 +1,10 @@
 package com.whats2watch.w2w.view.gui_graphic_controllers.room;
 
-import com.whats2watch.w2w.exceptions.DAOException;
-
 public interface RoomBoundaryInOp {
 
-    void joinRoomEvent() throws DAOException;
+    void joinRoomEvent();
 
-    void createRoomEvent() throws DAOException;
+    void createRoomEvent();
 
     void goToHomePageEvent();
 

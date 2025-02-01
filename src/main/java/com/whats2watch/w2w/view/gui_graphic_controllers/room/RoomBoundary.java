@@ -1,7 +1,8 @@
 package com.whats2watch.w2w.view.gui_graphic_controllers.room;
 
 import com.whats2watch.w2w.controllers.RoomController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dto.RoomValidator;
 import com.whats2watch.w2w.model.dto.ValidationResult;
@@ -42,7 +43,7 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
     @FXML
     private ComboBox<String> productionCompaniesField;
 
-    public void setMainApp(Dispatcher app, User user, Genre genre) throws DAOException {
+    public void setMainApp(Dispatcher app, User user, Genre genre) {
         this.app = app;
         this.activeUser = user;
         initializePage(genre);
@@ -50,54 +51,57 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
 
     @FXML
     @Override
-    public void joinRoomEvent() throws DAOException {
+    public void joinRoomEvent() {
         String roomCode = roomCodeField.getText();
-        Room room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
-        if (!roomCode.isEmpty() && room != null) {
+        Room room;
+        try{
+             room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
+             this.app.showSwipePage(activeUser, room);
+        } catch (EntityNotFoundException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
             alert.setContentText("No room related to this code.");
             alert.showAndWait();
-        }else{
-            this.app.showSwipePage(activeUser, room);
         }
     }
 
     @FXML
     @Override
-    public void createRoomEvent() throws DAOException {
-        WatchProvider watchProvider = RoomController.getWatchProviderByName(
-                watchProvidersField.getSelectionModel().getSelectedItem());
-        ProductionCompany productionCompany = RoomController.getProductionCompanyByName(
-                productionCompaniesField.getSelectionModel().getSelectedItem());
-        Integer decade = decadesField.getSelectionModel().getSelectedItem() != null
-                ? Integer.valueOf(decadesField.getSelectionModel().getSelectedItem().replace("s", ""))
-                : null;
-        Set<Genre> genres = genresField.getSelectionModel().getSelectedItem() != null
-                ? Set.of(Genre.of(genresField.getSelectionModel().getSelectedItem()))
-                : null;
-        Set<WatchProvider> watchProviders = watchProvider != null
-                ? Set.of(watchProvider)
-                : null;
-        Set<ProductionCompany> productionCompanies = productionCompany != null
-                ? Set.of(productionCompany)
-                : null;
-
-        RoomBean roomBean = new RoomBean(nameField.getText(), MediaType.MOVIE, decade, genres, watchProviders, productionCompanies);
-        ValidationResult validationResult = RoomValidator.validate(roomBean);
-        if (validationResult.isValid()) {
-            Room room = RoomController.saveRoom(activeUser, roomBean);
-            this.app.showSwipePage(activeUser, room);
-        } else {
+    public void createRoomEvent() {
+        try{
+            WatchProvider watchProvider = RoomController.getWatchProviderByName(
+                    watchProvidersField.getSelectionModel().getSelectedItem());
+            ProductionCompany productionCompany = RoomController.getProductionCompanyByName(
+                    productionCompaniesField.getSelectionModel().getSelectedItem());
+            Integer decade = decadesField.getSelectionModel().getSelectedItem() != null
+                    ? Integer.valueOf(decadesField.getSelectionModel().getSelectedItem().replace("s", ""))
+                    : null;
+            Set<Genre> genres = genresField.getSelectionModel().getSelectedItem() != null
+                    ? Set.of(Genre.of(genresField.getSelectionModel().getSelectedItem()))
+                    : null;
+            Set<WatchProvider> watchProviders = watchProvider != null ? Set.of(watchProvider) : null;
+            Set<ProductionCompany> productionCompanies = productionCompany != null ? Set.of(productionCompany) : null;
+            RoomBean roomBean = new RoomBean(nameField.getText(), MediaType.MOVIE, decade, genres, watchProviders, productionCompanies);
+            ValidationResult validationResult = RoomValidator.validate(roomBean);
+            if (validationResult.isValid()) {
+                Room room = RoomController.saveRoom(activeUser, roomBean);
+                this.app.showSwipePage(activeUser, room);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setContentText(validationResult.toString());
+                alert.showAndWait();
+            }
+        }catch (EntityNotFoundException | EntityCannotBePersistedException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("ERROR");
-            alert.setContentText(validationResult.toString());
+            alert.setContentText("Internal error, please try again.");
             alert.showAndWait();
         }
     }
 
     @Override
-    public void initializePage(Genre genre) throws DAOException {
+    public void initializePage(Genre genre) {
         ObservableList<String> genres = FXCollections.observableArrayList(
                 RoomController.fetchGenres().stream().map(Enum::name).collect(Collectors.toList())
         );
@@ -112,20 +116,27 @@ public class RoomBoundary implements RoomBoundaryInOp, RoomBoundaryOutOp{
         );
         decadesField.setItems(decades);
         decadesField.setEditable(false);
+        try {
+            Set<WatchProvider> watchProvidersCache = RoomController.fetchWatchProviders();
+            ObservableList<String> watchProviders = FXCollections.observableArrayList(
+                    watchProvidersCache.stream().map(WatchProvider::getProviderName).collect(Collectors.toList())
+            );
+            watchProvidersField.setItems(watchProviders);
+            watchProvidersField.setEditable(false);
 
-        Set<WatchProvider> watchProvidersCache = RoomController.fetchWatchProviders();
-        ObservableList<String> watchProviders = FXCollections.observableArrayList(
-                watchProvidersCache.stream().map(WatchProvider::getProviderName).collect(Collectors.toList())
-        );
-        watchProvidersField.setItems(watchProviders);
-        watchProvidersField.setEditable(false);
+            Set<ProductionCompany> productionCompaniesCache = RoomController.fetchProductionCompanies();
+            ObservableList<String> productionCompanies = FXCollections.observableArrayList(
+                    productionCompaniesCache.stream().map(ProductionCompany::getCompanyName).collect(Collectors.toList())
+            );
+            productionCompaniesField.setItems(productionCompanies);
+            productionCompaniesField.setEditable(false);
+        }catch (EntityNotFoundException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Internal error, please try again.");
+            alert.showAndWait();
+        }
 
-        Set<ProductionCompany> productionCompaniesCache = RoomController.fetchProductionCompanies();
-        ObservableList<String> productionCompanies = FXCollections.observableArrayList(
-                productionCompaniesCache.stream().map(ProductionCompany::getCompanyName).collect(Collectors.toList())
-        );
-        productionCompaniesField.setItems(productionCompanies);
-        productionCompaniesField.setEditable(false);
     }
 
     @FXML

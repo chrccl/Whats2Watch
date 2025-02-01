@@ -1,7 +1,8 @@
 package com.whats2watch.w2w.view.cli_view;
 
 import com.whats2watch.w2w.controllers.RegisterController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.Dispatcher;
 import com.whats2watch.w2w.model.Gender;
 import com.whats2watch.w2w.model.User;
@@ -30,15 +31,13 @@ public class RegisterView {
             System.out.println("Type 'L' for Login or 'R' for Register");
             action = scanner.nextLine().toUpperCase();
         }while(!action.equals("L") && !action.equals("R"));
-        try {
-            if(action.equals("L")) handleLogin();
-            else handleRegister();
-        } catch (DAOException e) {
-            showAlert(ERROR, e.getMessage());
-        }
+        if(action.equals("L"))
+            handleLogin();
+        else
+            handleRegister();
     }
 
-    public static void handleLogin() throws DAOException {
+    public static void handleLogin() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Login ---");
         System.out.print("Email: ");
@@ -49,11 +48,11 @@ public class RegisterView {
         UserBean userBean = new UserBean(email, password);
         ValidationResult validatorResult = LoginValidator.validate(userBean);
         if (validatorResult.isValid()) {
-            User user = RegisterController.login(userBean);
-            if (user != null) {
+            try{
+                User user = RegisterController.login(userBean);
                 System.out.println("Login successful!");
                 app.showHomePage(user);
-            } else {
+            } catch (EntityNotFoundException e) {
                 showAlert(ERROR, "Email or Password is incorrect!");
             }
         } else {
@@ -62,7 +61,7 @@ public class RegisterView {
 
     }
 
-    public static void handleRegister() throws DAOException {
+    public static void handleRegister() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- Register ---");
         System.out.print("Name: ");
@@ -89,13 +88,16 @@ public class RegisterView {
             showAlert(ERROR, "Password and Confirm Password fields must be equal.");
             return;
         }
-
         UserBean userBean = new UserBean(name, surname, gender, email, password);
         ValidationResult validatorResult = UserValidator.validate(userBean);
         if (validatorResult.isValid()) {
-            RegisterController.register(userBean);
-            showAlert("Registration Successful", "Your account has been created!");
-            app.showLoginPage();
+            try{
+                RegisterController.register(userBean);
+                showAlert("Registration Successful", "Your account has been created!");
+                app.showLoginPage();
+            } catch (EntityCannotBePersistedException e) {
+                showAlert(ERROR, "Internal error, please try again.");
+            }
         } else {
             showAlert(ERROR, validatorResult.toString());
         }

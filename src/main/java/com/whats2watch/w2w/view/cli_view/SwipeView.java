@@ -2,7 +2,8 @@ package com.whats2watch.w2w.view.cli_view;
 
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.controllers.SwipeController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 
 import java.util.ArrayList;
@@ -40,18 +41,17 @@ public class SwipeView {
                 .filter(rm -> rm.getUser().equals(user))
                 .findFirst()
                 .orElse(null);
-        try {
-            recommendMedias();
-        } catch (DAOException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
-        }
+        recommendMedias();
         showMenu();
     }
 
-    private static void recommendMedias() throws DAOException {
-        mediaList = SwipeController.recommendMedias(room, roomMember);
-        currentIndex = 0;
+    private static void recommendMedias() {
+        try {
+            mediaList = SwipeController.recommendMedias(room, roomMember);
+            currentIndex = 0;
+        } catch (EntityNotFoundException e) {
+            currentIndex++;
+        }
     }
 
     private static void showMediaCard() {
@@ -72,7 +72,7 @@ public class SwipeView {
         }
     }
 
-    private static void passMediaEvent() throws DAOException {
+    private static void passMediaEvent() {
         if (currentIndex < mediaList.size()) {
             roomMember.getPassedMedia().add(mediaList.get(currentIndex));
             currentIndex++;
@@ -82,7 +82,7 @@ public class SwipeView {
         }
     }
 
-    private static void likeMediaEvent() throws DAOException {
+    private static void likeMediaEvent() {
         if (currentIndex < mediaList.size()) {
             roomMember.getLikedMedia().add(mediaList.get(currentIndex));
             currentIndex++;
@@ -104,10 +104,14 @@ public class SwipeView {
         }
     }
 
-    private static void checkRecommendations() throws DAOException {
+    private static void checkRecommendations() {
         if (currentIndex >= 5) {
-            RoomController.updateRoomPreferences(room, roomMember);
-            recommendMedias();
+            try {
+                RoomController.updateRoomPreferences(room, roomMember);
+                recommendMedias();
+            } catch (EntityCannotBePersistedException e) {
+                recommendMedias();
+            }
         }
     }
 
@@ -116,10 +120,15 @@ public class SwipeView {
         printMediaList(new ArrayList<>(roomMember.getLikedMedia()));
     }
 
-    private static void showRoomMatches() throws DAOException {
-        RoomController.updateRoomPreferences(room, roomMember);
-        System.out.println("=== Room Matches ===");
-        printMediaList(RoomController.getRoomMatches(room));
+    private static void showRoomMatches() {
+        try {
+            RoomController.updateRoomPreferences(room, roomMember);
+        } catch (EntityCannotBePersistedException e) {
+            recommendMedias();
+        }finally {
+            System.out.println("=== Room Matches ===");
+            printMediaList(RoomController.getRoomMatches(room));
+        }
     }
 
     private static void printMediaList(List<Media> medias){
@@ -149,32 +158,28 @@ public class SwipeView {
 
             int choice = scanner.nextInt();
             scanner.nextLine();
-            try {
-                switch (choice) {
-                    case 1:
-                        passMediaEvent();
-                        break;
-                    case 2:
-                        likeMediaEvent();
-                        break;
-                    case 3:
-                        infoMediaEvent();
-                        break;
-                    case 4:
-                        printLikedMediaEvent();
-                        break;
-                    case 5:
-                        showRoomMatches();
-                        break;
-                    case 0:
-                        System.out.println("Returning to Homepage...");
-                        app.showHomePage(activeUser);
-                        return;
-                    default:
-                        System.out.println("Invalid choice. Please try again.");
-                }
-            } catch (DAOException e) {
-                System.out.println("An error occurred: " + e.getMessage());
+            switch (choice) {
+                case 1:
+                    passMediaEvent();
+                    break;
+                case 2:
+                    likeMediaEvent();
+                    break;
+                case 3:
+                    infoMediaEvent();
+                    break;
+                case 4:
+                    printLikedMediaEvent();
+                    break;
+                case 5:
+                    showRoomMatches();
+                    break;
+                case 0:
+                    System.out.println("Returning to Homepage...");
+                    app.showHomePage(activeUser);
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
     }

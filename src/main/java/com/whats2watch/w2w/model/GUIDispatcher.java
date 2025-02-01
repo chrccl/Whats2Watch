@@ -1,7 +1,6 @@
 package com.whats2watch.w2w.model;
 
 import com.whats2watch.w2w.WhatsToWatch;
-import com.whats2watch.w2w.exceptions.DAOException;
 
 import com.whats2watch.w2w.view.gui_graphic_controllers.homepage.HomePageBoundary;
 import com.whats2watch.w2w.view.gui_graphic_controllers.matches.MatchesBoundary;
@@ -37,7 +36,7 @@ public class GUIDispatcher implements Dispatcher{
     public void showLoginPage(){
         FXMLLoader fxmlLoader = new FXMLLoader(WhatsToWatch.class.getResource("gui_view/login-page.fxml"));
         fxmlLoader.setLocation(WhatsToWatch.class.getResource("gui_view/login-page.fxml"));
-        AnchorPane root = null;
+        AnchorPane root;
         try {
             root = fxmlLoader.load();
             RegisterBoundary controller = fxmlLoader.getController();
@@ -108,7 +107,7 @@ public class GUIDispatcher implements Dispatcher{
             stage.setScene(scene);
             stage.setMaximized(true);
             stage.show();
-        } catch (IOException | DAOException e) {
+        } catch (IOException e) {
             logger.severe(e.getMessage());
             System.exit(1);
         }
@@ -148,7 +147,7 @@ public class GUIDispatcher implements Dispatcher{
             stage.setScene(scene);
             stage.setMaximized(true);
             stage.show();
-        } catch (IOException | DAOException e) {
+        } catch (IOException e) {
             logger.severe(e.getMessage());
             System.exit(1);
         }

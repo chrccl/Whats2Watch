@@ -1,6 +1,5 @@
 package com.whats2watch.w2w.model.dao.dao_factories;
 
-import com.whats2watch.w2w.exceptions.DAOException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dao.entities.DAO;
 import com.whats2watch.w2w.model.dao.entities.media.movie.DAODemoMovie;
@@ -13,32 +12,32 @@ import com.whats2watch.w2w.model.dao.entities.watch_providers.DAODemoWatchProvid
 public class DAODemoFactory implements DAOFactory {
 
     @Override
-    public DAO<Movie, MediaId> createMovieDAO() throws DAOException {
+    public DAO<Movie, MediaId> createMovieDAO() {
         return DAODemoMovie.getInstance();
     }
 
     @Override
-    public DAO<TVSeries, MediaId> createTVSeriesDAO() throws DAOException {
+    public DAO<TVSeries, MediaId> createTVSeriesDAO() {
         return DAODemoTVSeries.getInstance();
     }
 
     @Override
-    public DAO<Room, String> createRoomDAO() throws DAOException {
+    public DAO<Room, String> createRoomDAO() {
         return DAODemoRoom.getInstance();
     }
 
     @Override
-    public DAO<User, String> createUserDAO() throws DAOException {
+    public DAO<User, String> createUserDAO() {
         return DAODemoUser.getInstance();
     }
 
     @Override
-    public DAO<WatchProvider, String> createWatchProviderDAO() throws DAOException {
+    public DAO<WatchProvider, String> createWatchProviderDAO() {
         return DAODemoWatchProvider.getInstance();
     }
 
     @Override
-    public DAO<ProductionCompany, String> createProductionCompaniesDAO() throws DAOException {
+    public DAO<ProductionCompany, String> createProductionCompaniesDAO() {
         return DAODemoProductionCompany.getInstance();
     }
 

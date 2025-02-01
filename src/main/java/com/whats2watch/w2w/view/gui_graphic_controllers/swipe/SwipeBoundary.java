@@ -2,7 +2,8 @@ package com.whats2watch.w2w.view.gui_graphic_controllers.swipe;
 
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.controllers.SwipeController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 
 import javafx.fxml.FXML;
@@ -35,7 +36,7 @@ public class SwipeBoundary implements SwipeBoundaryInOp, SwipeBoundaryOutOp {
 
     private static final String DEFAULT_IMAGE_URL = "https://cdn.builder.io/api/v1/image/assets/TEMP/1fe73cf00781e4aa55b4f5a68876f1debb1b35519e409f807117d6bd4551511f?placeholderIfAbsent=true";
 
-    public void setMainApp(Dispatcher app, User user, Room room) throws DAOException {
+    public void setMainApp(Dispatcher app, User user, Room room) {
         this.app = app;
         this.activeUser = user;
         this.room = room;
@@ -47,9 +48,16 @@ public class SwipeBoundary implements SwipeBoundaryInOp, SwipeBoundaryOutOp {
     }
 
     @Override
-    public void recommendMedias() throws DAOException {
-        mediaList = SwipeController.recommendMedias(room, roomMember);
-        updateMediaCard();
+    public void recommendMedias() {
+        try{
+            mediaList = SwipeController.recommendMedias(room, roomMember);
+            updateMediaCard();
+        } catch (EntityNotFoundException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Internal Error, please try again!");
+            alert.showAndWait();
+        }
     }
 
     @Override
@@ -66,7 +74,7 @@ public class SwipeBoundary implements SwipeBoundaryInOp, SwipeBoundaryOutOp {
 
     @FXML
     @Override
-    public void passMediaEvent() throws DAOException {
+    public void passMediaEvent() {
         roomMember.getPassedMedia().add(mediaList.get(currentIndex-1));
         updateMediaCard();
         if(currentIndex > 5) updateRecommendations();
@@ -74,7 +82,7 @@ public class SwipeBoundary implements SwipeBoundaryInOp, SwipeBoundaryOutOp {
 
     @FXML
     @Override
-    public void likeMediaEvent() throws DAOException {
+    public void likeMediaEvent() {
         roomMember.getLikedMedia().add(mediaList.get(currentIndex-1));
         updateMediaCard();
         if(currentIndex > 5) updateRecommendations();
@@ -91,16 +99,24 @@ public class SwipeBoundary implements SwipeBoundaryInOp, SwipeBoundaryOutOp {
     }
 
     @Override
-    public void updateRecommendations() throws DAOException {
-        RoomController.updateRoomPreferences(room, roomMember);
-        currentIndex = 0;
-        recommendMedias();
+    public void updateRecommendations() {
+        try{
+            RoomController.updateRoomPreferences(room, roomMember);
+            currentIndex = 0;
+            recommendMedias();
+        } catch (EntityCannotBePersistedException e) {
+            currentIndex++;
+        }
     }
 
     @FXML
     @Override
-    public void goToMatchesPageEvent() throws DAOException {
-        RoomController.updateRoomPreferences(room, roomMember);
-        this.app.showMatchesPage(activeUser, room);
+    public void goToMatchesPageEvent() {
+        try {
+            RoomController.updateRoomPreferences(room, roomMember);
+            this.app.showMatchesPage(activeUser, room);
+        } catch (EntityCannotBePersistedException e) {
+            this.app.showMatchesPage(activeUser, room);
+        }
     }
 }

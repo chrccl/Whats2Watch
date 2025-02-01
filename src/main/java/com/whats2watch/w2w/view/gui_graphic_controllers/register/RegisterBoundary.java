@@ -1,7 +1,8 @@
 package com.whats2watch.w2w.view.gui_graphic_controllers.register;
 
 import com.whats2watch.w2w.controllers.RegisterController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.Dispatcher;
 import com.whats2watch.w2w.model.Gender;
 import com.whats2watch.w2w.model.User;
@@ -49,14 +50,14 @@ public class RegisterBoundary implements RegisterBoundaryInOp, RegisterBoundaryO
 
     @FXML
     @Override
-    public void handleLogin() throws DAOException {
+    public void handleLogin() {
         UserBean userBean = new UserBean(emailField.getText(), passwordField.getText());
         ValidationResult validatorResult = LoginValidator.validate(userBean);
         if(validatorResult.isValid()){
-            User user = RegisterController.login(userBean);
-            if(user != null){
+            try{
+                User user = RegisterController.login(userBean);
                 this.app.showHomePage(user);
-            }else{
+            }catch (EntityNotFoundException e){
                 showAlert(Alert.AlertType.ERROR, ERROR, "Email o Password non sono corretti!");
             }
         }else{
@@ -66,7 +67,7 @@ public class RegisterBoundary implements RegisterBoundaryInOp, RegisterBoundaryO
 
     @FXML
     @Override
-    public void handleRegister() throws DAOException {
+    public void handleRegister() {
         String name = nameField.getText().trim();
         String surname = surnameField.getText().trim();
         Gender gender = Gender.valueOf(genderChoice.getValue().toUpperCase());
@@ -77,10 +78,14 @@ public class RegisterBoundary implements RegisterBoundaryInOp, RegisterBoundaryO
         if(password.equals(confirmPassword)){
             ValidationResult validatorResult = UserValidator.validate(userBean);
             if(validatorResult.isValid()){
-                RegisterController.register(userBean);
-                showAlert(Alert.AlertType.CONFIRMATION, "Registration Successful", "Your account has been created!");
-                clearForm();
-                this.app.showLoginPage();
+                try{
+                    RegisterController.register(userBean);
+                    showAlert(Alert.AlertType.CONFIRMATION, "Registration Successful", "Your account has been created!");
+                    clearForm();
+                    this.app.showLoginPage();
+                }catch (EntityCannotBePersistedException e){
+                    showAlert(Alert.AlertType.ERROR, ERROR, "Internal Error, please try again!");
+                }
             }else{
                 showAlert(Alert.AlertType.ERROR, ERROR, validatorResult.toString());
             }

@@ -1,7 +1,8 @@
 package com.whats2watch.w2w.view.cli_view;
 
 import com.whats2watch.w2w.controllers.RoomController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityCannotBePersistedException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 import com.whats2watch.w2w.model.dto.RoomValidator;
 import com.whats2watch.w2w.model.dto.ValidationResult;
@@ -50,44 +51,40 @@ public class RoomView {
             System.out.println("5. Exit");
             action = scanner.nextLine();
 
-            try {
-                switch (action) {
-                    case "1":
-                        handleJoinRoom(scanner);
-                        break;
-                    case "2":
-                        handleCreateRoom(scanner, initialGenre);
-                        break;
-                    case "3":
-                        app.showHomePage(activeUser);
-                        break;
-                    case "4":
-                        app.showProfilePage(activeUser);
-                        break;
-                    case "5":
-                        System.out.println("Exiting Room Menu.");
-                        break;
-                    default:
-                        System.out.println("Invalid option. Please try again.");
-                }
-            } catch (DAOException e) {
-                System.out.println("Error: " + e.getMessage());
+            switch (action) {
+                case "1":
+                    handleJoinRoom(scanner);
+                    break;
+                case "2":
+                    handleCreateRoom(scanner, initialGenre);
+                    break;
+                case "3":
+                    app.showHomePage(activeUser);
+                    break;
+                case "4":
+                    app.showProfilePage(activeUser);
+                    break;
+                case "5":
+                    System.out.println("Exiting Room Menu.");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
             }
         } while (!"5".equals(action));
     }
 
-    private static void handleJoinRoom(Scanner scanner) throws DAOException {
+    private static void handleJoinRoom(Scanner scanner) {
         System.out.print("Enter the Room Code: ");
         String roomCode = scanner.nextLine();
-        Room room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
-        if (room == null) {
-            System.out.println("No room found with the provided code.");
-        } else {
+        try{
+            Room room = RoomController.addMemberToAnExistingRoom(activeUser, roomCode);
             app.showSwipePage(activeUser, room);
+        } catch (EntityNotFoundException e) {
+            System.out.println("No room found with the provided code.");
         }
     }
 
-    private static void handleCreateRoom(Scanner scanner, Genre selectedGenre) throws DAOException {
+    private static void handleCreateRoom(Scanner scanner, Genre selectedGenre) {
         System.out.print("Enter Room Name: ");
         String name = scanner.nextLine();
 
@@ -104,8 +101,12 @@ public class RoomView {
         ValidationResult validationResult = RoomValidator.validate(roomBean);
 
         if (validationResult.isValid()) {
-            Room room = RoomController.saveRoom(activeUser, roomBean);
-            app.showSwipePage(activeUser, room);
+            try {
+                Room room = RoomController.saveRoom(activeUser, roomBean);
+                app.showSwipePage(activeUser, room);
+            } catch (EntityCannotBePersistedException e) {
+                System.out.println("Internal error: please try again");
+            }
         } else {
             System.out.println("Validation Error: " + validationResult);
         }
@@ -193,7 +194,7 @@ public class RoomView {
                     decadesCache.add(year + "s");
                 }
             }
-        } catch (DAOException e) {
+        } catch (EntityNotFoundException e) {
             System.out.println("Error initializing page: " + e.getMessage());
         }
     }

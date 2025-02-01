@@ -1,7 +1,7 @@
 package com.whats2watch.w2w.view.cli_view;
 
 import com.whats2watch.w2w.controllers.RoomController;
-import com.whats2watch.w2w.exceptions.DAOException;
+import com.whats2watch.w2w.exceptions.EntityNotFoundException;
 import com.whats2watch.w2w.model.*;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class HomePageView {
         try {
             if (trendingMedias != null) trendingMedias = RoomController.fetchTrendingMedias();
             if (recentRooms != null) recentRooms = RoomController.fetchRecentRooms(activeUser);
-        } catch (DAOException | InterruptedException | IOException e) {
+        } catch (EntityNotFoundException | InterruptedException | IOException e) {
             System.err.println(ERROR + ": " + e.getMessage());
             Thread.currentThread().interrupt();
             recentRooms = Collections.emptySet();
