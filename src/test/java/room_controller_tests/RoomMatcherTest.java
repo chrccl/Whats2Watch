@@ -1,3 +1,5 @@
+package room_controller_tests;
+
 import com.whats2watch.w2w.controllers.RoomController;
 import com.whats2watch.w2w.model.*;
 import org.junit.jupiter.api.Test;
@@ -5,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 
-public class RoomMatcherTest {
+class RoomMatcherTest {
 
     private final Media mediaA = MediaFactory.createMovieInstance().mediaId(new MediaId("A", 2010)).popularity(5.2).build();
     private final Media mediaB = MediaFactory.createMovieInstance().mediaId(new MediaId("B", 2005)).popularity(3.8).build();
