@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class MediaDAOTest {
 
     @Test
-    void testFindAllQueryDuration() throws DAOException {
+    void testFindAllMediaQueryDuration() throws DAOException {
         // Measure the time taken by the findAll method
         long startTime = System.currentTimeMillis();
 
@@ -25,5 +25,6 @@ class MediaDAOTest {
         // Assert that the query duration is less than 3 seconds
         assertTrue(duration < 3000, "The query took longer than 3 seconds");
     }
+
 
 }
