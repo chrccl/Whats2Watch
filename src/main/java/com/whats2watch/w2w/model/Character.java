@@ -17,16 +17,8 @@ public class Character {
         return characterName;
     }
 
-    public void setCharacterName(String characterName) {
-        this.characterName = characterName;
-    }
-
     public Actor getActor() {
         return actor;
-    }
-
-    public void setActor(Actor actor) {
-        this.actor = actor;
     }
 
     @Override

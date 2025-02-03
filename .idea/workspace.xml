@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="" />
+    <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +105,7 @@
       <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.RoomMatcherTest">
+  <component name="RunManager">
     <configuration name="WhatsToWatch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.whats2watch.w2w.WhatsToWatch" />
       <module name="W2W" />
@@ -134,8 +136,8 @@
     </configuration>
     <configuration name="RoomMatcherTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="RoomMatcherTest" />
+      <option name="PACKAGE_NAME" value="room_controller_tests" />
+      <option name="MAIN_CLASS_NAME" value="room_controller_tests.RoomMatcherTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -143,8 +145,8 @@
     </configuration>
     <configuration name="RoomMatcherTest.getRoomMatches_TwoMembersWithCommonMedia_ReturnsIntersectionSorted" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="RoomMatcherTest" />
+      <option name="PACKAGE_NAME" value="room_controller_tests" />
+      <option name="MAIN_CLASS_NAME" value="room_controller_tests.RoomMatcherTest" />
       <option name="METHOD_NAME" value="getRoomMatches_TwoMembersWithCommonMedia_ReturnsIntersectionSorted" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -153,8 +155,8 @@
     </configuration>
     <configuration name="RoomMatcherTest.testComputeOffsetWithLikedMedia" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="RoomMatcherTest" />
+      <option name="PACKAGE_NAME" value="room_controller_tests" />
+      <option name="MAIN_CLASS_NAME" value="room_controller_tests.RoomMatcherTest" />
       <option name="METHOD_NAME" value="testComputeOffsetWithLikedMedia" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -272,7 +274,7 @@
       <workItem from="1735552437074" duration="19000" />
       <workItem from="1738325661462" duration="10164000" />
       <workItem from="1738426752786" duration="7827000" />
-      <workItem from="1738572379451" duration="8447000" />
+      <workItem from="1738572379451" duration="8759000" />
     </task>
     <servers />
   </component>

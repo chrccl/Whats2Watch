@@ -18,16 +18,8 @@ public class TVSeries extends Media{
         return numberOfSeasons;
     }
 
-    public void setNumberOfSeasons(Integer numberOfSeasons) {
-        this.numberOfSeasons = numberOfSeasons;
-    }
-
     public Integer getNumberOfEpisodes() {
         return numberOfEpisodes;
-    }
-
-    public void setNumberOfEpisodes(Integer numberOfEpisodes) {
-        this.numberOfEpisodes = numberOfEpisodes;
     }
 
     @Override

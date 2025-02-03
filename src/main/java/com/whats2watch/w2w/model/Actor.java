@@ -20,10 +20,6 @@ public class Actor {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public Double getPopularity() {
         return popularity;
     }

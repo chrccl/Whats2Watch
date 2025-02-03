@@ -17,16 +17,8 @@ public class WatchProvider {
         return providerName;
     }
 
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
     public String getLogoUrl() {
         return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
     }
 
     @Override

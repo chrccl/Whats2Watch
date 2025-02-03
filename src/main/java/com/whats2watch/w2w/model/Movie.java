@@ -15,10 +15,6 @@ public class Movie extends Media{
         return director;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (!(o instanceof Movie)) return false;

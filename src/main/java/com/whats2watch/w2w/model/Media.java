@@ -50,24 +50,12 @@ public abstract class Media {
         return plot;
     }
 
-    public void setPlot(String plot) {
-        this.plot = plot;
-    }
-
     public String getPosterUrl() {
         return posterUrl;
     }
 
-    public void setPosterUrl(String posterUrl) {
-        this.posterUrl = posterUrl;
-    }
-
     public String getVideoUrl() {
         return videoUrl;
-    }
-
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
     }
 
     public Double getPopularity() {
@@ -82,16 +70,8 @@ public abstract class Media {
         return voteAverage;
     }
 
-    public void setVoteAverage(Double voteAverage) {
-        this.voteAverage = voteAverage;
-    }
-
     public Set<Character> getCharacters() {
         return characters;
-    }
-
-    public void setCharacters(Set<Character> characters) {
-        this.characters = characters;
     }
 
     public Set<Genre> getGenres() {
@@ -104,10 +84,6 @@ public abstract class Media {
 
     public Set<ProductionCompany> getProductionCompanies() {
         return productionCompanies;
-    }
-
-    public void setProductionCompanies(Set<ProductionCompany> productionCompanies) {
-        this.productionCompanies = productionCompanies;
     }
 
     public Set<WatchProvider> getWatchProviders() {

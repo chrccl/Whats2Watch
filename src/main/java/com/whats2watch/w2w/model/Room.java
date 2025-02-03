@@ -40,10 +40,6 @@ public class Room {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
@@ -56,56 +52,28 @@ public class Room {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public MediaType getMediaType() {
         return mediaType;
-    }
-
-    public void setMediaType(MediaType mediaType) {
-        this.mediaType = mediaType;
     }
 
     public Integer getDecade() {
         return decade;
     }
 
-    public void setDecade(Integer decade) {
-        this.decade = decade;
-    }
-
     public Set<Genre> getAllowedGenres() {
         return allowedGenres;
-    }
-
-    public void setAllowedGenres(Set<Genre> allowedGenres) {
-        this.allowedGenres = allowedGenres;
     }
 
     public Set<WatchProvider> getAllowedProviders() {
         return allowedProviders;
     }
 
-    public void setAllowedProviders(Set<WatchProvider> allowedProviders) {
-        this.allowedProviders = allowedProviders;
-    }
-
     public Set<ProductionCompany> getAllowedProductionCompanies() {
         return allowedProductionCompanies;
     }
 
-    public void setAllowedProductionCompanies(Set<ProductionCompany> allowedProductionCompanies) {
-        this.allowedProductionCompanies = allowedProductionCompanies;
-    }
-
     public Set<RoomMember> getRoomMembers() {
         return roomMembers;
-    }
-
-    public void setRoomMembers(Set<RoomMember> roomMembers) {
-        this.roomMembers = roomMembers;
     }
 
     @Override

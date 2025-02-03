@@ -34,10 +34,6 @@ public class User {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public Gender getGender() {
         return gender;
     }

@@ -30,16 +30,8 @@ public class RoomMember {
         return likedMedia;
     }
 
-    public void setLikedMedia(Set<Media> likedMedia) {
-        this.likedMedia = likedMedia;
-    }
-
     public Set<Media> getPassedMedia() {
         return passedMedia;
-    }
-
-    public void setPassedMedia(Set<Media> passedMedia) {
-        this.passedMedia = passedMedia;
     }
 
     @Override
