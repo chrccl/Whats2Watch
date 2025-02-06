@@ -28,8 +28,8 @@ public class HomePageView {
     }
 
     public static void setMainApp(Dispatcher d, User user) {
-        if(app != null) app = d;
-        if(activeUser != null) activeUser = user;
+        if(app == null) app = d;
+        if(activeUser == null) activeUser = user;
 
         // Precompute data
         if(genres != null) genres = RoomController.fetchGenres();
