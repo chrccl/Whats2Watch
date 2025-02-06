@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="8264675b-fde9-4dde-abf8-9339635474b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/HomePageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/whats2watch/w2w/view/cli_view/HomePageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/rooms.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/whats2watch/w2w/fs_persistence_layer/rooms.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,41 +64,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "Application.WhatsToWatch.executor": "Run",
-    "JUnit.MediaDAOTest.executor": "Run",
-    "JUnit.MediaDAOTest.testFindAllQueryDuration.executor": "Run",
-    "JUnit.MediaDAOTest.testSaveRoom.executor": "Run",
-    "JUnit.RoomMatcherTest.executor": "Run",
-    "JUnit.RoomMatcherTest.getRoomMatches_TwoMembersWithCommonMedia_ReturnsIntersectionSorted.executor": "Run",
-    "JUnit.SwipeControllerTest.testComputeOffsetWithLikedMedia.executor": "Run",
-    "JUnit.SwipeControllerTest.testRecommendMedias_DatabaseDAO.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/chri0/IdeaProjects/Whats2Watch",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WhatsToWatch.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MediaDAOTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MediaDAOTest.testFindAllQueryDuration.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MediaDAOTest.testSaveRoom.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RoomMatcherTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RoomMatcherTest.getRoomMatches_TwoMembersWithCommonMedia_ReturnsIntersectionSorted.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SwipeControllerTest.testComputeOffsetWithLikedMedia.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SwipeControllerTest.testRecommendMedias_DatabaseDAO.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.java in W2W.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/chri0/IdeaProjects/Whats2Watch&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch\src\main\resources\com\whats2watch\w2w\gui_view" />
@@ -105,7 +108,7 @@
       <recent name="C:\Users\chri0\IdeaProjects\Whats2Watch" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.WhatsToWatch">
     <configuration name="WhatsToWatch" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.whats2watch.w2w.WhatsToWatch" />
       <module name="W2W" />
@@ -153,23 +156,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="RoomMatcherTest.testComputeOffsetWithLikedMedia" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="java in W2W" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="W2W" />
-      <option name="PACKAGE_NAME" value="room_controller_tests" />
-      <option name="MAIN_CLASS_NAME" value="room_controller_tests.RoomMatcherTest" />
-      <option name="METHOD_NAME" value="testComputeOffsetWithLikedMedia" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.WhatsToWatch" />
+        <item itemvalue="JUnit.java in W2W" />
         <item itemvalue="JUnit.RoomMatcherTest" />
         <item itemvalue="JUnit.MediaDAOTest" />
-        <item itemvalue="Application.WhatsToWatch" />
         <item itemvalue="JUnit.RoomMatcherTest.getRoomMatches_TwoMembersWithCommonMedia_ReturnsIntersectionSorted" />
-        <item itemvalue="JUnit.RoomMatcherTest.testComputeOffsetWithLikedMedia" />
       </list>
     </recent_temporary>
   </component>
@@ -274,7 +275,11 @@
       <workItem from="1735552437074" duration="19000" />
       <workItem from="1738325661462" duration="10164000" />
       <workItem from="1738426752786" duration="7827000" />
-      <workItem from="1738572379451" duration="8759000" />
+      <workItem from="1738572379451" duration="9097000" />
+      <workItem from="1738592010832" duration="1752000" />
+      <workItem from="1738684140554" duration="1195000" />
+      <workItem from="1738744552447" duration="11000" />
+      <workItem from="1738839220933" duration="843000" />
     </task>
     <servers />
   </component>
